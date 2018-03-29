@@ -59,4 +59,14 @@ private:
 
 };
 
+class Graph {
+private:
+	vector<Road> roads;
+	vector<Edge> edges;
+	vector<Node> nodes;
+public:
+	Graph();
+	Node findNode(int id); //to do
+	Node findNode(string name); //to do
+};
 #endif /* SRC_GRAPH_H_ */

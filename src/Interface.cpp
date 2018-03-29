@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Interface.h"
+#include "Graph.h"
 
 using namespace std;
 
@@ -12,8 +13,10 @@ void Management::main_menu() {
 }
 
 void Management::add_vehicle() {
+
 	float aut, cons, agg, rec, ce;
 	int dest_id, dep_id;
+	Node dest, dep;
 
 	cout << "Autonomy: ";
 	cin >> aut;
@@ -30,5 +33,9 @@ void Management::add_vehicle() {
 	cout << "Destination: ";
 	cin >> dest_id;
 
+	dep = map.findNode(dep_id);
+	dest = map.findNode(dest_id);
 
+	Vehicle v_aux = new Vehicle(aut, cons, agg, rec, ce, dep, dest)
+	vehicles.push_back(v_aux);
 }
