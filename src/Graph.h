@@ -66,7 +66,7 @@ private:
 	vector<Node> nodes;
 public:
 	Graph();
-	Node findNode(int id); //to do
-	Node findNode(string name); //to do
+	Node* findNode(int id){}; //to do
+	Node* findNode(string name){}; //to do
 };
 #endif /* SRC_GRAPH_H_ */

@@ -12,10 +12,10 @@ private:
 	float aggravation; //o quanto mais gasta nas subidas
 	float recovery; //o que recupera nas descidas
 	float currentEnergy;
-	Node departure;
-	Node destination;
+	Node* departure;
+	Node* destination;
 
 
 public:
-	Vehicle(float aut, float cons, float agg, float rec, float ce, Node dep, Node dest);
+	Vehicle(float aut, float cons, float agg, float rec, float ce, Node* dep, Node* dest);
 };
