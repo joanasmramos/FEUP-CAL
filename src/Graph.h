@@ -25,6 +25,8 @@ private:
 	unsigned long id; ///< Node ID
 	//É preciso as coordenadas dos pontos, incluindo a altitude para calcular a diferença de consumos nas subidas e recupração nas descidas
 	string name;
+	double latitude; //in radians
+	double longitude; //in radians
 	double x_coor;
 	double y_coor;
 	double z_coor;
@@ -32,6 +34,12 @@ private:
 public:
 	friend class Graph;
 	friend class Edge;
+	Node(unsigned long id, double latitude, double longitude) {
+		this->id = id;
+		this->latitude = latitude;
+		this->longitude = longitude;
+	}
+
 	Node(long i, double x, double y, double z) {
 		id = i;
 		x_coor = x;
@@ -46,6 +54,10 @@ public:
 		y_coor = y;
 		z_coor = z;
 		name = n;
+	}
+
+	bool operator==(const Node n1){
+		return (n1.id == this->id);
 	}
 
 };
@@ -83,6 +95,18 @@ public:
 
 				}
 				return NULL;
-	};
+	}
+
+	bool addNode(Node node){
+		for(auto it = nodes.begin(); it != nodes.end(); it++) {
+			if ((*it)==node)
+				return false;
+		}
+		nodes.push_back(node);
+		return true;
+	}
+
+
+
 };
 #endif /* SRC_GRAPH_H_ */

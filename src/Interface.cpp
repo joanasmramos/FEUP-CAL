@@ -1,9 +1,41 @@
 #include <iostream>
 #include "Interface.h"
 #include "Graph.h"
+#include <fstream>
+#include <string>
 
 using namespace std;
 
+bool Management::read_nodes(string filename){
+	ifstream instream(filename);
+
+	string info;
+	unsigned long id;
+	double latitude;
+	double longitude;
+
+	if(instream.is_open()) {
+		while(!instream.eof()) {
+			getline(instream, info, ';');
+			id = stoi(info);
+			getline(instream, info, ';');
+			getline(instream, info, ';');
+			getline(instream, info, ';');
+			longitude = stod(info);
+			getline(instream, info, '\n');
+			latitude = stod(info);
+			Node newnode = new Node(id, latitude, longitude);
+			this->map->addNode(newnode);
+		}
+	}
+	else {
+		cout << "Couldn't open file.\n";
+		return false;
+	}
+
+	instream.close();
+	return true;
+}
 
 void Management::main_menu() {
 	cout << "Choose option: " << endl;

@@ -8,6 +8,7 @@ private:
 	Graph* map; //read map text files
 public:
 	Management(); //to do
+	bool read_nodes(string filename);
 	void main_menu();
 	void add_vehicle();
 };
