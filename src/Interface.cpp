@@ -17,6 +17,7 @@ void Management::add_vehicle() {
 
 	float aut, cons, agg, rec, ce;
 	int dest_id, dep_id, id;
+	Node* dep = NULL, *dest = NULL;
 
 	cout << "ID: ";
 	cin >> id;
@@ -30,15 +31,24 @@ void Management::add_vehicle() {
 	cin >> rec;
 	cout << "Current deposit (m): ";
 	cin >> ce;
-	cout << "Departure: ";
-	cin >> dep_id;
+	while(dep == NULL){
+		cout << "Departure: ";
+		cin >> dep_id;
 
-	Node* dep = map->findNode(dep_id);
+		dep = map->findNode(dep_id);
+		if(dep == NULL)
+			cout << "Departure not valid\n";
+	}
 
-	cout << "Destination: ";
-	cin >> dest_id;
+	while(dest==NULL){
+		cout << "Destination: ";
+		cin >> dest_id;
 
-	Node* dest = map->findNode(dest_id);
+		dest = map->findNode(dest_id);
+		if(dest == NULL)
+				cout << "Destination not valid\n";
+	}
+
 
 	Vehicle* v_aux = new Vehicle(id, aut, cons, agg, rec, ce, dep, dest);
 	vehicles.push_back(v_aux);
