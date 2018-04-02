@@ -10,6 +10,7 @@ void Management::main_menu() {
 	cout << "1- Add vehicle" << endl;
 	cout << "2- Remove vehicle" << endl;
 	cout << "3- Show vehicle's best itinerary" << endl;
+	cout << "4- Exit" << endl;
 }
 
 void Management::add_vehicle() {
@@ -41,4 +42,29 @@ void Management::add_vehicle() {
 
 	Vehicle* v_aux = new Vehicle(id, aut, cons, agg, rec, ce, dep, dest);
 	vehicles.push_back(v_aux);
+}
+
+Management::Management(){
+
+	int inp=0;
+
+	main_menu();
+
+	while(inp != 4){
+		cin >> inp;
+
+		switch(inp){
+		case 1:
+			add_vehicle();
+			break;
+		case 2:
+
+			break;
+		case 3:
+
+			break;
+
+		}
+	}
+
 }
