@@ -66,7 +66,23 @@ private:
 	vector<Node> nodes;
 public:
 	Graph();
-	Node* findNode(int id){}; //to do
-	Node* findNode(string name){}; //to do
+	Node* findNode(int id){
+		for(int i=0; i < nodes.size(); i++){
+			if(nodes[i].id == id){
+				return &nodes[i];
+			}
+
+		}
+		return NULL;
+	};
+	Node* findNode(string name){
+		for(int i=0; i < nodes.size(); i++){
+					if(nodes[i].name == name){
+						return &nodes[i];
+					}
+
+				}
+				return NULL;
+	};
 };
 #endif /* SRC_GRAPH_H_ */
