@@ -1,7 +1,8 @@
 #include <iostream>
 #include <iomanip>
-#include "Graph.h"
 #include <vector>
+#include "Graph.h"
+#include "Trip.h"
 
 using namespace std;
 
@@ -14,9 +15,13 @@ private:
 	float aggravation; //o quanto mais gasta nas subidas
 	float recovery; //o que recupera nas descidas
 	float currentEnergy;
-	vector<vector<Node>> trips;
+	vector< Trip* > trips;
 
 
 public:
-	Vehicle(int id, float aut, float cons, float agg, float rec, float ce, Node* dep, Node* dest);
+	Vehicle(int id, float aut, float cons, float agg, float rec, float ce);
+	int getID();
+	void addTrip(int i, Node* dest, Node* dep);
+	int findTrip(Node* dep, Node* dest);
+	bool removeTrip(Node* dep, Node* dest);
 };

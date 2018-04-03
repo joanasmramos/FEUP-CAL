@@ -7,8 +7,14 @@ private:
 	vector<Vehicle*> vehicles;
 	Graph* map; //read map text files
 public:
-	Management(); //to do
+	Management();
 	bool read_nodes(string filename);
 	void main_menu();
 	void add_vehicle();
+	void remove_vehicle();
+	void add_trip();
+	void remove_trip();
+	void calc_itineraries() {}; //TODO
+	int getInteger(string question, int min, int max);
+	int find_vehicle(int id);
 };
