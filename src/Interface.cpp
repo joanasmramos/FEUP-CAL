@@ -8,8 +8,8 @@ using namespace std;
 
 Management::Management(){
 	if (!(read_nodes("A.txt") == true) &&
-		(read_nodes("B.txt") == true) &&
-		(read_nodes("C.txt") == true))
+		(read_roads("B.txt") == true) &&
+		(read_edges("C.txt") == true))
 		return;
 
 	main_menu();
@@ -44,6 +44,14 @@ bool Management::read_nodes(string filename){
 
 	instream.close();
 	return true;
+}
+
+bool Management::read_edges(string filename){
+	return false;
+}
+
+bool Management::read_roads(string filename){
+	return false;
 }
 
 void Management::main_menu() {
