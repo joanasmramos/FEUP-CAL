@@ -47,6 +47,33 @@ bool Management::read_nodes(string filename){
 }
 
 bool Management::read_edges(string filename){
+	ifstream instream(filename);
+
+	string info;
+	unsigned long road_id, node1_id, node2_id;
+
+	if(instream.is_open()) {
+		while(!instream.eof()) {
+			getline(instream, info, ';');
+			road_id = stoi(info);
+			getline(instream, info, ';');
+			node1_id = stoi(info);
+			getline(instream, info, ';');
+			node2_id = stoi(info);
+
+			if(find_node(node1_id) == NULL || find_node(node2_id) == NULL)
+				break;
+
+			Edge * newedge = new Edge(road_id, node1_id, node2_id);
+			this->map->addEdge(* newedge);
+		}
+	}
+	else {
+		cout << "Couldn't open file.\n";
+		return false;
+	}
+
+	instream.close();
 	return false;
 }
 
@@ -242,4 +269,8 @@ int Management::getInteger(string question, int min, int max) {
 
 	cin.ignore(1000, '\n');
 	return option;
+}
+
+Node * Management::find_node(unsigned long id) {
+	return (map->findNode(id) == NULL);
 }

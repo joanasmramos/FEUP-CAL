@@ -19,4 +19,5 @@ public:
 	void calc_itineraries() {}; //TODO
 	int getInteger(string question, int min, int max);
 	int find_vehicle(int id);
+	Node * find_node(unsigned long id);
 };

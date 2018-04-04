@@ -12,11 +12,45 @@ class Edge;
 class Road;
 
 class Edge {
-
 private:
-	static int next_edge_id; ///< static variable to know the next unique edge ID.
-	int edgeID; ///< unique id of the edge.
+	unsigned long roadID;
+	unsigned long destID; //next unique edge ID.
+	unsigned long sourceID; // unique id of the edge.
 
+public:
+	Edge(unsigned long roadid, unsigned long idsource, unsigned long iddest) {
+		roadID = roadid;
+		sourceID = idsource;
+		destID = iddest;
+	}
+
+	unsigned long getDestId() const {
+		return destID;
+	}
+
+	void setDestId(unsigned long destId) {
+		destID = destId;
+	}
+
+	unsigned long getRoadId() const {
+		return roadID;
+	}
+
+	void setRoadId(unsigned long roadId) {
+		roadID = roadId;
+	}
+
+	unsigned long getSourceId() const {
+		return sourceID;
+	}
+
+	void setSourceId(unsigned long sourceId) {
+		sourceID = sourceId;
+	}
+
+	bool operator==(const Edge e1){
+		return (e1.roadID == this->roadID);
+	}
 };
 
 class Node {
@@ -27,9 +61,8 @@ private:
 	string name;
 	double latitude; //in radians
 	double longitude; //in radians
-	double x_coor;
-	double y_coor;
-	double z_coor;
+	double altitude;
+	bool chargingPoint;
 
 public:
 	friend class Graph;
@@ -42,17 +75,17 @@ public:
 
 	Node(long i, double x, double y, double z) {
 		id = i;
-		x_coor = x;
-		y_coor = y;
-		z_coor = z;
+		latitude = x;
+		longitude = y;
+		altitude = z;
 		name = "";
 	}
 
 	Node(long i, double x, double y, double z, string n) {
 		id = i;
-		x_coor = x;
-		y_coor = y;
-		z_coor = z;
+		latitude = x;
+		longitude = y;
+		altitude = z;
 		name = n;
 	}
 
@@ -78,17 +111,17 @@ private:
 	vector<Node> nodes;
 public:
 	Graph();
-	Node* findNode(int id){
-		for(int i=0; i < nodes.size(); i++){
-			if(nodes[i].id == id){
-				return &nodes[i];
+	Node* findNode(unsigned long id){
+		for(auto it = nodes.begin(); it != nodes.end(); it++){
+			if((*it).id == id){
+				return &(*it);
 			}
 
 		}
 		return NULL;
 	};
 	Node* findNode(string name){
-		for(int i=0; i < nodes.size(); i++){
+		for(unsigned int i=0; i < nodes.size(); i++){
 					if(nodes[i].name == name){
 						return &nodes[i];
 					}
@@ -103,6 +136,15 @@ public:
 				return false;
 		}
 		nodes.push_back(node);
+		return true;
+	}
+
+	bool addEdge(Edge edge){
+		for(auto it = edges.begin(); it != edges.end(); it++) {
+			if ((*it)==edge)
+				return false;
+		}
+		edges.push_back(edge);
 		return true;
 	}
 
