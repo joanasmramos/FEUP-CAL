@@ -62,7 +62,9 @@ private:
 	double latitude; //in radians
 	double longitude; //in radians
 	double altitude;
-	bool chargingPoint;
+	vector<Edge *> adj_in;
+	vector<Edge *> adj_out;
+	bool chargingPoint = false;
 
 public:
 	friend class Graph;
@@ -71,6 +73,7 @@ public:
 		this->id = id;
 		this->latitude = latitude;
 		this->longitude = longitude;
+		this->altitude = 0;
 	}
 
 	Node(long i, double x, double y, double z) {
@@ -89,9 +92,31 @@ public:
 		name = n;
 	}
 
+	vector<Edge *> getAdjIn() {
+		return adj_in;
+	}
+
+	bool getChargingPoint() {
+		return chargingPoint;
+	}
+
+	void setChargingPoint(bool b) {
+		chargingPoint = b;
+	}
+
+	void addEdgeIn(Edge* e1) {
+		adj_in.push_back(e1);
+	}
+
+	void addEdgeOut(Edge* e1) {
+		adj_out.push_back(e1);
+	}
+
 	bool operator==(const Node n1){
 		return (n1.id == this->id);
 	}
+
+
 
 };
 
@@ -101,20 +126,30 @@ private:
 	unsigned long id; ///< Unique Id of the road
 	std::string name; ///< Name of the road
 	bool twoWay; ///< True if road has two ways, false if it only has one.
+public:
+	Road(unsigned long i, std::string n, bool t) {
+		id = i;
+		name = n;
+		twoWay = t;
+	}
+
+	bool operator==(const Road n1){
+		return (n1.id == this->id);
+	}
 
 };
 
 class Graph {
 private:
-	vector<Road> roads;
-	vector<Edge> edges;
-	vector<Node> nodes;
+	vector<Road*> roads;
+	vector<Edge*> edges;
+	vector<Node*> nodes;
 public:
 	Graph();
 	Node* findNode(unsigned long id){
 		for(auto it = nodes.begin(); it != nodes.end(); it++){
-			if((*it).id == id){
-				return &(*it);
+			if((*it)->id == id){
+				return (*it);
 			}
 
 		}
@@ -122,15 +157,15 @@ public:
 	};
 	Node* findNode(string name){
 		for(unsigned int i=0; i < nodes.size(); i++){
-					if(nodes[i].name == name){
-						return &nodes[i];
+					if(nodes[i]->name == name){
+						return nodes[i];
 					}
 
 				}
 				return NULL;
 	}
 
-	bool addNode(Node node){
+	bool addNode(Node* node){
 		for(auto it = nodes.begin(); it != nodes.end(); it++) {
 			if ((*it)==node)
 				return false;
@@ -139,13 +174,41 @@ public:
 		return true;
 	}
 
-	bool addEdge(Edge edge){
+	bool addEdge(Edge* edge){
 		for(auto it = edges.begin(); it != edges.end(); it++) {
 			if ((*it)==edge)
 				return false;
 		}
 		edges.push_back(edge);
 		return true;
+	}
+
+	bool addRoad(Road* road){
+		for(auto it = roads.begin(); it != roads.end(); it++) {
+			if ((*it)==road)
+				return false;
+		}
+		roads.push_back(road);
+		return true;
+	}
+
+	void setChargingPoints() {
+
+		int max;
+		int max_index;
+
+		for (int i = 0; i < 5; i++) {
+			max = 0;
+			max_index = 0;
+			for (int j = 0; j < nodes.size(); j++) {
+				if(nodes[j]->getAdjIn().size() > max && !(nodes[j]->getChargingPoint())) {
+					max = nodes[j]->getAdjIn().size();
+					max_index = j;
+				}
+			}
+
+			nodes[max_index]->setChargingPoint(true);
+		}
 	}
 
 
