@@ -7,10 +7,12 @@
 using namespace std;
 
 Management::Management(){
+
 	if (!(read_nodes("A.txt") == true) &&
 		(read_roads("B.txt") == true) &&
 		(read_edges("C.txt") == true))
 		return;
+
 
 	main_menu();
 }
@@ -34,7 +36,7 @@ bool Management::read_nodes(string filename){
 			getline(instream, info, '\n');
 			latitude = stod(info);
 			Node* newnode = new Node(id, latitude, longitude);
-			this->map->addNode(*newnode);
+			this->map->addNode(newnode);
 		}
 	}
 	else {
@@ -65,7 +67,10 @@ bool Management::read_edges(string filename){
 				break;
 
 			Edge * newedge = new Edge(road_id, node1_id, node2_id);
-			this->map->addEdge(* newedge);
+			find_node(node1_id)->addEdgeOut(newedge);
+			find_node(node2_id)->addEdgeIn(newedge);
+
+			this->map->addEdge(newedge);
 		}
 	}
 	else {
@@ -77,8 +82,42 @@ bool Management::read_edges(string filename){
 	return false;
 }
 
+bool stringToBool(string txt) {
+	if (txt == "true")
+		return true;
+	else
+		return false;
+}
+
 bool Management::read_roads(string filename){
-	return false;
+	ifstream instream(filename);
+
+		string info;
+		unsigned long road_id;
+		string road_name;
+		bool two_way;
+
+		if(instream.is_open()) {
+			while(!instream.eof()) {
+				getline(instream, info, ';');
+				road_id = stoi(info);
+				getline(instream, info, ';');
+				road_name = info;
+				getline(instream, info, ';');
+				two_way = stringToBool(info);
+
+				Road* newroad = new Road(road_id, road_name, two_way);
+				this->map->addRoad(newroad);
+
+			}
+		}
+		else {
+			cout << "Couldn't open file.\n";
+			return false;
+		}
+
+		instream.close();
+		return false;
 }
 
 void Management::main_menu() {
@@ -128,35 +167,35 @@ void Management::add_vehicle() {
 	int dest_id, dep_id, id;
 	Node* dep = NULL, *dest = NULL;
 
-	cout << "ID: ";
+	cout << "ID: " << endl;
 	cin >> id;
-	cout << "Autonomy: ";
+	cout << "Autonomy: " << endl;
 	cin >> aut;
 	cout << "Consumption: ";
 	cin >> cons;
-	cout << "Ascendance aggravation (percentage/degree): ";
+	cout << "Ascendance aggravation (percentage/degree): " << endl;
 	cin >> agg;
-	cout << "Regenerative braking (percentage/degree): ";
+	cout << "Regenerative braking (percentage/degree): " << endl;
 	cin >> rec;
-	cout << "Current deposit (m): ";
+	cout << "Current deposit (m): " << endl;
 	cin >> ce;
-	while(dep == NULL){
-		cout << "Departure: ";
-		cin >> dep_id;
-
-		dep = map->findNode(dep_id);
-		if(dep == NULL)
-			cout << "Departure not valid\n";
-	}
-
-	while(dest==NULL){
-		cout << "Destination: ";
-		cin >> dest_id;
-
-		dest = map->findNode(dest_id);
-		if(dest == NULL)
-				cout << "Destination not valid\n";
-	}
+//	while(dep == NULL){
+//		cout << "Departure: ";
+//		cin >> dep_id;
+//
+//		dep = map->findNode(dep_id);
+//		if(dep == NULL)
+//			cout << "Departure not valid\n";
+//	}
+//
+//	while(dest==NULL){
+//		cout << "Destination: ";
+//		cin >> dest_id;
+//
+//		dest = map->findNode(dest_id);
+//		if(dest == NULL)
+//				cout << "Destination not valid\n";
+//	}
 
 
 	Vehicle* v_aux = new Vehicle(id, aut, cons, agg, rec, ce);
@@ -272,5 +311,5 @@ int Management::getInteger(string question, int min, int max) {
 }
 
 Node * Management::find_node(unsigned long id) {
-	return (map->findNode(id) == NULL);
+	return map->findNode(id);
 }

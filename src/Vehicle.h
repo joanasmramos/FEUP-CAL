@@ -10,10 +10,10 @@ class Vehicle {
 
 private:
 	int id;
-	float autonomy;
-	float consumptions;
-	float aggravation; //o quanto mais gasta nas subidas
-	float recovery; //o que recupera nas descidas
+	float autonomy; //joules
+	float consumptions; //joules/metro
+	float aggravation; //o quanto mais gasta nas subidas //extra_consumption = aggravation * (inclination^2 / 2)
+	float recovery; //o que recupera nas descidas //(joule/m)*%
 	float currentEnergy;
 	vector< Trip* > trips;
 
