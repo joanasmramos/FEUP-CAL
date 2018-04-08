@@ -3,6 +3,7 @@
 #include "Graph.h"
 #include <fstream>
 #include <string>
+#include <math.h>
 
 using namespace std;
 
@@ -67,6 +68,14 @@ bool Management::read_edges(string filename){
 				break;
 
 			Edge * newedge = new Edge(road_id, node1_id, node2_id);
+
+			double distance = sqrt(pow(find_node(node1_id)->getLong()-(find_node(node2_id)->getLong()), 2) +
+							  pow(find_node(node1_id)->getLat()-(find_node(node2_id)->getLat()), 2));
+
+			double value = distance * (1+((find_node(node1_id)->getAlt()-find_node(node2_id)->getAlt())/distance));
+
+			newedge->setValue(value);
+
 			find_node(node1_id)->addEdgeOut(newedge);
 			find_node(node2_id)->addEdgeIn(newedge);
 

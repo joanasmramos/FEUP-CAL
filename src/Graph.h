@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "MutablePriorityQueue.h"
 
 using namespace std;
 
@@ -11,17 +12,21 @@ class Node;
 class Edge;
 class Road;
 
+//double INF = numeric_limits<double>::max();
+
 class Edge {
 private:
 	unsigned long roadID;
 	unsigned long destID; //next unique edge ID.
 	unsigned long sourceID; // unique id of the edge.
+	double value; //size of the edge
 
 public:
 	Edge(unsigned long roadid, unsigned long idsource, unsigned long iddest) {
 		roadID = roadid;
 		sourceID = idsource;
 		destID = iddest;
+		value = numeric_limits<double>::max();
 	}
 
 	unsigned long getDestId() const {
@@ -48,6 +53,14 @@ public:
 		sourceID = sourceId;
 	}
 
+	double getValue() {
+		return value;
+	}
+
+	void setValue(double v) {
+		value = v;
+	}
+
 	bool operator==(const Edge e1){
 		return (e1.roadID == this->roadID);
 	}
@@ -62,11 +75,15 @@ private:
 	double latitude; //in radians
 	double longitude; //in radians
 	double altitude;
+	bool visited;
 	vector<Edge *> adj_in;
 	vector<Edge *> adj_out;
 	bool chargingPoint = false;
+	double dist = 0;
+	Node *path = NULL;
 
 public:
+	int queueIndex = 0;
 	friend class Graph;
 	friend class Edge;
 	Node(unsigned long id, double latitude, double longitude) {
@@ -74,6 +91,7 @@ public:
 		this->latitude = latitude;
 		this->longitude = longitude;
 		this->altitude = 0;
+		visited = false;
 	}
 
 	Node(long i, double x, double y, double z) {
@@ -82,6 +100,7 @@ public:
 		longitude = y;
 		altitude = z;
 		name = "";
+		visited = false;
 	}
 
 	Node(long i, double x, double y, double z, string n) {
@@ -90,6 +109,35 @@ public:
 		longitude = y;
 		altitude = z;
 		name = n;
+		visited = false;
+	}
+
+	double getLong() {
+		return longitude;
+	}
+
+	double getLat() {
+		return latitude;
+	}
+
+	double getAlt() {
+		return altitude;
+	}
+
+	double getDist() {
+		return dist;
+	}
+
+	Node* getPath() {
+		return path;
+	}
+
+	void setDist(double d) {
+		dist = d;
+	}
+
+	void setPath(Node* p) {
+		path = p;
 	}
 
 	vector<Edge *> getAdjIn() {
@@ -116,8 +164,9 @@ public:
 		return (n1.id == this->id);
 	}
 
-
-
+	bool operator<(const Node n1){
+		return (n1.id == this->id);
+	}
 };
 
 class Road {
@@ -211,6 +260,57 @@ public:
 		}
 	}
 
+	/**
+	* Initializes single-source shortest path data (path, dist).
+	* Receives the content of the source vertex and returns a pointer to the source vertex.
+	* Used by all single-source shortest path algorithms.
+	*/
+
+	Node * initSingleSource(const unsigned long id) {
+		for (auto v : nodes) {
+			v->setDist(numeric_limits<double>::max());
+			v->setPath(nullptr);
+		}
+		auto s = findNode(id);
+		s->setDist(0);
+		return s;
+	}
+
+	/**
+	* Analyzes an edge in single-source shortest path algorithm.
+	* Returns true if the target vertex was relaxed (dist, path).
+	* Used by all single-source shortest path algorithms.
+	*/
+	bool relax(Node *v, Node *w, double weight) {
+		if (v->getDist() + weight < w->getDist()) {
+			w->setDist(v->getDist() + weight);
+			w->setPath(v);
+			return true;
+		}
+		else
+			return false;
+	}
+
+	/**
+	* Dijkstra algorithm.
+	*/
+	void dijkstraShortestPath(const unsigned long origin) {
+		auto s = initSingleSource(origin);
+		MutablePriorityQueue<Node> q;
+		q.insert(s);
+		while ( ! q.empty() ) {
+			auto v = q.extractMin();
+			for (auto e : v->adj_out) {
+				auto oldDist = findNode(e->getDestId())->dist;
+				if (relax(v, findNode(e->getDestId()), e->getValue())) {
+					if (oldDist == numeric_limits<double>::max())
+						q.insert(findNode(e->getDestId()));
+					else
+						q.decreaseKey(findNode(e->getDestId()));
+				}
+			}
+		}
+	}
 
 
 };
