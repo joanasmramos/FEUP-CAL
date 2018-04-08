@@ -15,13 +15,10 @@ private:
 	float aggravation; //o quanto mais gasta nas subidas //extra_consumption = aggravation * (inclination^2 / 2)
 	float recovery; //o que recupera nas descidas //(joule/m)*%
 	float currentEnergy;
-	vector< Trip* > trips;
+	Vertex<int>* departure;
+	Vertex<int>* destination;
 
 
 public:
-	Vehicle(int id, float aut, float cons, float agg, float rec, float ce);
-	int getID();
-	void addTrip(int i, Node* dest, Node* dep);
-	int findTrip(Node* dep, Node* dest);
-	bool removeTrip(Node* dep, Node* dest);
+	Vehicle(float aut, float cons, float agg, float rec, float ce, Vertex<int>* dep, Vertex<int>* dest);
 };
