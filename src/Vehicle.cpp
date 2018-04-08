@@ -1,7 +1,8 @@
 #include "Vehicle.h"
-#include "Graph.h"
 
-Vehicle::Vehicle(float aut, float cons, float agg, float rec, float ce, Vertex<int>* dep, Vertex<int>* dest) {
+
+Vehicle::Vehicle(int id, float aut, float cons, float agg, float rec, float ce) {
+	this->id = id;
 	autonomy = aut;
 	consumptions = cons;
 	aggravation = agg;
@@ -9,7 +10,7 @@ Vehicle::Vehicle(float aut, float cons, float agg, float rec, float ce, Vertex<i
 	currentEnergy = ce;
 };
 
-/*int Vehicle::getID() {
+int Vehicle::getID() {
 	return id;
 }
 
@@ -37,4 +38,4 @@ bool Vehicle::removeTrip(Node* dep, Node* dest) {
 		trips.erase(trips.begin()+i);
 		return true;
 	}
-}*/
+}

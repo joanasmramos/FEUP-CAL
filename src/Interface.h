@@ -1,12 +1,11 @@
 #include <iostream>
 #include <vector>
 #include "Vehicle.h"
-#include "Graph.h"
 
 class Management {
 private:
 	vector<Vehicle*> vehicles;
-	Graph<int>* map; //read map text files
+	Graph* map; //read map text files
 public:
 	Management();
 	bool read_nodes(string filename);
@@ -20,5 +19,5 @@ public:
 	void calc_itineraries() {}; //TODO
 	int getInteger(string question, int min, int max);
 	int find_vehicle(int id);
-	//Node * find_node(unsigned long id);
+	Node * find_node(unsigned long id);
 };

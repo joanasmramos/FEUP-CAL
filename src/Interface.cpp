@@ -1,21 +1,23 @@
 #include <iostream>
 #include "Interface.h"
-
+#include "Graph.h"
+#include <fstream>
+#include <string>
+#include <math.h>
 
 using namespace std;
 
-
 Management::Management(){
 
-	/*if (!(read_nodes("A.txt") == true) &&
+	if (!(read_nodes("A.txt") == true) &&
 		(read_roads("B.txt") == true) &&
 		(read_edges("C.txt") == true))
-		return;*/
+		return;
 
 
 	main_menu();
 }
-/*
+
 bool Management::read_nodes(string filename){
 	ifstream instream(filename);
 
@@ -66,6 +68,14 @@ bool Management::read_edges(string filename){
 				break;
 
 			Edge * newedge = new Edge(road_id, node1_id, node2_id);
+
+			double distance = sqrt(pow(find_node(node1_id)->getLong()-(find_node(node2_id)->getLong()), 2) +
+							  pow(find_node(node1_id)->getLat()-(find_node(node2_id)->getLat()), 2));
+
+			double value = distance * (1+((find_node(node1_id)->getAlt()-find_node(node2_id)->getAlt())/distance));
+
+			newedge->setValue(value);
+
 			find_node(node1_id)->addEdgeOut(newedge);
 			find_node(node2_id)->addEdgeIn(newedge);
 
@@ -117,7 +127,7 @@ bool Management::read_roads(string filename){
 
 		instream.close();
 		return false;
-}*/
+}
 
 void Management::main_menu() {
 	cout << "Choose option: " << endl;
@@ -135,13 +145,13 @@ void Management::main_menu() {
 			add_vehicle();
 			break;
 		case 2:
-			//remove_vehicle(); //TODO
+			remove_vehicle(); //TODO
 			break;
 		case 3:
-			//add_trip(); //TODO
+			add_trip(); //TODO
 			break;
 		case 4:
-			//remove_trip(); //TODO
+			remove_trip(); //TODO
 			break;
 		case 5:
 			calc_itineraries(); //TODO
@@ -151,7 +161,7 @@ void Management::main_menu() {
 	}
 }
 
-/*int Management::find_vehicle(int id) {
+int Management::find_vehicle(int id) {
 	for (int i = 0; i < vehicles.size(); i++) {
 		if (id == vehicles[i]->getID()) {
 			return i;
@@ -159,12 +169,12 @@ void Management::main_menu() {
 	}
 	return -1;
 }
-*/
+
 void Management::add_vehicle() {
 
 	float aut, cons, agg, rec, ce;
 	int dest_id, dep_id, id;
-	Vertex<int>* dep = NULL, *dest = NULL;
+	Node* dep = NULL, *dest = NULL;
 
 	cout << "ID: " << endl;
 	cin >> id;
@@ -195,19 +205,15 @@ void Management::add_vehicle() {
 //		if(dest == NULL)
 //				cout << "Destination not valid\n";
 //	}
-/*
-	Vertex<int>* dep = map->findVertex(dep_id);
-	Vertex<int>* dest = map->findVertex(dest_id);
+
 
 	Vehicle* v_aux = new Vehicle(id, aut, cons, agg, rec, ce);
 	vehicles.push_back(v_aux);
 
 	cout << "Vehicle added successfully" << endl;
-
 }
-*/
 
-/*void Management::remove_vehicle() {
+void Management::remove_vehicle() {
 	int id = getInteger("Vehicle's ID: ", 0, 999999999);
 
 	int i = find_vehicle(id);
@@ -225,7 +231,7 @@ void Management::add_vehicle() {
 
 void Management::add_trip() {
 
-	/*int id = getInteger("Vehicle's ID: ", 0, 999999999);
+	int id = getInteger("Vehicle's ID: ", 0, 999999999);
 
 	int i = find_vehicle(id);
 
@@ -237,19 +243,18 @@ void Management::add_trip() {
 	int dep_id = getInteger("Departure point's ID: ", 0, 999999999);
 	int dest_id = getInteger("Destiny point's ID: ", 0, 999999999);
 
-	auto dep = map->findVertex(dep_id);
+	auto dep = map->findNode(dep_id);
 	if (dep == NULL) {
 		cout << "Point not found" << endl;
 		return;
 	}
-	auto dest = map->findVertex(dest_id);
+	auto dest = map->findNode(dest_id);
 	if (dep == NULL) {
 		cout << "Point not found" << endl;
 		return;
-
 	}
 
-	/*vehicles[i]->addTrip(id, dep, dest);
+	vehicles[i]->addTrip(id, dep, dest);
 
 	cout << "Trip added successfully" << endl;
 
@@ -269,24 +274,22 @@ void Management::remove_trip() {
 	int dep_id = getInteger("Departure point's ID: ", 0, 999999999);
 	int dest_id = getInteger("Destiny point's ID: ", 0, 999999999);
 
-	auto dep = map->findVertex(dep_id);
+	auto dep = map->findNode(dep_id);
 	if (dep == NULL) {
 		cout << "Point not found" << endl;
 		return;
 	}
-	auto dest = map->findVertex(dest_id);
+	auto dest = map->findNode(dest_id);
 	if (dep == NULL) {
 		cout << "Point not found" << endl;
 		return;
 	}
 
-	/*if (vehicles[i]->removeTrip(dep, dest))
+	if (vehicles[i]->removeTrip(dep, dest))
 		cout << "Trip removed successfully" << endl;
 	else
 		cout << "Trip not found" << endl;
-*/
 }
-
 
 int Management::getInteger(string question, int min, int max) {
 	//local variables
@@ -316,7 +319,6 @@ int Management::getInteger(string question, int min, int max) {
 	return option;
 }
 
-/*Node * Management::find_node(unsigned long id) {
+Node * Management::find_node(unsigned long id) {
 	return map->findNode(id);
 }
-*/

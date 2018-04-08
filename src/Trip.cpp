@@ -4,16 +4,16 @@
 
 using namespace std;
 
-Trip::Trip(int i, Vertex<int>* dp, Vertex<int>* dt) {
+Trip::Trip(int i, Node* dp, Node* dt) {
 	carID = i;
 	dep = dp;
 	dest = dt;
 }
 
-Vertex<int>* Trip::getDep() {
+Node* Trip::getDep() {
 	return dep;
 }
 
-Vertex<int>* Trip::getDest() {
+Node* Trip::getDest() {
 	return dest;
 }

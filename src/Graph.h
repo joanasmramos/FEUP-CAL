@@ -1,323 +1,318 @@
-/*
- * Graph.h
- */
-#ifndef GRAPH_H_
-#define GRAPH_H_
+#ifndef SRC_GRAPH_H_
+#define SRC_GRAPH_H_
 
+#include <iostream>
 #include <vector>
-#include <queue>
-#include <list>
-#include <limits>
-#include <cmath>
-#include <cfloat>
+#include <string>
 #include "MutablePriorityQueue.h"
 
 using namespace std;
 
-template <class T> class Edge;
-template <class T> class Graph;
-template <class T> class Vertex;
+class Node;
+class Edge;
+class Road;
+class Graph;
 
-#define INF std::numeric_limits<double>::max()
+//double INF = numeric_limits<double>::max();
 
-/************************* Vertex  **************************/
-
-template <class T>
-class Vertex {
-	T info;                // contents
-	vector<Edge<T> > adj;  // outgoing edges
-	bool visited = false;          // auxiliary field
-	double dist = 0;
-	Vertex<T> *path = NULL;
-	int queueIndex = 0; 		// required by MutablePriorityQueue
-	bool processing = false;
-	void addEdge(Vertex<T> *dest, double w);
-
-	//É preciso as coordenadas dos pontos, incluindo a altitude para calcular a diferença de consumos nas subidas e recupração nas descidas
-
-
-	string name;
-	double latitude = 0; //in radians
-	double longitude = 0; //in radians
-	double altitude = 0;
-	bool chargingPoint = false;
-
-
-
-public:
-	Vertex(T in);
-	bool operator<(Vertex<T> & vertex) const; // // required by MutablePriorityQueue
-	T getInfo() const;
-	double getDist() const;
-	Vertex *getPath() const;
-	friend class Graph<T>;
-	friend class MutablePriorityQueue<Vertex<T>>;
-
-	Vertex<T>(T info, double latitude, double longitude) {
-			this->info = info;
-			this->latitude = latitude;
-			this->longitude = longitude;
-			this->altitude = 0;
-		}
-
-		Vertex<T>(T info, double x, double y, double z) {
-			this->info = info;
-			latitude = x;
-			longitude = y;
-			altitude = z;
-			name = "";
-		}
-
-		Vertex<T>(T info, double x, double y, double z, string n) {
-			this->info = info;
-			latitude = x;
-			longitude = y;
-			altitude = z;
-			name = n;
-		}
-
-
-};
-
-
-template <class T>
-Vertex<T>::Vertex(T in): info(in) {}
-
-
-
-/*
- * Auxiliary function to add an outgoing edge to a vertex (this),
- * with a given destination vertex (d) and edge weight (w).
- */
-template <class T>
-void Vertex<T>::addEdge(Vertex<T> *d, double w) {
-	adj.push_back(Edge<T>(d, w));
-}
-
-template <class T>
-bool Vertex<T>::operator<(Vertex<T> & vertex) const {
-	return this->dist < vertex.dist;
-}
-
-template <class T>
-T Vertex<T>::getInfo() const {
-	return this->info;
-}
-
-template <class T>
-double Vertex<T>::getDist() const {
-	return this->dist;
-}
-
-template <class T>
-Vertex<T> *Vertex<T>::getPath() const {
-	return this->path;
-}
-
-/********************** Edge  ****************************/
-
-template <class T>
 class Edge {
+private:
 	unsigned long roadID;
-	Vertex<T> * dest;      // destination vertex
-	double weight;         // edge weight
+	unsigned long destID; //next unique edge ID.
+	unsigned long sourceID; // unique id of the edge.
+	double value; //size of the edge
+
 public:
-	Edge(Vertex<T> *d, double w, unsigned long r);
-	friend class Graph<T>;
-	friend class Vertex<T>;
+	Edge(unsigned long roadid, unsigned long idsource, unsigned long iddest) {
+		roadID = roadid;
+		sourceID = idsource;
+		destID = iddest;
+		value = numeric_limits<double>::max();
+	}
+
+	unsigned long getDestId() const {
+		return destID;
+	}
+
+	void setDestId(unsigned long destId) {
+		destID = destId;
+	}
+
+	unsigned long getRoadId() const {
+		return roadID;
+	}
+
+	void setRoadId(unsigned long roadId) {
+		roadID = roadId;
+	}
+
+	unsigned long getSourceId() const {
+		return sourceID;
+	}
+
+	void setSourceId(unsigned long sourceId) {
+		sourceID = sourceId;
+	}
+
+	double getValue() {
+		return value;
+	}
+
+	void setValue(double v) {
+		value = v;
+	}
+
+	bool operator==(const Edge e1){
+		return (e1.roadID == this->roadID);
+	}
 };
 
-template <class T>
-Edge<T>::Edge(Vertex<T> *d, double w, unsigned long r): dest(d), weight(w), roadID(r) {}
+class Node {
 
+private:
+	unsigned long id; ///< Node ID
+	//É preciso as coordenadas dos pontos, incluindo a altitude para calcular a diferença de consumos nas subidas e recupração nas descidas
+	string name;
+	double latitude; //in radians
+	double longitude; //in radians
+	double altitude;
+	bool visited;
+	vector<Edge *> adj_in;
+	vector<Edge *> adj_out;
+	bool chargingPoint = false;
+	double dist = 0;
+	Node *path = NULL;
 
-/*************************** Graph  **************************/
+public:
+	int queueIndex = 0;
+	friend class Graph;
+	friend class Edge;
+	Node(unsigned long id, double latitude, double longitude) {
+		this->id = id;
+		this->latitude = latitude;
+		this->longitude = longitude;
+		this->altitude = 0;
+		visited = false;
+	}
 
-template <class T>
+	Node(long i, double x, double y, double z) {
+		id = i;
+		latitude = x;
+		longitude = y;
+		altitude = z;
+		name = "";
+		visited = false;
+	}
+
+	Node(long i, double x, double y, double z, string n) {
+		id = i;
+		latitude = x;
+		longitude = y;
+		altitude = z;
+		name = n;
+		visited = false;
+	}
+
+	double getLong() {
+		return longitude;
+	}
+
+	double getLat() {
+		return latitude;
+	}
+
+	double getAlt() {
+		return altitude;
+	}
+
+	double getDist() {
+		return dist;
+	}
+
+	Node* getPath() {
+		return path;
+	}
+
+	void setDist(double d) {
+		dist = d;
+	}
+
+	void setPath(Node* p) {
+		path = p;
+	}
+
+	vector<Edge *> getAdjIn() {
+		return adj_in;
+	}
+
+	bool getChargingPoint() {
+		return chargingPoint;
+	}
+
+	void setChargingPoint(bool b) {
+		chargingPoint = b;
+	}
+
+	void addEdgeIn(Edge* e1) {
+		adj_in.push_back(e1);
+	}
+
+	void addEdgeOut(Edge* e1) {
+		adj_out.push_back(e1);
+	}
+
+	bool operator==(const Node n1){
+		return (n1.id == this->id);
+	}
+
+	bool operator<(const Node n1){
+		return (n1.id == this->id);
+	}
+};
+
+class Road {
+
+private:
+	unsigned long id; ///< Unique Id of the road
+	std::string name; ///< Name of the road
+	bool twoWay; ///< True if road has two ways, false if it only has one.
+public:
+	Road(unsigned long i, std::string n, bool t) {
+		id = i;
+		name = n;
+		twoWay = t;
+	}
+
+	bool operator==(const Road n1){
+		return (n1.id == this->id);
+	}
+
+};
+
 class Graph {
-	vector<Vertex<T> *> vertexSet;    // vertex set
-
+private:
+	vector<Road*> roads;
+	vector<Edge*> edges;
+	vector<Node*> nodes;
 public:
-	Vertex<T> *findVertex(const T &in) const;
-	bool addVertex(const T &in);
-	bool addEdge(const T &sourc, const T &dest, double w);
-	int getNumVertex() const;
-	vector<Vertex<T> *> getVertexSet() const;
+	Graph();
+	Node* findNode(unsigned long id){
+		for(auto it = nodes.begin(); it != nodes.end(); it++){
+			if((*it)->id == id){
+				return (*it);
+			}
 
-	// Fp05 - single source
-	void dijkstraShortestPath(const T &s);
-	void dijkstraShortestPathOld(const T &s);
-	void unweightedShortestPath(const T &s);
-	void bellmanFordShortestPath(const T &s);
-	vector<T> getPath(const T &origin, const T &dest) const;
+		}
+		return NULL;
+	};
+	Node* findNode(string name){
+		for(unsigned int i=0; i < nodes.size(); i++){
+					if(nodes[i]->name == name){
+						return nodes[i];
+					}
 
-	// Fp05 - all pairs
-	void floydWarshallShortestPath();
-	vector<T> getfloydWarshallPath(const T &origin, const T &dest) const;
+				}
+				return NULL;
+	}
+
+	bool addNode(Node* node){
+		for(auto it = nodes.begin(); it != nodes.end(); it++) {
+			if ((*it)==node)
+				return false;
+		}
+		nodes.push_back(node);
+		return true;
+	}
+
+	bool addEdge(Edge* edge){
+		for(auto it = edges.begin(); it != edges.end(); it++) {
+			if ((*it)==edge)
+				return false;
+		}
+		edges.push_back(edge);
+		return true;
+	}
+
+	bool addRoad(Road* road){
+		for(auto it = roads.begin(); it != roads.end(); it++) {
+			if ((*it)==road)
+				return false;
+		}
+		roads.push_back(road);
+		return true;
+	}
+
+	void setChargingPoints() {
+
+		int max;
+		int max_index;
+
+		for (int i = 0; i < 5; i++) {
+			max = 0;
+			max_index = 0;
+			for (int j = 0; j < nodes.size(); j++) {
+				if(nodes[j]->getAdjIn().size() > max && !(nodes[j]->getChargingPoint())) {
+					max = nodes[j]->getAdjIn().size();
+					max_index = j;
+				}
+			}
+
+			nodes[max_index]->setChargingPoint(true);
+		}
+	}
+
+	/**
+	* Initializes single-source shortest path data (path, dist).
+	* Receives the content of the source vertex and returns a pointer to the source vertex.
+	* Used by all single-source shortest path algorithms.
+	*/
+
+	Node * initSingleSource(const unsigned long id) {
+		for (auto v : nodes) {
+			v->setDist(numeric_limits<double>::max());
+			v->setPath(nullptr);
+		}
+		auto s = findNode(id);
+		s->setDist(0);
+		return s;
+	}
+
+	/**
+	* Analyzes an edge in single-source shortest path algorithm.
+	* Returns true if the target vertex was relaxed (dist, path).
+	* Used by all single-source shortest path algorithms.
+	*/
+	bool relax(Node *v, Node *w, double weight) {
+		if (v->getDist() + weight < w->getDist()) {
+			w->setDist(v->getDist() + weight);
+			w->setPath(v);
+			return true;
+		}
+		else
+			return false;
+	}
+
+	/**
+	* Dijkstra algorithm.
+	*/
+	void dijkstraShortestPath(const unsigned long origin) {
+		auto s = initSingleSource(origin);
+		MutablePriorityQueue<Node> q;
+		q.insert(s);
+		while ( ! q.empty() ) {
+			auto v = q.extractMin();
+			for (auto e : v->adj_out) {
+				auto oldDist = findNode(e->getDestId())->dist;
+				if (relax(v, findNode(e->getDestId()), e->getValue())) {
+					if (oldDist == numeric_limits<double>::max())
+						q.insert(findNode(e->getDestId()));
+					else
+						q.decreaseKey(findNode(e->getDestId()));
+				}
+			}
+		}
+	}
+
 
 };
-
-template <class T>
-int Graph<T>::getNumVertex() const {
-	return vertexSet.size();
-}
-
-template <class T>
-vector<Vertex<T> *> Graph<T>::getVertexSet() const {
-	return vertexSet;
-}
-
-/*
- * Auxiliary function to find a vertex with a given content.
- */
-template <class T>
-Vertex<T> * Graph<T>::findVertex(const T &in) const {
-	for (auto v : vertexSet)
-		if (v->info == in)
-			return v;
-	return NULL;
-}
-
-/*
- *  Adds a vertex with a given content or info (in) to a graph (this).
- *  Returns true if successful, and false if a vertex with that content already exists.
- */
-template <class T>
-bool Graph<T>::addVertex(const T &in) {
-	if ( findVertex(in) != NULL)
-		return false;
-	vertexSet.push_back(new Vertex<T>(in));
-	return true;
-}
-
-/*
- * Adds an edge to a graph (this), given the contents of the source and
- * destination vertices and the edge weight (w).
- * Returns true if successful, and false if the source or destination vertex does not exist.
- */
-template <class T>
-bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
-	auto v1 = findVertex(sourc);
-	auto v2 = findVertex(dest);
-	if (v1 == NULL || v2 == NULL)
-		return false;
-	v1->addEdge(v2,w);
-	return true;
-}
-
-
-/**************** Single Source Shortest Path algorithms ************/
-
-template<class T>
-void Graph<T>::dijkstraShortestPath(const T &origin) {
-	// TODO
-	int i, j;
-	Vertex<T> *v, *w;
-	MutablePriorityQueue<Vertex<T> > q;
-
-	for(i=0; i<this->vertexSet.size(); i++){
-		this->vertexSet.at(i).dist = DBL_MAX;
-		this->vertexSet.at(i).path = NULL;
-	}
-	origin->dist = 0;
-
-	q.insert(origin);
-
-	while(!q.empty()){
-		v = q.extractMin();
-		for(j=0; j < v->adj.size();j++){
-			w = v->adj.at(j);
-
-			if(w->getDist() > (v->getDist() + v->adj.at(j).weight)){
-				w->dist = v->dist + v->adj.at(j).weight;
-				w->path = v;
-				if(w->dist == DBL_MAX){
-					q.insert(w);
-				}
-				else{
-					q.decreaseKey(w);
-				}
-			}
-		}
-
-	}
-
-
-
-	vector<Vertex<T>*> vertexSet = Graph<T>::getVertexSet();
-
-		for (unsigned int i = 0; i < vertexSet.size(); i++) {
-			vertexSet.at(i)->dist = DBL_MAX;
-			vertexSet.at(i)->path = NULL;
-		}
-
-		//MutablePriorityQueue<Vertex<T> > q;
-		Vertex<T>* v1 = findVertex(origin);
-		v1->setDist(0);
-		q.insert(v1);
-
-		while (!q.empty()) {
-			Vertex<T>* v = q.extractMin();
-			vector<Edge<T> > adj = v->adj;
-
-			for (unsigned int i = 0; i < adj.size(); i++) {
-				double dist = adj.at(i).dest->getDist();
-				if (dist > v->getDist() + adj.at(i).weight) {
-					adj.at(i).dest->setDist(v->getDist() + adj.at(i).weight);
-					adj.at(i).dest->setPath(v);
-
-					if (dist != DBL_MAX)
-						q.decreaseKey(adj.at(i).dest);
-					else
-						q.insert(adj.at(i).dest);
-
-				}
-
-			}
-		}
-}
-
-template<class T>
-vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
-	vector<T> res;
-	// TODO
-	Vertex<T> * v;
-	v = findVertex(dest);
-	while(v != *findVertex(origin)){
-		res.push_back(v->info);
-		v = v->path;
-
-	}
-
-	res.push_back(origin.info);
-
-	return res;
-}
-
-template<class T>
-void Graph<T>::unweightedShortestPath(const T &orig) {
-	// TODO
-}
-
-template<class T>
-void Graph<T>::bellmanFordShortestPath(const T &orig) {
-	// TODO
-}
-
-
-/**************** All Pairs Shortest Path  ***************/
-
-template<class T>
-void Graph<T>::floydWarshallShortestPath() {
-	// TODO
-}
-
-template<class T>
-vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
-	vector<T> res;
-	// TODO
-	return res;
-}
-
-
-#endif /* GRAPH_H_ */
+#endif /* SRC_GRAPH_H_ */

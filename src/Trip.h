@@ -7,11 +7,11 @@ using namespace std;
 class Trip {
 private:
 	int carID;
-	Vertex<int>* dep;
-	Vertex<int>* dest;
+	Node* dep;
+	Node* dest;
 
 public:
-	Trip(int i, Vertex<int>* dp, Vertex<int>* dt);
-	Vertex<int>* getDep();
-	Vertex<int>* getDest();
+	Trip(int i, Node* dp, Node* dt);
+	Node* getDep();
+	Node* getDest();
 };
