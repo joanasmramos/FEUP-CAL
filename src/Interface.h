@@ -6,7 +6,6 @@
 class Management {
 private:
 	vector<Vehicle*> vehicles;
-	Graph* map; //read map text files
 	Graph<int>* map; //read map text files
 public:
 	Management();
@@ -21,5 +20,5 @@ public:
 	void calc_itineraries() {}; //TODO
 	int getInteger(string question, int min, int max);
 	int find_vehicle(int id);
-	Node * find_node(unsigned long id);
+	//Node * find_node(unsigned long id);
 };
