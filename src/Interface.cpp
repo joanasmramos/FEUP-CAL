@@ -1,8 +1,6 @@
 #include <iostream>
 #include "Interface.h"
-#include "Graph.h"
-#include <fstream>
-#include <string>
+
 
 using namespace std;
 
@@ -197,6 +195,8 @@ void Management::add_vehicle() {
 //				cout << "Destination not valid\n";
 //	}
 
+	Vertex<int>* dep = map->findVertex(dep_id);
+	Vertex<int>* dest = map->findVertex(dest_id);
 
 	Vehicle* v_aux = new Vehicle(id, aut, cons, agg, rec, ce);
 	vehicles.push_back(v_aux);

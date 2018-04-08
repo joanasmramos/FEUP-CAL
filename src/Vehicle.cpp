@@ -1,8 +1,7 @@
 #include "Vehicle.h"
+#include "Graph.h"
 
-
-Vehicle::Vehicle(int id, float aut, float cons, float agg, float rec, float ce) {
-	this->id = id;
+Vehicle::Vehicle(float aut, float cons, float agg, float rec, float ce, Vertex<int>* dep, Vertex<int>* dest) {
 	autonomy = aut;
 	consumptions = cons;
 	aggravation = agg;
