@@ -14,6 +14,8 @@ Management::Management(){
 		(read_edges("C.txt") == true))
 		return;
 
+	if (!(read_vehicles("Vehicles.txt") == true))
+			return;
 
 	main_menu();
 }
@@ -129,6 +131,56 @@ bool Management::read_roads(string filename){
 		return false;
 }
 
+bool Management::read_vehicles(string filename) {
+	ifstream instream(filename);
+
+	string info;
+	int id;
+	float a, c, ce;
+
+	if(instream.is_open()) {
+		while(!instream.eof()) {
+			getline(instream, info, ';');
+			id = stoi(info);
+			getline(instream, info, ';');
+			a = stoi(info);
+			getline(instream, info, ';');
+			c = stoi(info);
+			getline(instream, info, ';');
+			ce = stoi(info);
+
+			Vehicle* v = new Vehicle(id, a, c, ce);
+			vehicles.push_back(v);
+		}
+	}
+	else {
+		cout << "Couldn't open file.\n";
+		return false;
+	}
+
+	instream.close();
+	return false;
+}
+
+bool Management::read_trips(string filename) {
+	ifstream instream(filename);
+
+	string info;
+
+	if(instream.is_open()) {
+		while(!instream.eof()) {
+			getline(instream, info, ';');
+		}
+	}
+	else {
+		cout << "Couldn't open file.\n";
+		return false;
+	}
+
+	instream.close();
+	return false;
+}
+
 void Management::main_menu() {
 	cout << "Choose option: " << endl;
 	cout << "1- Add vehicle" << endl;
@@ -145,13 +197,13 @@ void Management::main_menu() {
 			add_vehicle();
 			break;
 		case 2:
-			remove_vehicle(); //TODO
+			remove_vehicle();
 			break;
 		case 3:
-			add_trip(); //TODO
+			add_trip();
 			break;
 		case 4:
-			remove_trip(); //TODO
+			remove_trip();
 			break;
 		case 5:
 			calc_itineraries(); //TODO

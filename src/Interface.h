@@ -9,8 +9,10 @@ private:
 public:
 	Management();
 	bool read_nodes(string filename);
-	bool read_edges(string filename); //TODO
-	bool read_roads(string filename); //TODO
+	bool read_edges(string filename);
+	bool read_roads(string filename);
+	bool read_vehicles(string filename);
+	bool read_trips(string filename);
 	void main_menu();
 	void add_vehicle();
 	void remove_vehicle();
