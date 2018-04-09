@@ -22,7 +22,9 @@ Management::Management(){
 }
 
 bool Management::read_nodes(string filename){
-	ifstream instream(filename);
+	ifstream instream;
+
+	instream.open(filename, ios::in);
 
 	string info;
 	unsigned long id;
@@ -44,7 +46,7 @@ bool Management::read_nodes(string filename){
 		}
 	}
 	else {
-		cout << "Couldn't open file.\n";
+		cout << "Couldn't open nodes file.\n";
 		return false;
 	}
 
@@ -86,7 +88,7 @@ bool Management::read_edges(string filename){
 		}
 	}
 	else {
-		cout << "Couldn't open file.\n";
+		cout << "Couldn't open edges file.\n";
 		return false;
 	}
 
@@ -124,7 +126,7 @@ bool Management::read_roads(string filename){
 			}
 		}
 		else {
-			cout << "Couldn't open file.\n";
+			cout << "Couldn't open roads file.\n";
 			return false;
 		}
 
@@ -160,7 +162,7 @@ bool Management::read_vehicles(string filename) {
 		}
 	}
 	else {
-		cout << "Couldn't open file.\n";
+		cout << "Couldn't open vehicles file.\n";
 		return false;
 	}
 
@@ -190,7 +192,7 @@ bool Management::read_trips(string filename) {
 		}
 	}
 	else {
-		cout << "Couldn't open file.\n";
+		cout << "Couldn't open trips file.\n";
 		return false;
 	}
 
@@ -225,9 +227,13 @@ void Management::main_menu() {
 		case 5:
 			calc_itineraries(); //TODO
 			break;
+		case 6:
+			return;
 
 		default: break;
 	}
+
+	main_menu();
 }
 
 int Management::find_vehicle(int id) {
@@ -241,45 +247,24 @@ int Management::find_vehicle(int id) {
 
 void Management::add_vehicle() {
 
-	float aut, cons, agg, rec, ce;
-	int dest_id, dep_id, id;
-	Node* dep = NULL, *dest = NULL;
+	float aut, cons, ce;
+	int id;
 
 	cout << "ID: " << endl;
 	cin >> id;
 	cout << "Autonomy: " << endl;
 	cin >> aut;
-	cout << "Consumption: ";
+	cout << "Consumption: " << endl;
 	cin >> cons;
-	cout << "Ascendance aggravation (percentage/degree): " << endl;
-	cin >> agg;
-	cout << "Regenerative braking (percentage/degree): " << endl;
-	cin >> rec;
 	cout << "Current deposit (m): " << endl;
 	cin >> ce;
-//	while(dep == NULL){
-//		cout << "Departure: ";
-//		cin >> dep_id;
-//
-//		dep = map->findNode(dep_id);
-//		if(dep == NULL)
-//			cout << "Departure not valid\n";
-//	}
-//
-//	while(dest==NULL){
-//		cout << "Destination: ";
-//		cin >> dest_id;
-//
-//		dest = map->findNode(dest_id);
-//		if(dest == NULL)
-//				cout << "Destination not valid\n";
-//	}
-
 
 	Vehicle* v_aux = new Vehicle(id, aut, cons, ce);
 	vehicles.push_back(v_aux);
 
 	cout << "Vehicle added successfully" << endl;
+
+	main_menu();
 }
 
 void Management::remove_vehicle() {
@@ -295,6 +280,8 @@ void Management::remove_vehicle() {
 	vehicles.erase(vehicles.begin()+i);
 
 	cout << "Vehicle removed successfully" << endl;
+
+	main_menu();
 
 }
 
@@ -317,6 +304,7 @@ void Management::add_trip() {
 		cout << "Point not found" << endl;
 		return;
 	}
+
 	auto dest = map->findNode(dest_id);
 	if (dep == NULL) {
 		cout << "Point not found" << endl;
@@ -326,6 +314,8 @@ void Management::add_trip() {
 	vehicles[i]->addTrip(id, dep, dest);
 
 	cout << "Trip added successfully" << endl;
+
+	main_menu();
 
 }
 
@@ -358,6 +348,8 @@ void Management::remove_trip() {
 		cout << "Trip removed successfully" << endl;
 	else
 		cout << "Trip not found" << endl;
+
+	main_menu();
 }
 
 void Management::calc_itineraries() {

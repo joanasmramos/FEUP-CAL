@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <string>
 #include "Graph.h"
 #include "Trip.h"
 
@@ -11,9 +12,7 @@ class Vehicle {
 private:
 	int id;
 	float autonomy; //joules
-	float consumptions; //joules/metro
-//	float aggravation; //o quanto mais gasta nas subidas //extra_consumption = aggravation * (inclination^2 / 2)
-//	float recovery; //o que recupera nas descidas //(joule/m)*%
+	float consumptions; //relativo a outros
 	float currentEnergy;
 	vector< Trip* > trips;
 
@@ -25,4 +24,5 @@ public:
 	int findTrip(Node* dep, Node* dest);
 	bool removeTrip(Node* dep, Node* dest);
 	vector< Trip* > getTrips();
+	string toString();
 };

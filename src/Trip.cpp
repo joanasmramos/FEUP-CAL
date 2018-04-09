@@ -17,3 +17,12 @@ Node* Trip::getDep() {
 Node* Trip::getDest() {
 	return dest;
 }
+
+string Trip::toString() {
+
+	string trip = "";
+
+	trip = to_string(carID) + "; " + to_string(dep->getId()) + "; " + to_string(dest->getId()) + "\n";
+
+	return trip;
+}

@@ -41,3 +41,12 @@ bool Vehicle::removeTrip(Node* dep, Node* dest) {
 vector< Trip* > Vehicle::getTrips() {
 	return trips;
 }
+
+string Vehicle::toString() {
+
+	string vehicle = "";
+
+	vehicle = to_string(id) + "; " + to_string(autonomy) + "; " + to_string(consumptions) + "; " + to_string(currentEnergy) + "\n";
+
+	return vehicle;
+}
