@@ -207,7 +207,7 @@ void Management::add_vehicle() {
 //	}
 
 
-	Vehicle* v_aux = new Vehicle(id, aut, cons, agg, rec, ce);
+	Vehicle* v_aux = new Vehicle(id, aut, cons, ce);
 	vehicles.push_back(v_aux);
 
 	cout << "Vehicle added successfully" << endl;
@@ -289,6 +289,19 @@ void Management::remove_trip() {
 		cout << "Trip removed successfully" << endl;
 	else
 		cout << "Trip not found" << endl;
+}
+
+void Management::calc_itineraries() {
+	//Neste momento o algoritmo calcula o caminho de um node para todos os outros, é preciso alterar para ficar par um ponto em especifico
+
+	//Falta fazer a função que guarda o caminho num vetor, está disponivel no moodle, é preciso alterar para encaixar o nosso grafo
+
+	//É preciso calcular a "distancia" (ja contabiliza subidas e descidas) entre dois pontos, se for maior que a autonomia temos de calcular a distancia
+	//ao chargingPoint mais proximo e dai para o node final.
+	//A distancia depois multiplica-se pelos consumos do carro, assim há alguma personalização de cada carro. Isto é, se a "distancia" for 100,
+	//a energia atual for 90 e os consumos desse carro forem 0.8 o carro faz o caminho e ainda fica com 10 de energia
+
+	//Sempre que se calcula um caminho imprimi-se o vetor dos pontos que depois devia ser convertido para as ruas
 }
 
 int Management::getInteger(string question, int min, int max) {

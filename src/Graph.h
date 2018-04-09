@@ -14,7 +14,7 @@ class Edge;
 class Road;
 class Graph;
 
-//double INF = numeric_limits<double>::max();
+#define INF numeric_limits<double>::max()
 
 class Edge {
 private:
@@ -28,7 +28,7 @@ public:
 		roadID = roadid;
 		sourceID = idsource;
 		destID = iddest;
-		value = numeric_limits<double>::max();
+		value = INF;
 	}
 
 	unsigned long getDestId() const {
@@ -270,7 +270,7 @@ public:
 
 	Node * initSingleSource(const unsigned long id) {
 		for (auto v : nodes) {
-			v->setDist(numeric_limits<double>::max());
+			v->setDist(INF);
 			v->setPath(nullptr);
 		}
 		auto s = findNode(id);
@@ -305,7 +305,7 @@ public:
 			for (auto e : v->adj_out) {
 				auto oldDist = findNode(e->getDestId())->dist;
 				if (relax(v, findNode(e->getDestId()), e->getValue())) {
-					if (oldDist == numeric_limits<double>::max())
+					if (oldDist == INF)
 						q.insert(findNode(e->getDestId()));
 					else
 						q.decreaseKey(findNode(e->getDestId()));

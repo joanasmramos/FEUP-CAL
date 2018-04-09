@@ -1,12 +1,12 @@
 #include "Vehicle.h"
 
 
-Vehicle::Vehicle(int id, float aut, float cons, float agg, float rec, float ce) {
+Vehicle::Vehicle(int id, float aut, float cons, float ce) {
 	this->id = id;
 	autonomy = aut;
 	consumptions = cons;
-	aggravation = agg;
-	recovery = rec;
+//	aggravation = agg;
+//	recovery = rec;
 	currentEnergy = ce;
 };
 
