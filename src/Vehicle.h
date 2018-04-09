@@ -24,4 +24,5 @@ public:
 	void addTrip(int i, Node* dest, Node* dep);
 	int findTrip(Node* dep, Node* dest);
 	bool removeTrip(Node* dep, Node* dest);
+	vector< Trip* > getTrips();
 };

@@ -73,7 +73,7 @@ bool Management::read_edges(string filename){
 			Edge * newedge = new Edge(road_id, node1_id, node2_id);
 
 			double distance = sqrt(pow(find_node(node1_id)->getLong()-(find_node(node2_id)->getLong()), 2) +
-							  pow(find_node(node1_id)->getLat()-(find_node(node2_id)->getLat()), 2));
+							  pow(find_node(node1_id)->getLat()-(find_node(node2_id)->getLat()), 2))*1000;
 
 			double value = distance * (1+((find_node(node1_id)->getAlt()-find_node(node2_id)->getAlt())/distance));
 
@@ -361,9 +361,6 @@ void Management::remove_trip() {
 }
 
 void Management::calc_itineraries() {
-	//Neste momento o algoritmo calcula o caminho de um node para todos os outros, é preciso alterar para ficar par um ponto em especifico
-
-	//Falta fazer a função que guarda o caminho num vetor, está disponivel no moodle, é preciso alterar para encaixar o nosso grafo
 
 	//É preciso calcular a "distancia" (ja contabiliza subidas e descidas) entre dois pontos, se for maior que a autonomia temos de calcular a distancia
 	//ao chargingPoint mais proximo e dai para o node final.
@@ -372,7 +369,15 @@ void Management::calc_itineraries() {
 
 	//Sempre que se calcula um caminho imprimi-se o vetor dos pontos que depois devia ser convertido para as ruas
 
-	vector<unsigned long> path = map->getShortestPath(25620570, 25632400);
+//	cout << vehicles[0]->getTrips()[0]->getDep()->getId() << endl;
+//	cout << vehicles[0]->getTrips()[0]->getDest()->getId() << endl;
+
+	vector<unsigned long> path = map->getShortestPath(vehicles[0]->getTrips()[0]->getDep()->getId(), vehicles[0]->getTrips()[0]->getDest()->getId());
+
+	cout << path.size() << endl;
+
+	cout << getLength(path) << endl;
+
 }
 
 double Management::getLength(vector<unsigned long> path) {

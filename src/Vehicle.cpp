@@ -5,8 +5,6 @@ Vehicle::Vehicle(int id, float aut, float cons, float ce) {
 	this->id = id;
 	autonomy = aut;
 	consumptions = cons;
-//	aggravation = agg;
-//	recovery = rec;
 	currentEnergy = ce;
 };
 
@@ -38,4 +36,8 @@ bool Vehicle::removeTrip(Node* dep, Node* dest) {
 		trips.erase(trips.begin()+i);
 		return true;
 	}
+}
+
+vector< Trip* > Vehicle::getTrips() {
+	return trips;
 }
