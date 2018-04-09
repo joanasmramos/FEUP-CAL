@@ -114,6 +114,10 @@ public:
 		visited = false;
 	}
 
+	unsigned long getId() {
+		return id;
+	}
+
 	double getLong() {
 		return longitude;
 	}
@@ -195,8 +199,10 @@ private:
 	vector<Road*> roads;
 	vector<Edge*> edges;
 	vector<Node*> nodes;
+
 public:
 	Graph();
+
 	Node* findNode(unsigned long id){
 		for(auto it = nodes.begin(); it != nodes.end(); it++){
 			if((*it)->id == id){
@@ -205,16 +211,17 @@ public:
 
 		}
 		return NULL;
-	};
-	Node* findNode(string name){
-		for(unsigned int i=0; i < nodes.size(); i++){
-					if(nodes[i]->name == name){
-						return nodes[i];
-					}
-
-				}
-				return NULL;
 	}
+
+	Edge* findEdge(unsigned long dep, unsigned long dest) {
+		for(auto it = edges.begin(); it != edges.end(); it++){
+			if((*it)->getSourceId() == dep && (*it)->getDestId() == dest){
+				return (*it);
+			}
+		}
+		return NULL;
+	}
+
 
 	bool addNode(Node* node){
 		for(auto it = nodes.begin(); it != nodes.end(); it++) {
@@ -312,6 +319,20 @@ public:
 				}
 			}
 		}
+	}
+
+	vector<unsigned long> getShortestPath(unsigned long origin, unsigned long dest) {
+
+		dijkstraShortestPath(origin);
+
+		vector<unsigned long> res;
+		auto v = findNode(dest);
+		if (v == nullptr || v->getDist() == INF) // missing or disconnected
+			return res;
+		for ( ; v != nullptr; v = v->getPath())
+			res.push_back(v->getId());
+		reverse(res.begin(), res.end());
+		return res;
 	}
 
 

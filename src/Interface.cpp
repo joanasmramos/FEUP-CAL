@@ -371,6 +371,19 @@ void Management::calc_itineraries() {
 	//a energia atual for 90 e os consumos desse carro forem 0.8 o carro faz o caminho e ainda fica com 10 de energia
 
 	//Sempre que se calcula um caminho imprimi-se o vetor dos pontos que depois devia ser convertido para as ruas
+
+	vector<unsigned long> path = map->getShortestPath(25620570, 25632400);
+}
+
+double Management::getLength(vector<unsigned long> path) {
+
+	double length = 0;
+
+	for (int i = 0; i < path.size()-1; i++) {
+		length += map->findEdge(map->findNode(path[i])->getId(), map->findNode(path[i+1])->getId())->getValue();
+	}
+
+	return length;
 }
 
 int Management::getInteger(string question, int min, int max) {
