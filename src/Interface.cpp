@@ -14,7 +14,8 @@ Management::Management(){
 		(read_edges("C.txt") == true))
 		return;
 
-	if (!(read_vehicles("Vehicles.txt") == true))
+	if (!(read_vehicles("Vehicles.txt") == true) &&
+			read_trips("Trips.txt"))
 			return;
 
 	main_menu();
@@ -132,6 +133,11 @@ bool Management::read_roads(string filename){
 }
 
 bool Management::read_vehicles(string filename) {
+
+	//////////////////////////////////////////////////
+	//////////////Falta altitude//////////////////////
+	//////////////////////////////////////////////////
+
 	ifstream instream(filename);
 
 	string info;
@@ -166,10 +172,21 @@ bool Management::read_trips(string filename) {
 	ifstream instream(filename);
 
 	string info;
+	int id, dep, dest;
+	int index;
 
 	if(instream.is_open()) {
 		while(!instream.eof()) {
 			getline(instream, info, ';');
+			id = stoi(info);
+			getline(instream, info, ';');
+			dep = stoi(info);
+			getline(instream, info, ';');
+			dest = stoi(info);
+
+			index = find_vehicle(id);
+
+			vehicles[index]->addTrip(id, map->findNode(dep), map->findNode(dest));
 		}
 	}
 	else {
