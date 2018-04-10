@@ -25,7 +25,7 @@ bool Management::read_nodes(string filename){
 
 	ifstream instream;
 
-	instream.open(filename, ios::in);
+	instream.open(filename);
 
 	string info;
 	string id;
@@ -36,8 +36,6 @@ bool Management::read_nodes(string filename){
 		while(!instream.eof()) {
 			getline(instream, info, ';');
 			id = info;
-			getline(instream, info, ';');
-			getline(instream, info, ';');
 			getline(instream, info, ';');
 			longitude = stod(info);
 			getline(instream, info, '\n');
@@ -95,7 +93,7 @@ bool Management::read_edges(string filename){
 	}
 
 	instream.close();
-	return false;
+	return true;
 }
 
 bool stringToBool(string txt) {
@@ -134,7 +132,7 @@ bool Management::read_roads(string filename){
 		}
 
 		instream.close();
-		return false;
+		return true;
 }
 
 bool Management::read_vehicles(string filename) {
@@ -170,7 +168,7 @@ bool Management::read_vehicles(string filename) {
 	}
 
 	instream.close();
-	return false;
+	return true;
 }
 
 bool Management::read_trips(string filename) {
@@ -186,9 +184,9 @@ bool Management::read_trips(string filename) {
 			getline(instream, info, ';');
 			id = stoi(info);
 			getline(instream, info, ';');
-			dep = stoi(info);
+			dep = info;
 			getline(instream, info, ';');
-			dest = stoi(info);
+			dest = info;
 
 			index = find_vehicle(id);
 
@@ -201,7 +199,7 @@ bool Management::read_trips(string filename) {
 	}
 
 	instream.close();
-	return false;
+	return true;
 }
 
 void Management::main_menu() {
