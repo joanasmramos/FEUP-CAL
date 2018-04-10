@@ -1,4 +1,5 @@
 #include "connection.h"
+#include <errno.h>
 
 void myerror(string msg) {
   printf("%s\n", msg.c_str());
@@ -29,8 +30,10 @@ Connection::Connection(short port) {
 #else
 		WSADATA wsaData;
     int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
-    if (iResult != NO_ERROR)
+
+    if (iResult != 0)
 				printf("Client: Error at WSAStartup().\n");
+
 
 	// Create a socket.
     sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
