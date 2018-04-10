@@ -261,9 +261,10 @@ public:
 		int max;
 		int max_index;
 
-		for (int i = 0; i < 5; i++) {
+		//for (int i = 0; i < 5; i++) {
 			max = 0;
 			max_index = 0;
+
 			for (int j = 0; j < nodes.size(); j++) {
 				if(nodes[j]->getAdjIn().size() > max && !(nodes[j]->getChargingPoint())) {
 					max = nodes[j]->getAdjIn().size();
@@ -273,7 +274,7 @@ public:
 
 			nodes[max_index]->setChargingPoint(true);
 			chargingPoints.push_back(nodes[max_index]);
-		}
+		//}
 	}
 
 	/**

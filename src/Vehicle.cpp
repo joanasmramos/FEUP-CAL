@@ -58,3 +58,7 @@ string Vehicle::toString() {
 
 	return vehicle;
 }
+
+void Vehicle::charge() {
+	currentEnergy = autonomy;
+}

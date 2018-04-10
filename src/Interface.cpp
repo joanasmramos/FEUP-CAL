@@ -8,6 +8,7 @@
 using namespace std;
 
 Management::Management(){
+
 	map = new Graph();
 
 //	if (!((read_nodes("A.txt") == true) &&
@@ -23,6 +24,8 @@ Management::Management(){
 
 	if (!((read_vehicles("VehiclesTest.txt") == true) && (read_trips("TripsTest.txt"))))
 			return;
+
+	map->setChargingPoints();
 
 	main_menu();
 }
@@ -184,8 +187,6 @@ bool Management::read_vehicles(string filename) {
 }
 
 bool Management::read_trips(string filename) {
-
-	cout << "OK" << endl;
 
 	ifstream instream(filename);
 
@@ -396,20 +397,20 @@ void Management::calc_itineraries() {
 
 	//TESTING
 
-	cout << "Started\n";
-
-	cout << vehicles[0]->toString() << endl;
-	cout << vehicles[0]->getTrips()[0]->toString() << endl;
-
-	path = map->getShortestPath(vehicles[0]->getTrips()[0]->getDep()->getId(), vehicles[0]->getTrips()[0]->getDest()->getId());
-	cout << "Path\n";
-	length = vehicles[0]->getConsumptions() * getLength(path);
-
-	cout << path.size() << endl;
-	cout << length << endl;
+//	cout << "Started\n";
+//
+//	cout << vehicles[0]->toString() << endl;
+//	cout << vehicles[0]->getTrips()[0]->toString() << endl;
+//
+//	path = map->getShortestPath(vehicles[0]->getTrips()[0]->getDep()->getId(), vehicles[0]->getTrips()[0]->getDest()->getId());
+//	cout << "Path\n";
+//	length = vehicles[0]->getConsumptions() * getLength(path);
+//
+//	cout << path.size() << endl;
+//	cout << length << endl;
 
 	//REAL
-	/*
+
 	for (int i = 0; i < vehicles.size(); i++) {
 
 		length = 0;
@@ -421,12 +422,13 @@ void Management::calc_itineraries() {
 			length = vehicles[i]->getConsumptions() * getLength(path);
 
 			if(length > ((double) vehicles[i]->getCurrentEnergy())) {
+
 				for (int k = 0; k < map->getChargingPoints().size(); k++) {
 
 					dep_to_cp = map->getShortestPath(vehicles[i]->getTrips()[j]->getDep()->getId(), map->getChargingPoints()[k]->getId());
 
 					chargingPointsPaths.push_back(dep_to_cp);
-					chargingPointsDistance.push_back(getLength(path));
+					chargingPointsDistance.push_back(getLength(dep_to_cp));
 				}
 
 				min_index = 0;
@@ -456,7 +458,7 @@ void Management::calc_itineraries() {
 			cout << length << endl;
 		}
 	}
-	*/
+
 }
 
 

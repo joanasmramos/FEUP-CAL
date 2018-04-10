@@ -27,4 +27,5 @@ public:
 	float getCurrentEnergy();
 	float getConsumptions();
 	string toString();
+	void charge();
 };
