@@ -21,7 +21,7 @@ Management::Management(){
 	if (!((read_nodes("Nodes.txt") == true) && (read_edges("Edges.txt") == true)))
 		return;
 
-	if (!(read_vehicles("VehiclesTest.txt") == true) && (read_trips("TripsTest.txt")))
+	if (!((read_vehicles("VehiclesTest.txt") == true) && (read_trips("TripsTest.txt"))))
 			return;
 
 	main_menu();
@@ -52,7 +52,6 @@ bool Management::read_nodes(string filename){
 			Node* newnode = new Node(id, latitude, longitude, altitude);
 			this->map->addNode(newnode);
 
-			cout << newnode->getId() << " " << newnode->getLong() << " " << newnode->getLat() << " " << newnode->getAlt() << endl;
 		}
 	}
 	else {
@@ -185,6 +184,9 @@ bool Management::read_vehicles(string filename) {
 }
 
 bool Management::read_trips(string filename) {
+
+	cout << "OK" << endl;
+
 	ifstream instream(filename);
 
 	string info;
@@ -206,7 +208,13 @@ bool Management::read_trips(string filename) {
 			Node* node_1 = find_node(dep);
 			Node* node_2 = find_node(dest);
 
-			vehicles[index]->addTrip(id, node_1, node_2);
+			if (node_1 == NULL || node_2 == NULL) {
+				cout << "Couldn't find node. Trip not created." << endl << dep << " " << dest << endl;
+			} else if (index == -1) {
+				cout << "Couldn't find vehicle. Trip not created." << endl;
+			} else {
+				vehicles[index]->addTrip(id, node_1, node_2);
+			}
 		}
 	}
 	else {
