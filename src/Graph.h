@@ -19,40 +19,40 @@ class Graph;
 
 class Edge {
 private:
-	unsigned long roadID;
-	unsigned long destID; //next unique edge ID.
-	unsigned long sourceID; // unique id of the edge.
+	string roadID;
+	string destID; //next unique edge ID.
+	string sourceID; // unique id of the edge.
 	double value; //size of the edge
 
 public:
-	Edge(unsigned long roadid, unsigned long idsource, unsigned long iddest) {
+	Edge(string roadid, string idsource, string iddest) {
 		roadID = roadid;
 		sourceID = idsource;
 		destID = iddest;
 		value = INF;
 	}
 
-	unsigned long getDestId() const {
+	string getDestId() const {
 		return destID;
 	}
 
-	void setDestId(unsigned long destId) {
+	void setDestId(string destId) {
 		destID = destId;
 	}
 
-	unsigned long getRoadId() const {
+	string getRoadId() const {
 		return roadID;
 	}
 
-	void setRoadId(unsigned long roadId) {
+	void setRoadId(string roadId) {
 		roadID = roadId;
 	}
 
-	unsigned long getSourceId() const {
+	string getSourceId() const {
 		return sourceID;
 	}
 
-	void setSourceId(unsigned long sourceId) {
+	void setSourceId(string sourceId) {
 		sourceID = sourceId;
 	}
 
@@ -72,7 +72,7 @@ public:
 class Node {
 
 private:
-	unsigned long id; ///< Node ID
+	string id; ///< Node ID
 	//É preciso as coordenadas dos pontos, incluindo a altitude para calcular a diferença de consumos nas subidas e recupração nas descidas
 	string name;
 	double latitude; //in radians
@@ -89,7 +89,7 @@ public:
 	int queueIndex = 0;
 	friend class Graph;
 	friend class Edge;
-	Node(unsigned long id, double latitude, double longitude) {
+	Node(string id, double latitude, double longitude) {
 		this->id = id;
 		this->latitude = latitude;
 		this->longitude = longitude;
@@ -97,7 +97,7 @@ public:
 		visited = false;
 	}
 
-	Node(long i, double x, double y, double z) {
+	Node(string i, double x, double y, double z) {
 		id = i;
 		latitude = x;
 		longitude = y;
@@ -106,7 +106,7 @@ public:
 		visited = false;
 	}
 
-	Node(long i, double x, double y, double z, string n) {
+	Node(string i, double x, double y, double z, string n) {
 		id = i;
 		latitude = x;
 		longitude = y;
@@ -115,7 +115,7 @@ public:
 		visited = false;
 	}
 
-	unsigned long getId() {
+	string getId() {
 		return id;
 	}
 
@@ -179,11 +179,11 @@ public:
 class Road {
 
 private:
-	unsigned long id; ///< Unique Id of the road
+	string id; ///< Unique Id of the road
 	std::string name; ///< Name of the road
 	bool twoWay; ///< True if road has two ways, false if it only has one.
 public:
-	Road(unsigned long i, std::string n, bool t) {
+	Road(string i, std::string n, bool t) {
 		id = i;
 		name = n;
 		twoWay = t;
@@ -205,7 +205,7 @@ public:
 	Graph() {
 	}
 
-	Node* findNode(unsigned long id){
+	Node* findNode(string id){
 		for(auto it = nodes.begin(); it != nodes.end(); it++){
 			if((*it)->id == id){
 				return (*it);
@@ -215,7 +215,7 @@ public:
 		return NULL;
 	}
 
-	Edge* findEdge(unsigned long dep, unsigned long dest) {
+	Edge* findEdge(string dep, string dest) {
 		for(auto it = edges.begin(); it != edges.end(); it++){
 			if((*it)->getSourceId() == dep && (*it)->getDestId() == dest){
 				return (*it);
@@ -282,7 +282,7 @@ public:
 	* Used by all single-source shortest path algorithms.
 	*/
 
-	Node * initSingleSource(const unsigned long id) {
+	Node * initSingleSource(const string id) {
 		for (auto v : nodes) {
 			v->setDist(INF);
 			v->setPath(nullptr);
@@ -310,7 +310,7 @@ public:
 	/**
 	* Dijkstra algorithm.
 	*/
-	void dijkstraShortestPath(const unsigned long origin) {
+	void dijkstraShortestPath(const string origin) {
 		auto s = initSingleSource(origin);
 		MutablePriorityQueue<Node> q;
 		q.insert(s);
@@ -328,11 +328,11 @@ public:
 		}
 	}
 
-	vector<unsigned long> getShortestPath(unsigned long origin, unsigned long dest) {
+	vector<string> getShortestPath(string origin, string dest) {
 
 		dijkstraShortestPath(origin);
 
-		vector<unsigned long> res;
+		vector<string> res;
 		auto v = findNode(dest);
 		if (v == nullptr || v->getDist() == INF) // missing or disconnected
 			return res;

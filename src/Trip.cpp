@@ -22,7 +22,7 @@ string Trip::toString() {
 
 	string trip = "";
 
-	trip = to_string(carID) + "; " + to_string(dep->getId()) + "; " + to_string(dest->getId()) + "\n";
+	trip = to_string(carID) + "; " + dep->getId() + "; " + dest->getId() + "\n";
 
 	return trip;
 }

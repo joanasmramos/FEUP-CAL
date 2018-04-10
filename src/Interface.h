@@ -19,8 +19,8 @@ public:
 	void add_trip();
 	void remove_trip();
 	void calc_itineraries(); //TODO
-	double getLength(vector<unsigned long> path);
-	int getInteger(string question, int min, int max);
+	double getLength(vector<string> path);
+	string getInteger(string question, int min, int max);
 	int find_vehicle(int id);
-	Node * find_node(unsigned long id);
+	Node * find_node(string id);
 };

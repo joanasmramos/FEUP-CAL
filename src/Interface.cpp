@@ -28,14 +28,14 @@ bool Management::read_nodes(string filename){
 	instream.open(filename, ios::in);
 
 	string info;
-	unsigned long id;
+	string id;
 	double latitude;
 	double longitude;
 
 	if(instream.is_open()) {
 		while(!instream.eof()) {
 			getline(instream, info, ';');
-			id = stoul(info);
+			id = info;
 			getline(instream, info, ';');
 			getline(instream, info, ';');
 			getline(instream, info, ';');
@@ -60,16 +60,16 @@ bool Management::read_edges(string filename){
 	ifstream instream(filename);
 
 	string info;
-	unsigned long road_id, node1_id, node2_id;
+	string road_id, node1_id, node2_id;
 
 	if(instream.is_open()) {
 		while(!instream.eof()) {
 			getline(instream, info, ';');
-			road_id = stoul(info);
+			road_id = info;
 			getline(instream, info, ';');
-			node1_id = stoul(info);
+			node1_id = info;
 			getline(instream, info, ';');
-			node2_id = stoul(info);
+			node2_id = info;
 
 			if(find_node(node1_id) == NULL || find_node(node2_id) == NULL)
 				break;
@@ -110,14 +110,14 @@ bool Management::read_roads(string filename){
 	ifstream instream(filename);
 
 		string info;
-		unsigned long road_id;
+		string road_id;
 		string road_name;
 		bool two_way;
 
 		if(instream.is_open()) {
 			while(!instream.eof()) {
 				getline(instream, info, ';');
-				road_id = stoul(info);
+				road_id = info;
 				getline(instream, info, ';');
 				road_name = info;
 				getline(instream, info, ';');
@@ -177,7 +177,8 @@ bool Management::read_trips(string filename) {
 	ifstream instream(filename);
 
 	string info;
-	int id, dep, dest;
+	int id;
+	string dep, dest;
 	int index;
 
 	if(instream.is_open()) {
@@ -212,9 +213,9 @@ void Management::main_menu() {
 	cout << "5- Show best itineraries" << endl;
 	cout << "6- Exit" << endl;
 
-	int option = getInteger("Option: ", 1, 6);
+	string option = getInteger("Option: ", 1, 6);
 
-	switch (option) {
+	switch (stoul(option)) {
 		case 1:
 			add_vehicle();
 			break;
@@ -271,7 +272,7 @@ void Management::add_vehicle() {
 }
 
 void Management::remove_vehicle() {
-	int id = getInteger("Vehicle's ID: ", 0, 999999999);
+	int id = stoul(getInteger("Vehicle's ID: ", 0, 999999999));
 
 	int i = find_vehicle(id);
 
@@ -290,7 +291,7 @@ void Management::remove_vehicle() {
 
 void Management::add_trip() {
 
-	int id = getInteger("Vehicle's ID: ", 0, 999999999);
+	int id = stoul(getInteger("Vehicle's ID: ", 0, 999999999));
 
 	int i = find_vehicle(id);
 
@@ -299,8 +300,8 @@ void Management::add_trip() {
 		return;
 	}
 
-	int dep_id = getInteger("Departure point's ID: ", 0, 999999999);
-	int dest_id = getInteger("Destiny point's ID: ", 0, 999999999);
+	string dep_id = getInteger("Departure point's ID: ", 0, 999999999);
+	string dest_id = getInteger("Destiny point's ID: ", 0, 999999999);
 
 	auto dep = map->findNode(dep_id);
 	if (dep == NULL) {
@@ -322,7 +323,7 @@ void Management::add_trip() {
 
 void Management::remove_trip() {
 
-	int id = getInteger("Vehicle's ID: ", 0, 999999999);
+	int id = stoul(getInteger("Vehicle's ID: ", 0, 999999999));
 
 	int i = find_vehicle(id);
 
@@ -331,8 +332,8 @@ void Management::remove_trip() {
 		return;
 	}
 
-	int dep_id = getInteger("Departure point's ID: ", 0, 999999999);
-	int dest_id = getInteger("Destiny point's ID: ", 0, 999999999);
+	string dep_id = getInteger("Departure point's ID: ", 0, 999999999);
+	string dest_id = getInteger("Destiny point's ID: ", 0, 999999999);
 
 	auto dep = map->findNode(dep_id);
 	if (dep == NULL) {
@@ -365,8 +366,8 @@ void Management::calc_itineraries() {
 
 
 	double length = 0;
-	vector<unsigned long> path, dep_to_cp, cp_to_dest;
-	vector<vector<unsigned long>> chargingPointsPaths;
+	vector<string> path, dep_to_cp, cp_to_dest;
+	vector<vector<string>> chargingPointsPaths;
 	vector<double> chargingPointsDistance;
 	int min_index;
 	double min;
@@ -420,7 +421,7 @@ void Management::calc_itineraries() {
 }
 
 
-double Management::getLength(vector<unsigned long> path) {
+double Management::getLength(vector<string> path) {
 
 	double length = 0;
 
@@ -431,14 +432,14 @@ double Management::getLength(vector<unsigned long> path) {
 	return length;
 }
 
-int Management::getInteger(string question, int min, int max) {
+string Management::getInteger(string question, int min, int max) {
 	//local variables
 	bool error = false;
-	int option;
+	string option;
 
 	do
 	{
-		option = 0;
+		option = "";
 		do
 		{
 			cout << question;
@@ -453,12 +454,12 @@ int Management::getInteger(string question, int min, int max) {
 		} while (cin.fail());
 		error = false;
 
-	} while (!(option >= min && option <= max));
+	} while (!(stoul(option) >= min && stoul(option) <= max));
 
 	cin.ignore(1000, '\n');
 	return option;
 }
 
-Node * Management::find_node(unsigned long id) {
+Node * Management::find_node(string id) {
 	return map->findNode(id);
 }
