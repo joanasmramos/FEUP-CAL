@@ -37,6 +37,7 @@ bool Management::read_nodes(string filename){
 	string id;
 	double latitude;
 	double longitude;
+	double altitude;
 
 	if(instream.is_open()) {
 		while(!instream.eof()) {
@@ -44,10 +45,14 @@ bool Management::read_nodes(string filename){
 			id = info;
 			getline(instream, info, ';');
 			longitude = stod(info);
-			getline(instream, info, '\n');
+			getline(instream, info, ';');
 			latitude = stod(info);
-			Node* newnode = new Node(id, latitude, longitude);
+			getline(instream, info, '\n');
+			altitude = stod(info);
+			Node* newnode = new Node(id, latitude, longitude, altitude);
 			this->map->addNode(newnode);
+
+			cout << newnode->getId() << " " << newnode->getLong() << " " << newnode->getLat() << " " << newnode->getAlt() << endl;
 		}
 	}
 	else {
@@ -65,6 +70,7 @@ bool Management::read_edges(string filename){
 
 	string info;
 	string road_id, node1_id, node2_id;
+	double distance, value;
 
 	if(instream.is_open()) {
 		while(!instream.eof()) {
@@ -72,25 +78,30 @@ bool Management::read_edges(string filename){
 			road_id = info;
 			getline(instream, info, ';');
 			node1_id = info;
-			getline(instream, info, ';');
+			getline(instream, info, '\n');
 			node2_id = info;
 
-			if(find_node(node1_id) == NULL || find_node(node2_id) == NULL)
-				break;
+			Node* node_1 = find_node(node1_id);
+			Node* node_2 = find_node(node2_id);
 
-			Edge * newedge = new Edge(road_id, node1_id, node2_id);
+			if (node_1 == NULL || node_2 == NULL) {
+				cout << "Couldn't find node. Edge not created." << endl << node1_id << " " << node2_id << endl;
+			} else {
 
-			double distance = sqrt(pow(find_node(node1_id)->getLong()-(find_node(node2_id)->getLong()), 2) +
-							  pow(find_node(node1_id)->getLat()-(find_node(node2_id)->getLat()), 2))*1000;
+				Edge * newedge = new Edge(road_id, node1_id, node2_id);
 
-			double value = distance * (1+((find_node(node1_id)->getAlt()-find_node(node2_id)->getAlt())/distance));
+				distance = sqrt(pow(node_1->getLong()-(node_2->getLong()), 2) +
+								  pow(node_1->getLat()-(node_2->getLat()), 2));
 
-			newedge->setValue(value);
+				value = distance * (1+((node_1->getAlt()-node_2->getAlt())/distance));
 
-			find_node(node1_id)->addEdgeOut(newedge);
-			find_node(node2_id)->addEdgeIn(newedge);
+				newedge->setValue(value);
 
-			this->map->addEdge(newedge);
+				node_1->addEdgeOut(newedge);
+				node_2->addEdgeIn(newedge);
+
+				this->map->addEdge(newedge);
+			}
 		}
 	}
 	else {
@@ -143,10 +154,6 @@ bool Management::read_roads(string filename){
 
 bool Management::read_vehicles(string filename) {
 
-	//////////////////////////////////////////////////
-	//////////////Falta altitude//////////////////////
-	//////////////////////////////////////////////////
-
 	ifstream instream(filename);
 
 	string info;
@@ -158,11 +165,11 @@ bool Management::read_vehicles(string filename) {
 			getline(instream, info, ';');
 			id = stoi(info);
 			getline(instream, info, ';');
-			a = stoi(info);
+			a = stof(info);
 			getline(instream, info, ';');
-			c = stoi(info);
+			c = stof(info);
 			getline(instream, info, ';');
-			ce = stoi(info);
+			ce = stof(info);
 
 			Vehicle* v = new Vehicle(id, a, c, ce);
 			vehicles.push_back(v);
@@ -191,12 +198,15 @@ bool Management::read_trips(string filename) {
 			id = stoi(info);
 			getline(instream, info, ';');
 			dep = info;
-			getline(instream, info, ';');
+			getline(instream, info, '\n');
 			dest = info;
 
 			index = find_vehicle(id);
 
-			vehicles[index]->addTrip(id, map->findNode(dep), map->findNode(dest));
+			Node* node_1 = find_node(dep);
+			Node* node_2 = find_node(dest);
+
+			vehicles[index]->addTrip(id, node_1, node_2);
 		}
 	}
 	else {
@@ -376,6 +386,22 @@ void Management::calc_itineraries() {
 	int min_index;
 	double min;
 
+	//TESTING
+
+	cout << "Started\n";
+
+	cout << vehicles[0]->toString() << endl;
+	cout << vehicles[0]->getTrips()[0]->toString() << endl;
+
+	path = map->getShortestPath(vehicles[0]->getTrips()[0]->getDep()->getId(), vehicles[0]->getTrips()[0]->getDest()->getId());
+	cout << "Path\n";
+	length = vehicles[0]->getConsumptions() * getLength(path);
+
+	cout << path.size() << endl;
+	cout << length << endl;
+
+	//REAL
+	/*
 	for (int i = 0; i < vehicles.size(); i++) {
 
 		length = 0;
@@ -422,6 +448,7 @@ void Management::calc_itineraries() {
 			cout << length << endl;
 		}
 	}
+	*/
 }
 
 
