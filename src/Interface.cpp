@@ -8,6 +8,7 @@
 using namespace std;
 
 Management::Management(){
+	map = new Graph();
 
 	if (!((read_nodes("A.txt") == true) &&
 		(read_roads("B.txt") == true) &&
@@ -34,7 +35,7 @@ bool Management::read_nodes(string filename){
 	if(instream.is_open()) {
 		while(!instream.eof()) {
 			getline(instream, info, ';');
-			id = stoi(info);
+			id = stoul(info);
 			getline(instream, info, ';');
 			getline(instream, info, ';');
 			getline(instream, info, ';');
@@ -64,11 +65,11 @@ bool Management::read_edges(string filename){
 	if(instream.is_open()) {
 		while(!instream.eof()) {
 			getline(instream, info, ';');
-			road_id = stoi(info);
+			road_id = stoul(info);
 			getline(instream, info, ';');
-			node1_id = stoi(info);
+			node1_id = stoul(info);
 			getline(instream, info, ';');
-			node2_id = stoi(info);
+			node2_id = stoul(info);
 
 			if(find_node(node1_id) == NULL || find_node(node2_id) == NULL)
 				break;
@@ -116,7 +117,7 @@ bool Management::read_roads(string filename){
 		if(instream.is_open()) {
 			while(!instream.eof()) {
 				getline(instream, info, ';');
-				road_id = stoi(info);
+				road_id = stoul(info);
 				getline(instream, info, ';');
 				road_name = info;
 				getline(instream, info, ';');

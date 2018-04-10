@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <limits>
+#include <algorithm>
 #include "MutablePriorityQueue.h"
 
 using namespace std;
@@ -201,7 +202,8 @@ private:
 	vector<Node*> nodes;
 	vector<Node*> chargingPoints;
 public:
-	Graph();
+	Graph() {
+	}
 
 	Node* findNode(unsigned long id){
 		for(auto it = nodes.begin(); it != nodes.end(); it++){
