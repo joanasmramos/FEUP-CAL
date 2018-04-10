@@ -24,5 +24,7 @@ public:
 	int findTrip(Node* dep, Node* dest);
 	bool removeTrip(Node* dep, Node* dest);
 	vector< Trip* > getTrips();
+	float getCurrentEnergy();
+	float getConsumptions();
 	string toString();
 };

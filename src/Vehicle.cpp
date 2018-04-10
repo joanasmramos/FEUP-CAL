@@ -12,6 +12,14 @@ int Vehicle::getID() {
 	return id;
 }
 
+float Vehicle::getCurrentEnergy() {
+	return currentEnergy;
+}
+
+float Vehicle::getConsumptions() {
+	return consumptions;
+}
+
 void Vehicle::addTrip(int i, Node* dest, Node* dep) {
 	trips.push_back(new Trip(id, dest, dep));
 }

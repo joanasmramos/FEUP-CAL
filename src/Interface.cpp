@@ -9,19 +9,19 @@ using namespace std;
 
 Management::Management(){
 
-	if (!(read_nodes("A.txt") == true) &&
+	if (!((read_nodes("A.txt") == true) &&
 		(read_roads("B.txt") == true) &&
-		(read_edges("C.txt") == true))
+		(read_edges("C.txt") == true)))
 		return;
 
-	if (!(read_vehicles("Vehicles.txt") == true) &&
-			read_trips("Trips.txt"))
+	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
 			return;
 
 	main_menu();
 }
 
 bool Management::read_nodes(string filename){
+
 	ifstream instream;
 
 	instream.open(filename, ios::in);
@@ -55,6 +55,7 @@ bool Management::read_nodes(string filename){
 }
 
 bool Management::read_edges(string filename){
+
 	ifstream instream(filename);
 
 	string info;
@@ -104,6 +105,7 @@ bool stringToBool(string txt) {
 }
 
 bool Management::read_roads(string filename){
+
 	ifstream instream(filename);
 
 		string info;
@@ -315,8 +317,6 @@ void Management::add_trip() {
 
 	cout << "Trip added successfully" << endl;
 
-	main_menu();
-
 }
 
 void Management::remove_trip() {
@@ -348,8 +348,6 @@ void Management::remove_trip() {
 		cout << "Trip removed successfully" << endl;
 	else
 		cout << "Trip not found" << endl;
-
-	main_menu();
 }
 
 void Management::calc_itineraries() {
@@ -364,13 +362,62 @@ void Management::calc_itineraries() {
 //	cout << vehicles[0]->getTrips()[0]->getDep()->getId() << endl;
 //	cout << vehicles[0]->getTrips()[0]->getDest()->getId() << endl;
 
-	vector<unsigned long> path = map->getShortestPath(vehicles[0]->getTrips()[0]->getDep()->getId(), vehicles[0]->getTrips()[0]->getDest()->getId());
 
-	cout << path.size() << endl;
+	double length = 0;
+	vector<unsigned long> path, dep_to_cp, cp_to_dest;
+	vector<vector<unsigned long>> chargingPointsPaths;
+	vector<double> chargingPointsDistance;
+	int min_index;
+	double min;
 
-	cout << getLength(path) << endl;
+	for (int i = 0; i < vehicles.size(); i++) {
 
+		length = 0;
+
+		for (int j = 0; j < vehicles[i]->getTrips().size(); j++) {
+
+			path = map->getShortestPath(vehicles[i]->getTrips()[j]->getDep()->getId(), vehicles[i]->getTrips()[j]->getDest()->getId());
+
+			length = vehicles[i]->getConsumptions() * getLength(path);
+
+			if(length > ((double) vehicles[i]->getCurrentEnergy())) {
+				for (int k = 0; k < map->getChargingPoints().size(); k++) {
+
+					dep_to_cp = map->getShortestPath(vehicles[i]->getTrips()[j]->getDep()->getId(), map->getChargingPoints()[k]->getId());
+
+					chargingPointsPaths.push_back(dep_to_cp);
+					chargingPointsDistance.push_back(getLength(path));
+				}
+
+				min_index = 0;
+				min = vehicles[i]->getConsumptions() * chargingPointsDistance[0];
+
+				for (int k = 1; k < chargingPointsDistance.size(); k++) {
+					if(chargingPointsDistance[k] < min) {
+						min_index = k;
+						min = vehicles[i]->getConsumptions() * chargingPointsDistance[k];
+					}
+				}
+
+				if (min > (double) vehicles[i]->getCurrentEnergy()) {
+					cout << "You don't have enough energy to get to either your destine nor the nearest charging point." << endl;
+				} else {
+					dep_to_cp = chargingPointsPaths[min_index];
+					cp_to_dest = map->getShortestPath(map->getChargingPoints()[min_index]->getId(), vehicles[i]->getTrips()[j]->getDest()->getId());
+
+					path = dep_to_cp;
+
+					path.insert(path.end(), cp_to_dest.begin(), cp_to_dest.end());
+
+					cout << "You need to stop for charging." << endl;
+				}
+			}
+			cout << path.size() << endl;
+			cout << length << endl;
+		}
+	}
 }
+
 
 double Management::getLength(vector<unsigned long> path) {
 

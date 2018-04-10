@@ -199,7 +199,7 @@ private:
 	vector<Road*> roads;
 	vector<Edge*> edges;
 	vector<Node*> nodes;
-
+	vector<Node*> chargingPoints;
 public:
 	Graph();
 
@@ -250,6 +250,10 @@ public:
 		return true;
 	}
 
+	vector<Node*> getChargingPoints() {
+		return chargingPoints;
+	}
+
 	void setChargingPoints() {
 
 		int max;
@@ -266,6 +270,7 @@ public:
 			}
 
 			nodes[max_index]->setChargingPoint(true);
+			chargingPoints.push_back(nodes[max_index]);
 		}
 	}
 
