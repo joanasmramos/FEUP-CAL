@@ -25,6 +25,7 @@ private:
 	double value; //size of the edge
 
 public:
+	friend class Graph;
 	Edge(string roadid, string idsource, string iddest) {
 		roadID = roadid;
 		sourceID = idsource;
@@ -183,10 +184,19 @@ private:
 	std::string name; ///< Name of the road
 	bool twoWay; ///< True if road has two ways, false if it only has one.
 public:
+	friend class Graph;
 	Road(string i, std::string n, bool t) {
 		id = i;
 		name = n;
 		twoWay = t;
+	}
+
+	string getId() {
+		return id;
+	}
+
+	string getName() {
+		return name;
 	}
 
 	bool operator==(const Road n1){
@@ -205,12 +215,15 @@ public:
 	Graph() {
 	}
 
+	vector<Road*> getRoads() {
+		return roads;
+	}
+
 	Node* findNode(string id){
 		for(auto it = nodes.begin(); it != nodes.end(); it++){
 			if((*it)->id == id){
 				return (*it);
 			}
-
 		}
 		return NULL;
 	}
@@ -218,6 +231,15 @@ public:
 	Edge* findEdge(string dep, string dest) {
 		for(auto it = edges.begin(); it != edges.end(); it++){
 			if((*it)->getSourceId() == dep && (*it)->getDestId() == dest){
+				return (*it);
+			}
+		}
+		return NULL;
+	}
+
+	Road* findRoad(string id) {
+		for(auto it = roads.begin(); it != roads.end(); it++){
+			if((*it)->id == id){
 				return (*it);
 			}
 		}
@@ -266,13 +288,13 @@ public:
 			max_index = 0;
 
 			for (int j = 0; j < nodes.size(); j++) {
-				if(nodes[j]->getAdjIn().size() > max && !(nodes[j]->getChargingPoint())) {
-					max = nodes[j]->getAdjIn().size();
+				if(nodes[j]->adj_in.size() > max && !(nodes[j]->chargingPoint)) {
+					max = nodes[j]->adj_in.size();
 					max_index = j;
 				}
 			}
 
-			nodes[max_index]->setChargingPoint(true);
+			nodes[max_index]->chargingPoint = true;
 			chargingPoints.push_back(nodes[max_index]);
 		//}
 	}
@@ -285,11 +307,11 @@ public:
 
 	Node * initSingleSource(const string id) {
 		for (auto v : nodes) {
-			v->setDist(INF);
-			v->setPath(nullptr);
+			v->dist = INF;
+			v->path = nullptr;
 		}
 		auto s = findNode(id);
-		s->setDist(0);
+		s->dist = 0;
 		return s;
 	}
 
@@ -299,9 +321,9 @@ public:
 	* Used by all single-source shortest path algorithms.
 	*/
 	bool relax(Node *v, Node *w, double weight) {
-		if (v->getDist() + weight < w->getDist()) {
-			w->setDist(v->getDist() + weight);
-			w->setPath(v);
+		if (v->dist + weight < w->dist) {
+			w->dist = v->dist + weight;
+			w->path = v;
 			return true;
 		}
 		else
@@ -318,12 +340,12 @@ public:
 		while ( ! q.empty() ) {
 			auto v = q.extractMin();
 			for (auto e : v->adj_out) {
-				auto oldDist = findNode(e->getDestId())->dist;
-				if (relax(v, findNode(e->getDestId()), e->getValue())) {
+				auto oldDist = findNode(e->destID)->dist;
+				if (relax(v, findNode(e->destID), e->value)) {
 					if (oldDist == INF)
-						q.insert(findNode(e->getDestId()));
+						q.insert(findNode(e->destID));
 					else
-						q.decreaseKey(findNode(e->getDestId()));
+						q.decreaseKey(findNode(e->destID));
 				}
 			}
 		}
@@ -335,10 +357,10 @@ public:
 
 		vector<string> res;
 		auto v = findNode(dest);
-		if (v == nullptr || v->getDist() == INF) // missing or disconnected
+		if (v == nullptr || v->dist == INF) // missing or disconnected
 			return res;
-		for ( ; v != nullptr; v = v->getPath())
-			res.push_back(v->getId());
+		for ( ; v != nullptr; v = v->path)
+			res.push_back(v->id);
 		reverse(res.begin(), res.end());
 		return res;
 	}

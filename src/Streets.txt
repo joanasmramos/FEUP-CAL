@@ -1,0 +1,8 @@
+1;Rua Passos Manuel;false
+2;Avenida dos Aliados;true
+3;Rua Formosa;false
+4;Rua Mouzinho da Silveira;true
+5;Rua do Almada;false
+6;Rua de Cedofeita;false
+8;Rua dos Clérigos;false
+9;Rua do Bonjardim;false

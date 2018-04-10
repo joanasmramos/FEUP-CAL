@@ -54,11 +54,15 @@ string Vehicle::toString() {
 
 	string vehicle = "";
 
-	vehicle = to_string(id) + "; " + to_string(autonomy) + "; " + to_string(consumptions) + "; " + to_string(currentEnergy) + "\n";
+	vehicle = to_string(id) + "; " + to_string(autonomy) + "; " + to_string(consumptions) + "; " + to_string(currentEnergy);
 
 	return vehicle;
 }
 
 void Vehicle::charge() {
 	currentEnergy = autonomy;
+}
+
+void Vehicle::setCurrentEnergy(float c) {
+	currentEnergy = c;
 }

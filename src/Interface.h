@@ -19,8 +19,12 @@ public:
 	void add_trip();
 	void remove_trip();
 	void calc_itineraries(); //TODO
-	double getLength(vector<string> path);
+	double getLength(vector<Edge*> edges);
 	string getInteger(string question, int min, int max);
 	int find_vehicle(int id);
 	Node * find_node(string id);
+	void print_path(vector<Edge*> p);
+	vector<Edge *> getEdges(vector<string> path);
+	void updateVehicles();
+	void updateTrips();
 };

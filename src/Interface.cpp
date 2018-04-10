@@ -19,7 +19,7 @@ Management::Management(){
 //	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
 //			return;
 
-	if (!((read_nodes("Nodes.txt") == true) && (read_edges("Edges.txt") == true)))
+	if (!((read_nodes("Nodes.txt") == true) && (read_edges("Edges.txt") == true) && (read_roads("Streets.txt") == true)))
 		return;
 
 	if (!((read_vehicles("VehiclesTest.txt") == true) && (read_trips("TripsTest.txt"))))
@@ -137,7 +137,7 @@ bool Management::read_roads(string filename){
 				road_id = info;
 				getline(instream, info, ';');
 				road_name = info;
-				getline(instream, info, ';');
+				getline(instream, info, '\n');
 				two_way = stringToBool(info);
 
 				Road* newroad = new Road(road_id, road_name, two_way);
@@ -173,8 +173,12 @@ bool Management::read_vehicles(string filename) {
 			getline(instream, info, ';');
 			ce = stof(info);
 
-			Vehicle* v = new Vehicle(id, a, c, ce);
-			vehicles.push_back(v);
+			if (ce > a) {
+				cout << "Invalid vehicle\n" << endl;
+			} else {
+				Vehicle* v = new Vehicle(id, a, c, ce);
+				vehicles.push_back(v);
+			}
 		}
 	}
 	else {
@@ -231,8 +235,8 @@ void Management::main_menu() {
 	cout << "Choose option: " << endl;
 	cout << "1- Add vehicle" << endl;
 	cout << "2- Remove vehicle" << endl;
-	cout << "3- Add trip to car" << endl;
-	cout << "4- Remove trip from car" << endl;
+	cout << "3- Add trip to vehicle" << endl;
+	cout << "4- Remove trip from vehicle" << endl;
 	cout << "5- Show best itineraries" << endl;
 	cout << "6- Exit" << endl;
 
@@ -241,18 +245,26 @@ void Management::main_menu() {
 	switch (stoul(option)) {
 		case 1:
 			add_vehicle();
+			updateVehicles();
+			read_trips("TripsTest.txt");
 			break;
 		case 2:
 			remove_vehicle();
+			updateVehicles();
+			read_trips("TripsTest.txt");
 			break;
 		case 3:
 			add_trip();
+			updateTrips();
+			read_trips("TripsTest.txt");
 			break;
 		case 4:
 			remove_trip();
+			updateTrips();
+			read_trips("TripsTest.txt");
 			break;
 		case 5:
-			calc_itineraries(); //TODO
+			calc_itineraries();
 			break;
 		case 6:
 			return;
@@ -286,12 +298,15 @@ void Management::add_vehicle() {
 	cout << "Current deposit (m): " << endl;
 	cin >> ce;
 
+	if (aut < ce) {
+		cout << "The current energy needs to be smaller than the autonomy." << endl;
+		return;
+	}
+
 	Vehicle* v_aux = new Vehicle(id, aut, cons, ce);
 	vehicles.push_back(v_aux);
 
 	cout << "Vehicle added successfully" << endl;
-
-	main_menu();
 }
 
 void Management::remove_vehicle() {
@@ -307,9 +322,6 @@ void Management::remove_vehicle() {
 	vehicles.erase(vehicles.begin()+i);
 
 	cout << "Vehicle removed successfully" << endl;
-
-	main_menu();
-
 }
 
 void Management::add_trip() {
@@ -377,49 +389,29 @@ void Management::remove_trip() {
 
 void Management::calc_itineraries() {
 
-	//É preciso calcular a "distancia" (ja contabiliza subidas e descidas) entre dois pontos, se for maior que a autonomia temos de calcular a distancia
-	//ao chargingPoint mais proximo e dai para o node final.
-	//A distancia depois multiplica-se pelos consumos do carro, assim há alguma personalização de cada carro. Isto é, se a "distancia" for 100,
-	//a energia atual for 90 e os consumos desse carro forem 0.8 o carro faz o caminho e ainda fica com 10 de energia
-
-	//Sempre que se calcula um caminho imprimi-se o vetor dos pontos que depois devia ser convertido para as ruas
-
-//	cout << vehicles[0]->getTrips()[0]->getDep()->getId() << endl;
-//	cout << vehicles[0]->getTrips()[0]->getDest()->getId() << endl;
-
-
 	double length = 0;
 	vector<string> path, dep_to_cp, cp_to_dest;
 	vector<vector<string>> chargingPointsPaths;
 	vector<double> chargingPointsDistance;
 	int min_index;
 	double min;
-
-	//TESTING
-
-//	cout << "Started\n";
-//
-//	cout << vehicles[0]->toString() << endl;
-//	cout << vehicles[0]->getTrips()[0]->toString() << endl;
-//
-//	path = map->getShortestPath(vehicles[0]->getTrips()[0]->getDep()->getId(), vehicles[0]->getTrips()[0]->getDest()->getId());
-//	cout << "Path\n";
-//	length = vehicles[0]->getConsumptions() * getLength(path);
-//
-//	cout << path.size() << endl;
-//	cout << length << endl;
-
-	//REAL
+	vector<Edge*> path_edges;
 
 	for (int i = 0; i < vehicles.size(); i++) {
+
+		cout << i+1 << "º Vehicle:" << endl << endl;
 
 		length = 0;
 
 		for (int j = 0; j < vehicles[i]->getTrips().size(); j++) {
 
+			cout << j+1 << "º Trip:" << endl << endl;
+
 			path = map->getShortestPath(vehicles[i]->getTrips()[j]->getDep()->getId(), vehicles[i]->getTrips()[j]->getDest()->getId());
 
-			length = vehicles[i]->getConsumptions() * getLength(path);
+			path_edges = getEdges(path);
+
+			length = vehicles[i]->getConsumptions() * getLength(path_edges);
 
 			if(length > ((double) vehicles[i]->getCurrentEnergy())) {
 
@@ -428,7 +420,8 @@ void Management::calc_itineraries() {
 					dep_to_cp = map->getShortestPath(vehicles[i]->getTrips()[j]->getDep()->getId(), map->getChargingPoints()[k]->getId());
 
 					chargingPointsPaths.push_back(dep_to_cp);
-					chargingPointsDistance.push_back(getLength(dep_to_cp));
+					chargingPointsDistance.push_back(getLength(getEdges(dep_to_cp)));
+
 				}
 
 				min_index = 0;
@@ -444,30 +437,77 @@ void Management::calc_itineraries() {
 				if (min > (double) vehicles[i]->getCurrentEnergy()) {
 					cout << "You don't have enough energy to get to either your destine nor the nearest charging point." << endl;
 				} else {
+
 					dep_to_cp = chargingPointsPaths[min_index];
 					cp_to_dest = map->getShortestPath(map->getChargingPoints()[min_index]->getId(), vehicles[i]->getTrips()[j]->getDest()->getId());
+
+					cp_to_dest.erase(cp_to_dest.begin());
 
 					path = dep_to_cp;
 
 					path.insert(path.end(), cp_to_dest.begin(), cp_to_dest.end());
 
+					path_edges = getEdges(path);
+
+					length = getLength(path_edges);
+
+					vehicles[i]->charge();
+					vehicles[i]->setCurrentEnergy(vehicles[i]->getCurrentEnergy() - (length - min));
+
 					cout << "You need to stop for charging." << endl;
 				}
+			} else {
+				vehicles[i]->setCurrentEnergy(vehicles[i]->getCurrentEnergy() - length);
 			}
-			cout << path.size() << endl;
+
+			cout << "Path: " << endl;
+			print_path(path_edges);
+			cout << "Energy spent: " << endl;
 			cout << length << endl;
 		}
 	}
 
+	updateVehicles();
+
 }
 
 
-double Management::getLength(vector<string> path) {
+void Management::print_path(vector<Edge*> p) {
+	string last_printed;
+	string currentName;
+
+	for (int i = 0; i < p.size(); i++) {
+		currentName = map->findRoad(p[i]->getRoadId())->getName();
+		if(last_printed != currentName) {
+			cout << currentName;
+			if (i != p.size()-1)
+				cout << " - ";
+		}
+		if (i == p.size()-1)
+			cout << endl;
+
+		last_printed = currentName;
+	}
+}
+
+vector<Edge*> Management::getEdges(vector<string> path) {
+
+	vector<Edge*> v;
+
+	for (int i = 0; i < path.size()-1; i++) {
+		Edge* e = map->findEdge(find_node(path[i])->getId(), find_node(path[i+1])->getId());
+		v.push_back(e);
+	}
+
+	return v;
+}
+
+double Management::getLength(vector<Edge*> edges) {
 
 	double length = 0;
 
-	for (int i = 0; i < path.size()-1; i++) {
-		length += map->findEdge(map->findNode(path[i])->getId(), map->findNode(path[i+1])->getId())->getValue();
+	for (int i = 0; i < edges.size(); i++) {
+		length += edges[i]->getValue();
 	}
 
 	return length;
@@ -504,3 +544,43 @@ string Management::getInteger(string question, int min, int max) {
 Node * Management::find_node(string id) {
 	return map->findNode(id);
 }
+
+void Management::updateVehicles() {
+
+	ofstream outstream;
+
+	outstream.open("VehiclesTest.txt");
+
+	if(outstream.is_open()) {
+		for (int i = 0; i < vehicles.size(); i++) {
+			outstream << vehicles[i]->toString();
+			if (i != vehicles.size()-1)
+				outstream << "\n";
+		}
+	} else {
+		cout << "Couldn't open nodes file.\n";
+	}
+	outstream.close();
+}
+
+void Management::updateTrips() {
+
+	ofstream outstream;
+
+	outstream.open("TripsTest.txt");
+
+	if(outstream.is_open()) {
+		for (int i = 0; i < vehicles.size(); i++) {
+			for (int j = 0; j < vehicles[i]->getTrips().size(); j++) {
+				outstream << vehicles[i]->getTrips()[j]->toString();
+				if (!(j == vehicles[i]->getTrips().size()-1 && i == vehicles.size()-1))
+					outstream << "\n";
+			}
+		}
+	} else {
+		cout << "Couldn't open nodes file.\n";
+	}
+
+	outstream.close();
+}
+
