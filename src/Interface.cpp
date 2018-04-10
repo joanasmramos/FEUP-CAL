@@ -10,12 +10,18 @@ using namespace std;
 Management::Management(){
 	map = new Graph();
 
-	if (!((read_nodes("A.txt") == true) &&
-		(read_roads("B.txt") == true) &&
-		(read_edges("C.txt") == true)))
+//	if (!((read_nodes("A.txt") == true) &&
+//		(read_roads("B.txt") == true) &&
+//		(read_edges("C.txt") == true)))
+//		return;
+//
+//	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
+//			return;
+
+	if (!((read_nodes("Nodes.txt") == true) && (read_edges("Edges.txt") == true)))
 		return;
 
-	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
+	if (!(read_vehicles("VehiclesTest.txt") == true) && (read_trips("TripsTest.txt")))
 			return;
 
 	main_menu();
