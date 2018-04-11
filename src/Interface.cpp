@@ -4,28 +4,8 @@
 #include <fstream>
 #include <string>
 #include <math.h>
-#include <stdlib.h>
 
 using namespace std;
-
-
-vector<double> convertToMeters(double rlat, double rlon, double latitude, double longitude){
-	vector<double> res;
-	double dlat, dlon, lat, lon;
-
-	dlat = rlat - latitude;
-	dlon = rlon - longitude;
-
-	lat = dlat * 111111;
-	lon = dlon * cos(latitude * 0.01745329252) * 111111;
-
-	res.push_back(lat);
-	res.push_back(lon);
-
-
-
-	return res;
-}
 
 Management::Management(){
 
@@ -39,7 +19,7 @@ Management::Management(){
 //	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
 //			return;
 
-	if (!((read_nodes("A.txt") == true) && (read_edges("C.txt") == true) && (read_roads("B.txt") == true)))
+	if (!((read_nodes("Nodes.txt") == true) && (read_edges("Edges.txt") == true) && (read_roads("Streets.txt") == true)))
 		return;
 
 	if (!((read_vehicles("VehiclesTest.txt") == true) && (read_trips("TripsTest.txt"))))
@@ -58,48 +38,22 @@ bool Management::read_nodes(string filename){
 
 	string info;
 	string id;
-	double latitude, rlat;
-	double longitude, rlon;
+	double latitude;
+	double longitude;
 	double altitude;
-	vector<double> coor;
-
 
 	if(instream.is_open()) {
-
-		getline(instream, info, ';');
-		  id = info;
-		  getline(instream, info, ';');
-		  rlon = stod(info);
-		  longitude = 0.0;
-		  getline(instream, info, ';');
-		  rlat = stod(info);
-		  latitude = 0.0;
-		  getline(instream, info, ';');
-		  getline(instream, info, ';');
-		  altitude = rand() % 100 + rand() % 100 + rand() % 100 + rand() % 100 + rand() % 100;
-		  Node* newnode = new Node(id, latitude, longitude, altitude);
-		  this->map->addNode(newnode);
-
-
-
 		while(!instream.eof()) {
-
 			getline(instream, info, ';');
 			id = info;
 			getline(instream, info, ';');
 			longitude = stod(info);
 			getline(instream, info, ';');
 			latitude = stod(info);
-
-			coor = convertToMeters(rlat, rlon, latitude, longitude);
-
-			latitude = coor[0];
-			longitude = coor[1];
-
-			getline(instream, info, ';');
-		  	getline(instream, info, ';');
-			altitude = rand() % 100 + rand() % 100 + rand() % 100 + rand() % 100 + rand() % 100;
-
+			getline(instream, info, '\n');
+			altitude = stod(info);
+			Node* newnode = new Node(id, latitude, longitude, altitude);
+			this->map->addNode(newnode);
 
 		}
 	}
