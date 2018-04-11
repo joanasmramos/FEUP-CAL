@@ -26,6 +26,12 @@ private:
 
 public:
 	friend class Graph;
+	/**
+	 * @brief Edge constructor
+	 * @param roadid Road ID
+	 * @param idsource Source ID
+	 * @param iddest Destiny ID
+	 */
 	Edge(string roadid, string idsource, string iddest) {
 		roadID = roadid;
 		sourceID = idsource;
@@ -33,38 +39,71 @@ public:
 		value = INF;
 	}
 
+	/**
+	 * @return destID
+	 */
 	string getDestId() const {
 		return destID;
 	}
 
+	/**
+	 * @brief sets destiny ID
+	 * @param destId Destiny ID
+	 */
 	void setDestId(string destId) {
 		destID = destId;
 	}
 
+	/**
+	 * @return RoadID
+	 */
 	string getRoadId() const {
 		return roadID;
 	}
 
+	/**
+	 * @brief sets road ID
+	 * @param roadId Road ID
+	 */
 	void setRoadId(string roadId) {
 		roadID = roadId;
 	}
 
+	/**
+	 * @return sourceID
+	 */
 	string getSourceId() const {
 		return sourceID;
 	}
 
+	/**
+	 * @brief sets source ID
+	 * @param sourceId source ID
+	 */
 	void setSourceId(string sourceId) {
 		sourceID = sourceId;
 	}
 
+	/**
+	 * @return value
+	 */
 	double getValue() {
 		return value;
 	}
 
+	/**
+	 * @brief sets value
+	 * @param v value
+	 */
 	void setValue(double v) {
 		value = v;
 	}
 
+	/**
+	 * @brief Equals operator
+	 * @param e1 second edge
+	 * @return if they are the same
+	 */
 	bool operator==(const Edge e1){
 		return (e1.roadID == this->roadID);
 	}
@@ -300,9 +339,10 @@ public:
 	}
 
 	/**
-	* Initializes single-source shortest path data (path, dist).
-	* Receives the content of the source vertex and returns a pointer to the source vertex.
-	* Used by all single-source shortest path algorithms.
+	* @brief Initializes single-source shortest path data (path, dist).
+	* @brief Used by all single-source shortest path algorithms.
+	* @param id content of the source vertex and returns a pointer to the source vertex.
+	* @return node
 	*/
 
 	Node * initSingleSource(const string id) {
@@ -316,9 +356,12 @@ public:
 	}
 
 	/**
-	* Analyzes an edge in single-source shortest path algorithm.
-	* Returns true if the target vertex was relaxed (dist, path).
-	* Used by all single-source shortest path algorithms.
+	* @brief Analyzes an edge in single-source shortest path algorithm.
+	* @brief Used by all single-source shortest path algorithms.
+	* @param v Node 1
+	* @param w Node 2
+	* @param weight value
+	* @return Returns true if the target vertex was relaxed (dist, path).
 	*/
 	bool relax(Node *v, Node *w, double weight) {
 		if (v->dist + weight < w->dist) {
@@ -331,7 +374,8 @@ public:
 	}
 
 	/**
-	* Dijkstra algorithm.
+	* @brief Dijkstra algorithm.
+	* @param origin origin node
 	*/
 	void dijkstraShortestPath(const string origin) {
 		auto s = initSingleSource(origin);
@@ -351,6 +395,12 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Calls Dijkstra algorithm with origin
+	 * @param origin origin
+	 * @param dest destination
+	 * @return Vector with path from origin to destination
+	 */
 	vector<string> getShortestPath(string origin, string dest) {
 
 		dijkstraShortestPath(origin);

@@ -116,7 +116,7 @@ bool Management::read_edges(string filename){
 }
 
 bool stringToBool(string txt) {
-	if (txt == "true")
+	if (transform(txt.begin(), txt.end(), txt.begin(), ::tolower) == "true")
 		return true;
 	else
 		return false;
@@ -239,7 +239,7 @@ void Management::main_menu() {
 	cout << "2- Remove vehicle" << endl;
 	cout << "3- Add trip to vehicle" << endl;
 	cout << "4- Remove trip from vehicle" << endl;
-	cout << "5- Show best itineraries" << endl;
+	cout << "5- Calculate and show best itineraries" << endl;
 	cout << "6- Show vehicles" << endl;
 	cout << "7- Show trips" << endl;
 	cout << "8- Exit" << endl;
