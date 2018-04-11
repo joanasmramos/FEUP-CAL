@@ -116,7 +116,7 @@ bool Management::read_edges(string filename){
 }
 
 bool stringToBool(string txt) {
-	if (transform(txt.begin(), txt.end(), txt.begin(), ::tolower) == "true")
+	if (txt == "true" || txt == "True")
 		return true;
 	else
 		return false;

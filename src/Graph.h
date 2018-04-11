@@ -129,6 +129,13 @@ public:
 	int queueIndex = 0;
 	friend class Graph;
 	friend class Edge;
+
+	/**
+	 * @brief Node constructor without altitude, for testing.
+	 * @param id id
+	 * @param latitude latitude
+	 * @param longitude longitude
+	 */
 	Node(string id, double latitude, double longitude) {
 		this->id = id;
 		this->latitude = latitude;
@@ -137,6 +144,13 @@ public:
 		visited = false;
 	}
 
+	/**
+	 * @brief Node constructor.
+	 * @param id i
+	 * @param y latitude
+	 * @param y longitude
+	 * @param z altitude
+	 */
 	Node(string i, double x, double y, double z) {
 		id = i;
 		latitude = x;
@@ -146,71 +160,100 @@ public:
 		visited = false;
 	}
 
-	Node(string i, double x, double y, double z, string n) {
-		id = i;
-		latitude = x;
-		longitude = y;
-		altitude = z;
-		name = n;
-		visited = false;
-	}
-
+	/**
+	 * @return id
+	 */
 	string getId() {
 		return id;
 	}
 
+	/**
+	 * @return longitude
+	 */
 	double getLong() {
 		return longitude;
 	}
 
+	/**
+	 * @return latitude
+	 */
 	double getLat() {
 		return latitude;
 	}
 
+	/**
+	 * @return altitude
+	 */
 	double getAlt() {
 		return altitude;
 	}
 
+	/**
+	 * @return dist
+	 */
 	double getDist() {
 		return dist;
 	}
 
+	/**
+	 * @return path
+	 */
 	Node* getPath() {
 		return path;
 	}
 
-	void setDist(double d) {
-		dist = d;
-	}
-
-	void setPath(Node* p) {
-		path = p;
-	}
-
+	/**
+	 * @return adj_in
+	 */
 	vector<Edge *> getAdjIn() {
 		return adj_in;
 	}
 
+	/**
+	 * @return chargingPoint
+	 */
 	bool getChargingPoint() {
 		return chargingPoint;
 	}
 
+	/**
+	 * @brief sets charging point
+	 * @param b is charging point?
+	 */
 	void setChargingPoint(bool b) {
 		chargingPoint = b;
 	}
 
+	/**
+	 * @brief Add entry edge
+	 * @param e1 edge
+	 */
 	void addEdgeIn(Edge* e1) {
 		adj_in.push_back(e1);
 	}
 
+	/**
+	 * @brief Add exit edge
+	 * @param e1 edge
+	 */
 	void addEdgeOut(Edge* e1) {
 		adj_out.push_back(e1);
 	}
 
+	/**
+	 * @brief Equals operator
+	 * @param n1 second edge
+	 * @return if they are the same
+	 */
 	bool operator==(const Node n1){
 		return (n1.id == this->id);
 	}
 
+	/**
+	 * @brief < operator
+	 * @param n1 second edge
+	 * @return irrelevent value, only necessary for MutablePriorityQueue
+	 */
 	bool operator<(const Node n1){
 		return (n1.id == this->id);
 	}
@@ -224,20 +267,38 @@ private:
 	bool twoWay; ///< True if road has two ways, false if it only has one.
 public:
 	friend class Graph;
+
+	/**
+	 * @brief Road constructor
+	 * @param i id
+	 * @param n name
+	 * @param t twoWay
+	 */
 	Road(string i, std::string n, bool t) {
 		id = i;
 		name = n;
 		twoWay = t;
 	}
 
+	/**
+	 * @return id
+	 */
 	string getId() {
 		return id;
 	}
 
+	/**
+	 * @return name
+	 */
 	string getName() {
 		return name;
 	}
 
+	/**
+	 * @brief Equals operator
+	 * @param n1 second edge
+	 * @return if they are the same
+	 */
 	bool operator==(const Road n1){
 		return (n1.id == this->id);
 	}
@@ -251,13 +312,23 @@ private:
 	vector<Node*> nodes;
 	vector<Node*> chargingPoints;
 public:
+	/**
+	 * Graph constructor.
+	 */
 	Graph() {
 	}
 
+	/**
+	 * @return roads
+	 */
 	vector<Road*> getRoads() {
 		return roads;
 	}
 
+	/**
+	 * @param id id
+	 * @returns node with certain id
+	 */
 	Node* findNode(string id){
 		for(auto it = nodes.begin(); it != nodes.end(); it++){
 			if((*it)->id == id){
@@ -267,6 +338,10 @@ public:
 		return NULL;
 	}
 
+	/**
+	 * @param id id
+	 * @returns edge with certain id
+	 */
 	Edge* findEdge(string dep, string dest) {
 		for(auto it = edges.begin(); it != edges.end(); it++){
 			if((*it)->getSourceId() == dep && (*it)->getDestId() == dest){
@@ -276,6 +351,10 @@ public:
 		return NULL;
 	}
 
+	/**
+	 * @param id id
+	 * @returns road with certain id
+	 */
 	Road* findRoad(string id) {
 		for(auto it = roads.begin(); it != roads.end(); it++){
 			if((*it)->id == id){
@@ -285,7 +364,11 @@ public:
 		return NULL;
 	}
 
-
+	/**
+	 * @brief Adds node to graph
+	 * @param node node
+	 * @return if it was added
+	 */
 	bool addNode(Node* node){
 		for(auto it = nodes.begin(); it != nodes.end(); it++) {
 			if ((*it)==node)
@@ -295,6 +378,11 @@ public:
 		return true;
 	}
 
+	/**
+	 * @brief Adds edge to graph
+	 * @param egde edge
+	 * @return if it was added
+	 */
 	bool addEdge(Edge* edge){
 		for(auto it = edges.begin(); it != edges.end(); it++) {
 			if ((*it)==edge)
@@ -304,6 +392,11 @@ public:
 		return true;
 	}
 
+	/**
+	 * @brief Adds road to graph
+	 * @param road road
+	 * @return if it was added
+	 */
 	bool addRoad(Road* road){
 		for(auto it = roads.begin(); it != roads.end(); it++) {
 			if ((*it)==road)
@@ -313,10 +406,16 @@ public:
 		return true;
 	}
 
+	/**
+	 * @return chargingPoints
+	 */
 	vector<Node*> getChargingPoints() {
 		return chargingPoints;
 	}
 
+	/**
+	 * @brief sets charging points based on the ones with more entry points
+	 */
 	void setChargingPoints() {
 
 		int max;
