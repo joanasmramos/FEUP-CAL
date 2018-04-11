@@ -161,7 +161,7 @@ bool Management::read_edges(string filename){
 }
 
 bool stringToBool(string txt) {
-	if (txt == "true")
+	if (txt == "true" || txt == "True")
 		return true;
 	else
 		return false;
@@ -263,7 +263,9 @@ bool Management::read_trips(string filename) {
 			} else if (index == -1) {
 				cout << "Couldn't find vehicle. Trip not created." << endl;
 			} else {
-				vehicles[index]->addTrip(id, node_1, node_2);
+				Trip* t = new Trip(id, node_1, node_2);
+				vehicles[index]->addTrip(t);
+				trips.push_back(t);
 			}
 		}
 	}
@@ -282,36 +284,42 @@ void Management::main_menu() {
 	cout << "2- Remove vehicle" << endl;
 	cout << "3- Add trip to vehicle" << endl;
 	cout << "4- Remove trip from vehicle" << endl;
-	cout << "5- Show best itineraries" << endl;
-	cout << "6- Exit" << endl;
+	cout << "5- Calculate and show best itineraries" << endl;
+	cout << "6- Show vehicles" << endl;
+	cout << "7- Show trips" << endl;
+	cout << "8- Exit" << endl;
 
-	string option = getInteger("Option: ", 1, 6);
+	string option = getInteger("Option: ", 1, 8);
 
 	switch (stoul(option)) {
 		case 1:
 			add_vehicle();
 			updateVehicles();
-			read_trips("TripsTest.txt");
 			break;
 		case 2:
 			remove_vehicle();
 			updateVehicles();
-			read_trips("TripsTest.txt");
+			updateTrips();
 			break;
 		case 3:
 			add_trip();
 			updateTrips();
-			read_trips("TripsTest.txt");
 			break;
 		case 4:
 			remove_trip();
 			updateTrips();
-			read_trips("TripsTest.txt");
 			break;
 		case 5:
 			calc_itineraries();
+			updateVehicles();
 			break;
 		case 6:
+			print_vehicles();
+			break;
+		case 7:
+			print_trips();
+			break;
+		case 8:
 			return;
 
 		default: break;
@@ -357,14 +365,21 @@ void Management::add_vehicle() {
 void Management::remove_vehicle() {
 	int id = stoul(getInteger("Vehicle's ID: ", 0, 999999999));
 
-	int i = find_vehicle(id);
+	int index = find_vehicle(id);
 
-	if (i == -1) {
+	if (index == -1) {
 		cout << "Vehicle not found" << endl;
 		return;
 	}
 
-	vehicles.erase(vehicles.begin()+i);
+	vehicles.erase(vehicles.begin()+index);
+
+	for(int i = 0; i < trips.size(); i++) {
+		if (trips[i]->getCarId() == id) {
+			trips.erase(trips.begin()+i);
+			i--;
+		}
+	}
 
 	cout << "Vehicle removed successfully" << endl;
 }
@@ -395,7 +410,9 @@ void Management::add_trip() {
 		return;
 	}
 
-	vehicles[i]->addTrip(id, dep, dest);
+	Trip* t = new Trip(id, dep, dest);
+	vehicles[i]->addTrip(t);
+	trips.push_back(t);
 
 	cout << "Trip added successfully" << endl;
 
@@ -412,8 +429,12 @@ void Management::remove_trip() {
 		return;
 	}
 
-	string dep_id = getInteger("Departure point's ID: ", 0, 999999999);
-	string dest_id = getInteger("Destiny point's ID: ", 0, 999999999);
+	string dep_id;
+	string dest_id;
+	cout << "Departure point's ID: ";
+	cin >> dep_id;
+	cout << "Destiny point's ID: ";
+	cin >> dest_id;
 
 	auto dep = map->findNode(dep_id);
 	if (dep == NULL) {
@@ -426,8 +447,15 @@ void Management::remove_trip() {
 		return;
 	}
 
-	if (vehicles[i]->removeTrip(dep, dest))
+	if (vehicles[i]->removeTrip(dep, dest)) {
 		cout << "Trip removed successfully" << endl;
+		for (int i= 0; i < trips.size(); i++) {
+			if (trips[i]->getDest()->getId() == dest_id && trips[i]->getDep()->getId() == dep_id && trips[i]->getCarId() == id) {
+				trips.erase(trips.begin()+i);
+				break;
+			}
+		}
+	}
 	else
 		cout << "Trip not found" << endl;
 }
@@ -615,19 +643,35 @@ void Management::updateTrips() {
 	outstream.open("TripsTest.txt");
 
 	if(outstream.is_open()) {
-		for (int i = 0; i < vehicles.size(); i++) {
-			for (int j = 0; j < vehicles[i]->getTrips().size(); j++) {
-				outstream << vehicles[i]->getTrips()[j]->toString();
-				if (!(j == vehicles[i]->getTrips().size()-1 && i == vehicles.size()-1))
-					outstream << "\n";
-			}
+		for (int i = 0; i < trips.size(); i++) {
+			outstream << trips[i]->toString();
+			if (i != trips.size()-1)
+				outstream << "\n";
 		}
 	} else {
 		cout << "Couldn't open nodes file.\n";
 	}
-
 	outstream.close();
 }
 
+void Management::print_vehicles() {
+	cout << endl;
+	for (int i = 0; i < vehicles.size(); i++) {
+		cout << vehicles[i]->toString();
+		if (i != vehicles.size()-1)
+			cout << "\n";
+	}
+	cout << endl;
+	cout << endl;
+}
 
-
+void Management::print_trips() {
+	cout << endl;
+	for (int i = 0; i < trips.size(); i++) {
+		cout << trips[i]->toString();
+		if (i != trips.size()-1)
+			cout << "\n";
+	}
+	cout << endl;
+	cout << endl;
+}

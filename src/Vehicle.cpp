@@ -20,8 +20,8 @@ float Vehicle::getConsumptions() {
 	return consumptions;
 }
 
-void Vehicle::addTrip(int i, Node* dest, Node* dep) {
-	trips.push_back(new Trip(id, dest, dep));
+void Vehicle::addTrip(Trip* t) {
+	trips.push_back(t);
 }
 
 int Vehicle::findTrip(Node* dep, Node* dest) {

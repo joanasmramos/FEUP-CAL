@@ -18,6 +18,10 @@ Node* Trip::getDest() {
 	return dest;
 }
 
+int Trip::getCarId() {
+	return carID;
+}
+
 string Trip::toString() {
 
 	string trip = "";

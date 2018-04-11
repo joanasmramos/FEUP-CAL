@@ -26,6 +26,12 @@ private:
 
 public:
 	friend class Graph;
+	/**
+	 * @brief Edge constructor
+	 * @param roadid Road ID
+	 * @param idsource Source ID
+	 * @param iddest Destiny ID
+	 */
 	Edge(string roadid, string idsource, string iddest) {
 		roadID = roadid;
 		sourceID = idsource;
@@ -33,38 +39,71 @@ public:
 		value = INF;
 	}
 
+	/**
+	 * @return destID
+	 */
 	string getDestId() const {
 		return destID;
 	}
 
+	/**
+	 * @brief sets destiny ID
+	 * @param destId Destiny ID
+	 */
 	void setDestId(string destId) {
 		destID = destId;
 	}
 
+	/**
+	 * @return RoadID
+	 */
 	string getRoadId() const {
 		return roadID;
 	}
 
+	/**
+	 * @brief sets road ID
+	 * @param roadId Road ID
+	 */
 	void setRoadId(string roadId) {
 		roadID = roadId;
 	}
 
+	/**
+	 * @return sourceID
+	 */
 	string getSourceId() const {
 		return sourceID;
 	}
 
+	/**
+	 * @brief sets source ID
+	 * @param sourceId source ID
+	 */
 	void setSourceId(string sourceId) {
 		sourceID = sourceId;
 	}
 
+	/**
+	 * @return value
+	 */
 	double getValue() {
 		return value;
 	}
 
+	/**
+	 * @brief sets value
+	 * @param v value
+	 */
 	void setValue(double v) {
 		value = v;
 	}
 
+	/**
+	 * @brief Equals operator
+	 * @param e1 second edge
+	 * @return if they are the same
+	 */
 	bool operator==(const Edge e1){
 		return (e1.roadID == this->roadID);
 	}
@@ -90,6 +129,13 @@ public:
 	int queueIndex = 0;
 	friend class Graph;
 	friend class Edge;
+
+	/**
+	 * @brief Node constructor without altitude, for testing.
+	 * @param id id
+	 * @param latitude latitude
+	 * @param longitude longitude
+	 */
 	Node(string id, double latitude, double longitude) {
 		this->id = id;
 		this->latitude = latitude;
@@ -98,6 +144,13 @@ public:
 		visited = false;
 	}
 
+	/**
+	 * @brief Node constructor.
+	 * @param id i
+	 * @param y latitude
+	 * @param y longitude
+	 * @param z altitude
+	 */
 	Node(string i, double x, double y, double z) {
 		id = i;
 		latitude = x;
@@ -107,71 +160,100 @@ public:
 		visited = false;
 	}
 
-	Node(string i, double x, double y, double z, string n) {
-		id = i;
-		latitude = x;
-		longitude = y;
-		altitude = z;
-		name = n;
-		visited = false;
-	}
-
+	/**
+	 * @return id
+	 */
 	string getId() {
 		return id;
 	}
 
+	/**
+	 * @return longitude
+	 */
 	double getLong() {
 		return longitude;
 	}
 
+	/**
+	 * @return latitude
+	 */
 	double getLat() {
 		return latitude;
 	}
 
+	/**
+	 * @return altitude
+	 */
 	double getAlt() {
 		return altitude;
 	}
 
+	/**
+	 * @return dist
+	 */
 	double getDist() {
 		return dist;
 	}
 
+	/**
+	 * @return path
+	 */
 	Node* getPath() {
 		return path;
 	}
 
-	void setDist(double d) {
-		dist = d;
-	}
-
-	void setPath(Node* p) {
-		path = p;
-	}
-
+	/**
+	 * @return adj_in
+	 */
 	vector<Edge *> getAdjIn() {
 		return adj_in;
 	}
 
+	/**
+	 * @return chargingPoint
+	 */
 	bool getChargingPoint() {
 		return chargingPoint;
 	}
 
+	/**
+	 * @brief sets charging point
+	 * @param b is charging point?
+	 */
 	void setChargingPoint(bool b) {
 		chargingPoint = b;
 	}
 
+	/**
+	 * @brief Add entry edge
+	 * @param e1 edge
+	 */
 	void addEdgeIn(Edge* e1) {
 		adj_in.push_back(e1);
 	}
 
+	/**
+	 * @brief Add exit edge
+	 * @param e1 edge
+	 */
 	void addEdgeOut(Edge* e1) {
 		adj_out.push_back(e1);
 	}
 
+	/**
+	 * @brief Equals operator
+	 * @param n1 second edge
+	 * @return if they are the same
+	 */
 	bool operator==(const Node n1){
 		return (n1.id == this->id);
 	}
 
+	/**
+	 * @brief < operator
+	 * @param n1 second edge
+	 * @return irrelevent value, only necessary for MutablePriorityQueue
+	 */
 	bool operator<(const Node n1){
 		return (n1.id == this->id);
 	}
@@ -185,20 +267,38 @@ private:
 	bool twoWay; ///< True if road has two ways, false if it only has one.
 public:
 	friend class Graph;
+
+	/**
+	 * @brief Road constructor
+	 * @param i id
+	 * @param n name
+	 * @param t twoWay
+	 */
 	Road(string i, std::string n, bool t) {
 		id = i;
 		name = n;
 		twoWay = t;
 	}
 
+	/**
+	 * @return id
+	 */
 	string getId() {
 		return id;
 	}
 
+	/**
+	 * @return name
+	 */
 	string getName() {
 		return name;
 	}
 
+	/**
+	 * @brief Equals operator
+	 * @param n1 second edge
+	 * @return if they are the same
+	 */
 	bool operator==(const Road n1){
 		return (n1.id == this->id);
 	}
@@ -212,13 +312,23 @@ private:
 	vector<Node*> nodes;
 	vector<Node*> chargingPoints;
 public:
+	/**
+	 * Graph constructor.
+	 */
 	Graph() {
 	}
 
+	/**
+	 * @return roads
+	 */
 	vector<Road*> getRoads() {
 		return roads;
 	}
 
+	/**
+	 * @param id id
+	 * @returns node with certain id
+	 */
 	Node* findNode(string id){
 		for(auto it = nodes.begin(); it != nodes.end(); it++){
 			if((*it)->id == id){
@@ -228,6 +338,10 @@ public:
 		return NULL;
 	}
 
+	/**
+	 * @param id id
+	 * @returns edge with certain id
+	 */
 	Edge* findEdge(string dep, string dest) {
 		for(auto it = edges.begin(); it != edges.end(); it++){
 			if((*it)->getSourceId() == dep && (*it)->getDestId() == dest){
@@ -237,6 +351,10 @@ public:
 		return NULL;
 	}
 
+	/**
+	 * @param id id
+	 * @returns road with certain id
+	 */
 	Road* findRoad(string id) {
 		for(auto it = roads.begin(); it != roads.end(); it++){
 			if((*it)->id == id){
@@ -246,7 +364,11 @@ public:
 		return NULL;
 	}
 
-
+	/**
+	 * @brief Adds node to graph
+	 * @param node node
+	 * @return if it was added
+	 */
 	bool addNode(Node* node){
 		for(auto it = nodes.begin(); it != nodes.end(); it++) {
 			if ((*it)==node)
@@ -256,6 +378,11 @@ public:
 		return true;
 	}
 
+	/**
+	 * @brief Adds edge to graph
+	 * @param egde edge
+	 * @return if it was added
+	 */
 	bool addEdge(Edge* edge){
 		for(auto it = edges.begin(); it != edges.end(); it++) {
 			if ((*it)==edge)
@@ -265,6 +392,11 @@ public:
 		return true;
 	}
 
+	/**
+	 * @brief Adds road to graph
+	 * @param road road
+	 * @return if it was added
+	 */
 	bool addRoad(Road* road){
 		for(auto it = roads.begin(); it != roads.end(); it++) {
 			if ((*it)==road)
@@ -274,10 +406,16 @@ public:
 		return true;
 	}
 
+	/**
+	 * @return chargingPoints
+	 */
 	vector<Node*> getChargingPoints() {
 		return chargingPoints;
 	}
 
+	/**
+	 * @brief sets charging points based on the ones with more entry points
+	 */
 	void setChargingPoints() {
 
 		int max;
@@ -300,9 +438,10 @@ public:
 	}
 
 	/**
-	* Initializes single-source shortest path data (path, dist).
-	* Receives the content of the source vertex and returns a pointer to the source vertex.
-	* Used by all single-source shortest path algorithms.
+	* @brief Initializes single-source shortest path data (path, dist).
+	* @brief Used by all single-source shortest path algorithms.
+	* @param id content of the source vertex and returns a pointer to the source vertex.
+	* @return node
 	*/
 
 	Node * initSingleSource(const string id) {
@@ -316,9 +455,12 @@ public:
 	}
 
 	/**
-	* Analyzes an edge in single-source shortest path algorithm.
-	* Returns true if the target vertex was relaxed (dist, path).
-	* Used by all single-source shortest path algorithms.
+	* @brief Analyzes an edge in single-source shortest path algorithm.
+	* @brief Used by all single-source shortest path algorithms.
+	* @param v Node 1
+	* @param w Node 2
+	* @param weight value
+	* @return Returns true if the target vertex was relaxed (dist, path).
 	*/
 	bool relax(Node *v, Node *w, double weight) {
 		if (v->dist + weight < w->dist) {
@@ -331,7 +473,8 @@ public:
 	}
 
 	/**
-	* Dijkstra algorithm.
+	* @brief Dijkstra algorithm.
+	* @param origin origin node
 	*/
 	void dijkstraShortestPath(const string origin) {
 		auto s = initSingleSource(origin);
@@ -351,6 +494,12 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Calls Dijkstra algorithm with origin
+	 * @param origin origin
+	 * @param dest destination
+	 * @return Vector with path from origin to destination
+	 */
 	vector<string> getShortestPath(string origin, string dest) {
 
 		dijkstraShortestPath(origin);
