@@ -325,6 +325,14 @@ public:
 		return roads;
 	}
 
+	vector<Edge*> getEdges() {
+		return edges;
+	}
+
+	vector<Node*> getNodes() {
+		return nodes;
+	}
+
 	/**
 	 * @param id id
 	 * @returns node with certain id

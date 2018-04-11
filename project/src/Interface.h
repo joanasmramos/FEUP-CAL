@@ -1,12 +1,14 @@
 #include <iostream>
 #include <vector>
 #include "Vehicle.h"
+#include "graphviewer.h"
 
 class Management {
 private:
 	vector<Vehicle*> vehicles;
 	vector<Trip*> trips;
 	Graph* map; //read map text files
+	GraphViewer *gv;
 public:
 	/**
 	 * @brief Management constructor. It creates de graph and calls the functions to read the information to the graph.
@@ -118,4 +120,5 @@ public:
 	 * @brief prints trips file
 	 */
 	void print_trips();
+	void setup_GraphViewer();
 };

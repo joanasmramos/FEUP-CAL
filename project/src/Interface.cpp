@@ -4,6 +4,9 @@
 #include <fstream>
 #include <string>
 #include <math.h>
+#include <cstdio>
+#include "graphviewer.h"
+#include <sstream>
 
 using namespace std;
 
@@ -19,6 +22,8 @@ Management::Management(){
 //	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
 //			return;
 
+	setup_GraphViewer();
+
 	if (!((read_nodes("Nodes.txt") == true) && (read_edges("Edges.txt") == true) && (read_roads("Streets.txt") == true)))
 		return;
 
@@ -28,6 +33,16 @@ Management::Management(){
 	map->setChargingPoints();
 
 	main_menu();
+}
+
+void Management::setup_GraphViewer() {
+	GraphViewer *gv = new GraphViewer(1000, 600, false);
+
+	gv->createWindow(1000, 600);
+
+	gv->defineEdgeColor("blue");
+	gv->defineVertexColor("yellow");
+	gv->defineEdgeCurved(true);
 }
 
 bool Management::read_nodes(string filename){
@@ -52,6 +67,7 @@ bool Management::read_nodes(string filename){
 			latitude = stod(info);
 			getline(instream, info, '\n');
 			altitude = stod(info);
+			gv->addNode(id, latitude, longitude);
 			Node* newnode = new Node(id, latitude, longitude, altitude);
 			this->map->addNode(newnode);
 
@@ -104,6 +120,7 @@ bool Management::read_edges(string filename){
 
 				this->map->addEdge(newedge);
 			}
+			gv->addEdge(road_id, node1_id, node2_id);
 		}
 	}
 	else {
