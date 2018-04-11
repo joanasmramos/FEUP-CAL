@@ -1,0 +1,180 @@
+\hypertarget{class_vehicle}{}\section{Vehicle Class Reference}
+\label{class_vehicle}\index{Vehicle@{Vehicle}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_vehicle_a4291fb819f4f33fde79d80d3c5112260}{Vehicle}} (int id, float aut, float cons, float ce)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_vehicle}{Vehicle}} constructor. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_vehicle_a65fb09187931545d0a9e695f619ac807}{get\+ID}} ()
+\item 
+void \mbox{\hyperlink{class_vehicle_a7694d76ed4d0cadd2ae5560d27eb8ff1}{add\+Trip}} (\mbox{\hyperlink{class_trip}{Trip}} $\ast$t)
+\begin{DoxyCompactList}\small\item\em Adds trip to vehicle. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_vehicle_a9eec5611b31ac4ef92e2df466ead038f}{find\+Trip}} (\mbox{\hyperlink{class_node}{Node}} $\ast$dep, \mbox{\hyperlink{class_node}{Node}} $\ast$dest)
+\begin{DoxyCompactList}\small\item\em Finds trip based on the departure and destiny. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_vehicle_a5a5e5b45575b6000ffca90c7da4fcb44}{remove\+Trip}} (\mbox{\hyperlink{class_node}{Node}} $\ast$dep, \mbox{\hyperlink{class_node}{Node}} $\ast$dest)
+\begin{DoxyCompactList}\small\item\em Removes trip based on the departure and destiny. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{class_trip}{Trip}} $\ast$$>$ \mbox{\hyperlink{class_vehicle_a8c13aa94ebf49bbe64764b53a889a840}{get\+Trips}} ()
+\item 
+float \mbox{\hyperlink{class_vehicle_a72d38fc28c1d3aa9d0476de3a5704764}{get\+Current\+Energy}} ()
+\item 
+float \mbox{\hyperlink{class_vehicle_a8449770d06c218d8168b5f834f4c2feb}{get\+Consumptions}} ()
+\item 
+string \mbox{\hyperlink{class_vehicle_abd9381537867c1a98430ab06ce51898f}{to\+String}} ()
+\begin{DoxyCompactList}\small\item\em Converts vehicle to string. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_vehicle_ab92fc01c6c79b248d31384d5ebf862bd}\label{class_vehicle_ab92fc01c6c79b248d31384d5ebf862bd}} 
+void \mbox{\hyperlink{class_vehicle_ab92fc01c6c79b248d31384d5ebf862bd}{charge}} ()
+\begin{DoxyCompactList}\small\item\em Set current energy to the maximum value (autonomy) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_vehicle_acceb523a48842847e13b22ef71798907}{set\+Current\+Energy}} (float c)
+\begin{DoxyCompactList}\small\item\em set current energy \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_vehicle_a4291fb819f4f33fde79d80d3c5112260}\label{class_vehicle_a4291fb819f4f33fde79d80d3c5112260}} 
+\index{Vehicle@{Vehicle}!Vehicle@{Vehicle}}
+\index{Vehicle@{Vehicle}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{Vehicle()}{Vehicle()}}
+{\footnotesize\ttfamily Vehicle\+::\+Vehicle (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{float}]{aut,  }\item[{float}]{cons,  }\item[{float}]{ce }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{class_vehicle}{Vehicle}} constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & ID \\
+\hline
+{\em aut} & autonomy \\
+\hline
+{\em cons} & consumptions \\
+\hline
+{\em ce} & current energy \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_vehicle_a7694d76ed4d0cadd2ae5560d27eb8ff1}\label{class_vehicle_a7694d76ed4d0cadd2ae5560d27eb8ff1}} 
+\index{Vehicle@{Vehicle}!add\+Trip@{add\+Trip}}
+\index{add\+Trip@{add\+Trip}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{add\+Trip()}{addTrip()}}
+{\footnotesize\ttfamily void Vehicle\+::add\+Trip (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_trip}{Trip}} $\ast$}]{t }\end{DoxyParamCaption})}
+
+
+
+Adds trip to vehicle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & trip \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_vehicle_a9eec5611b31ac4ef92e2df466ead038f}\label{class_vehicle_a9eec5611b31ac4ef92e2df466ead038f}} 
+\index{Vehicle@{Vehicle}!find\+Trip@{find\+Trip}}
+\index{find\+Trip@{find\+Trip}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{find\+Trip()}{findTrip()}}
+{\footnotesize\ttfamily int Vehicle\+::find\+Trip (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{dep,  }\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{dest }\end{DoxyParamCaption})}
+
+
+
+Finds trip based on the departure and destiny. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dep} & Departure node \\
+\hline
+{\em dest} & Destiny node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+trip\textquotesingle{}s index 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vehicle_a8449770d06c218d8168b5f834f4c2feb}\label{class_vehicle_a8449770d06c218d8168b5f834f4c2feb}} 
+\index{Vehicle@{Vehicle}!get\+Consumptions@{get\+Consumptions}}
+\index{get\+Consumptions@{get\+Consumptions}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{get\+Consumptions()}{getConsumptions()}}
+{\footnotesize\ttfamily float Vehicle\+::get\+Consumptions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+consumptions 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vehicle_a72d38fc28c1d3aa9d0476de3a5704764}\label{class_vehicle_a72d38fc28c1d3aa9d0476de3a5704764}} 
+\index{Vehicle@{Vehicle}!get\+Current\+Energy@{get\+Current\+Energy}}
+\index{get\+Current\+Energy@{get\+Current\+Energy}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{get\+Current\+Energy()}{getCurrentEnergy()}}
+{\footnotesize\ttfamily float Vehicle\+::get\+Current\+Energy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+current energy 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vehicle_a65fb09187931545d0a9e695f619ac807}\label{class_vehicle_a65fb09187931545d0a9e695f619ac807}} 
+\index{Vehicle@{Vehicle}!get\+ID@{get\+ID}}
+\index{get\+ID@{get\+ID}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{get\+I\+D()}{getID()}}
+{\footnotesize\ttfamily int Vehicle\+::get\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+id 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vehicle_a8c13aa94ebf49bbe64764b53a889a840}\label{class_vehicle_a8c13aa94ebf49bbe64764b53a889a840}} 
+\index{Vehicle@{Vehicle}!get\+Trips@{get\+Trips}}
+\index{get\+Trips@{get\+Trips}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{get\+Trips()}{getTrips()}}
+{\footnotesize\ttfamily vector$<$ \mbox{\hyperlink{class_trip}{Trip}} $\ast$$>$ Vehicle\+::get\+Trips (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+trips 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vehicle_a5a5e5b45575b6000ffca90c7da4fcb44}\label{class_vehicle_a5a5e5b45575b6000ffca90c7da4fcb44}} 
+\index{Vehicle@{Vehicle}!remove\+Trip@{remove\+Trip}}
+\index{remove\+Trip@{remove\+Trip}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{remove\+Trip()}{removeTrip()}}
+{\footnotesize\ttfamily bool Vehicle\+::remove\+Trip (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{dep,  }\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{dest }\end{DoxyParamCaption})}
+
+
+
+Removes trip based on the departure and destiny. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dep} & Departure node \\
+\hline
+{\em dest} & Destiny node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+if it was removed 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vehicle_acceb523a48842847e13b22ef71798907}\label{class_vehicle_acceb523a48842847e13b22ef71798907}} 
+\index{Vehicle@{Vehicle}!set\+Current\+Energy@{set\+Current\+Energy}}
+\index{set\+Current\+Energy@{set\+Current\+Energy}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{set\+Current\+Energy()}{setCurrentEnergy()}}
+{\footnotesize\ttfamily void Vehicle\+::set\+Current\+Energy (\begin{DoxyParamCaption}\item[{float}]{c }\end{DoxyParamCaption})}
+
+
+
+set current energy 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & current energy \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_vehicle_abd9381537867c1a98430ab06ce51898f}\label{class_vehicle_abd9381537867c1a98430ab06ce51898f}} 
+\index{Vehicle@{Vehicle}!to\+String@{to\+String}}
+\index{to\+String@{to\+String}!Vehicle@{Vehicle}}
+\subsubsection{\texorpdfstring{to\+String()}{toString()}}
+{\footnotesize\ttfamily string Vehicle\+::to\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Converts vehicle to string. 
+
+\begin{DoxyReturn}{Returns}
+String vehicle 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Vehicle.\+h\item 
+Vehicle.\+cpp\end{DoxyCompactItemize}

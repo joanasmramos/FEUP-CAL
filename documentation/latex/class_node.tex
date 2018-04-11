@@ -1,0 +1,254 @@
+\hypertarget{class_node}{}\section{Node Class Reference}
+\label{class_node}\index{Node@{Node}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_node_a28aac6e6241c57bb09bb8eced2b3694d}{Node}} (string id, double latitude, double longitude)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_node}{Node}} constructor without altitude, for testing. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_node_aec64c06bee93948a1ebfd6597982e578}{Node}} (string i, double x, double y, double z)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_node}{Node}} constructor. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_node_ad560e18143071e5c5b8eb33d03870e00}{get\+Id}} ()
+\item 
+double \mbox{\hyperlink{class_node_a8c7aa3ca64970417959b88e0cd097aa2}{get\+Long}} ()
+\item 
+double \mbox{\hyperlink{class_node_abad0b37954e52e81581ee1a6055425ce}{get\+Lat}} ()
+\item 
+double \mbox{\hyperlink{class_node_ad772b7e55055f1d8d3ae2a7d99b63d72}{get\+Alt}} ()
+\item 
+double \mbox{\hyperlink{class_node_a57980950fdbe58cb696b10f387133474}{get\+Dist}} ()
+\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_node_a419e5f9cbdea4b8f285d6dd841b92a2d}{get\+Path}} ()
+\item 
+vector$<$ \mbox{\hyperlink{class_edge}{Edge}} $\ast$ $>$ \mbox{\hyperlink{class_node_a3f01ccf70c3cf5b1df6fc0c560bfe5ef}{get\+Adj\+In}} ()
+\item 
+bool \mbox{\hyperlink{class_node_ae207a54fd98dc3ad4369f85530de4529}{get\+Charging\+Point}} ()
+\item 
+void \mbox{\hyperlink{class_node_ad802c1308c34e4acd51938cf2d85eee8}{set\+Charging\+Point}} (bool b)
+\begin{DoxyCompactList}\small\item\em sets charging point \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_node_a2818059d54f94691d733f6d05c17015a}{add\+Edge\+In}} (\mbox{\hyperlink{class_edge}{Edge}} $\ast$e1)
+\begin{DoxyCompactList}\small\item\em Add entry edge. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_node_a815de14eaf18e8b62bf83717a86341bd}{add\+Edge\+Out}} (\mbox{\hyperlink{class_edge}{Edge}} $\ast$e1)
+\begin{DoxyCompactList}\small\item\em Add exit edge. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_node_a1e6c8f645d5ef4855f4cc56eaeba33e2}{operator==}} (const \mbox{\hyperlink{class_node}{Node}} n1)
+\begin{DoxyCompactList}\small\item\em Equals operator. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_node_ae72c904e058406e2c1c49e51e487ebd1}{operator$<$}} (const \mbox{\hyperlink{class_node}{Node}} n1)
+\begin{DoxyCompactList}\small\item\em $<$ operator \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_node_a01788c18aef94f986ec563e8233365c1}\label{class_node_a01788c18aef94f986ec563e8233365c1}} 
+int {\bfseries queue\+Index} = 0
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_node_afab89afd724f1b07b1aaad6bdc61c47a}\label{class_node_afab89afd724f1b07b1aaad6bdc61c47a}} 
+class {\bfseries Graph}
+\item 
+\mbox{\Hypertarget{class_node_ad2c8ba04c9d9989ccbf3c5aba267a3d7}\label{class_node_ad2c8ba04c9d9989ccbf3c5aba267a3d7}} 
+class {\bfseries Edge}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_node_a28aac6e6241c57bb09bb8eced2b3694d}\label{class_node_a28aac6e6241c57bb09bb8eced2b3694d}} 
+\index{Node@{Node}!Node@{Node}}
+\index{Node@{Node}!Node@{Node}}
+\subsubsection{\texorpdfstring{Node()}{Node()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Node\+::\+Node (\begin{DoxyParamCaption}\item[{string}]{id,  }\item[{double}]{latitude,  }\item[{double}]{longitude }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\mbox{\hyperlink{class_node}{Node}} constructor without altitude, for testing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id \\
+\hline
+{\em latitude} & latitude \\
+\hline
+{\em longitude} & longitude \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_node_aec64c06bee93948a1ebfd6597982e578}\label{class_node_aec64c06bee93948a1ebfd6597982e578}} 
+\index{Node@{Node}!Node@{Node}}
+\index{Node@{Node}!Node@{Node}}
+\subsubsection{\texorpdfstring{Node()}{Node()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Node\+::\+Node (\begin{DoxyParamCaption}\item[{string}]{i,  }\item[{double}]{x,  }\item[{double}]{y,  }\item[{double}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\mbox{\hyperlink{class_node}{Node}} constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & i \\
+\hline
+{\em y} & latitude \\
+\hline
+{\em y} & longitude \\
+\hline
+{\em z} & altitude \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_node_a2818059d54f94691d733f6d05c17015a}\label{class_node_a2818059d54f94691d733f6d05c17015a}} 
+\index{Node@{Node}!add\+Edge\+In@{add\+Edge\+In}}
+\index{add\+Edge\+In@{add\+Edge\+In}!Node@{Node}}
+\subsubsection{\texorpdfstring{add\+Edge\+In()}{addEdgeIn()}}
+{\footnotesize\ttfamily void Node\+::add\+Edge\+In (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_edge}{Edge}} $\ast$}]{e1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Add entry edge. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e1} & edge \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_node_a815de14eaf18e8b62bf83717a86341bd}\label{class_node_a815de14eaf18e8b62bf83717a86341bd}} 
+\index{Node@{Node}!add\+Edge\+Out@{add\+Edge\+Out}}
+\index{add\+Edge\+Out@{add\+Edge\+Out}!Node@{Node}}
+\subsubsection{\texorpdfstring{add\+Edge\+Out()}{addEdgeOut()}}
+{\footnotesize\ttfamily void Node\+::add\+Edge\+Out (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_edge}{Edge}} $\ast$}]{e1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Add exit edge. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e1} & edge \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_node_a3f01ccf70c3cf5b1df6fc0c560bfe5ef}\label{class_node_a3f01ccf70c3cf5b1df6fc0c560bfe5ef}} 
+\index{Node@{Node}!get\+Adj\+In@{get\+Adj\+In}}
+\index{get\+Adj\+In@{get\+Adj\+In}!Node@{Node}}
+\subsubsection{\texorpdfstring{get\+Adj\+In()}{getAdjIn()}}
+{\footnotesize\ttfamily vector$<$\mbox{\hyperlink{class_edge}{Edge}} $\ast$$>$ Node\+::get\+Adj\+In (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+adj\+\_\+in 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_ad772b7e55055f1d8d3ae2a7d99b63d72}\label{class_node_ad772b7e55055f1d8d3ae2a7d99b63d72}} 
+\index{Node@{Node}!get\+Alt@{get\+Alt}}
+\index{get\+Alt@{get\+Alt}!Node@{Node}}
+\subsubsection{\texorpdfstring{get\+Alt()}{getAlt()}}
+{\footnotesize\ttfamily double Node\+::get\+Alt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+altitude 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_ae207a54fd98dc3ad4369f85530de4529}\label{class_node_ae207a54fd98dc3ad4369f85530de4529}} 
+\index{Node@{Node}!get\+Charging\+Point@{get\+Charging\+Point}}
+\index{get\+Charging\+Point@{get\+Charging\+Point}!Node@{Node}}
+\subsubsection{\texorpdfstring{get\+Charging\+Point()}{getChargingPoint()}}
+{\footnotesize\ttfamily bool Node\+::get\+Charging\+Point (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+charging\+Point 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a57980950fdbe58cb696b10f387133474}\label{class_node_a57980950fdbe58cb696b10f387133474}} 
+\index{Node@{Node}!get\+Dist@{get\+Dist}}
+\index{get\+Dist@{get\+Dist}!Node@{Node}}
+\subsubsection{\texorpdfstring{get\+Dist()}{getDist()}}
+{\footnotesize\ttfamily double Node\+::get\+Dist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+dist 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_ad560e18143071e5c5b8eb33d03870e00}\label{class_node_ad560e18143071e5c5b8eb33d03870e00}} 
+\index{Node@{Node}!get\+Id@{get\+Id}}
+\index{get\+Id@{get\+Id}!Node@{Node}}
+\subsubsection{\texorpdfstring{get\+Id()}{getId()}}
+{\footnotesize\ttfamily string Node\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+id 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_abad0b37954e52e81581ee1a6055425ce}\label{class_node_abad0b37954e52e81581ee1a6055425ce}} 
+\index{Node@{Node}!get\+Lat@{get\+Lat}}
+\index{get\+Lat@{get\+Lat}!Node@{Node}}
+\subsubsection{\texorpdfstring{get\+Lat()}{getLat()}}
+{\footnotesize\ttfamily double Node\+::get\+Lat (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+latitude 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a8c7aa3ca64970417959b88e0cd097aa2}\label{class_node_a8c7aa3ca64970417959b88e0cd097aa2}} 
+\index{Node@{Node}!get\+Long@{get\+Long}}
+\index{get\+Long@{get\+Long}!Node@{Node}}
+\subsubsection{\texorpdfstring{get\+Long()}{getLong()}}
+{\footnotesize\ttfamily double Node\+::get\+Long (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+longitude 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a419e5f9cbdea4b8f285d6dd841b92a2d}\label{class_node_a419e5f9cbdea4b8f285d6dd841b92a2d}} 
+\index{Node@{Node}!get\+Path@{get\+Path}}
+\index{get\+Path@{get\+Path}!Node@{Node}}
+\subsubsection{\texorpdfstring{get\+Path()}{getPath()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}}$\ast$ Node\+::get\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+path 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_ae72c904e058406e2c1c49e51e487ebd1}\label{class_node_ae72c904e058406e2c1c49e51e487ebd1}} 
+\index{Node@{Node}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!Node@{Node}}
+\subsubsection{\texorpdfstring{operator$<$()}{operator<()}}
+{\footnotesize\ttfamily bool Node\+::operator$<$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_node}{Node}}}]{n1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+$<$ operator 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n1} & second edge \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+irrelevent value, only necessary for \mbox{\hyperlink{class_mutable_priority_queue}{Mutable\+Priority\+Queue}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_a1e6c8f645d5ef4855f4cc56eaeba33e2}\label{class_node_a1e6c8f645d5ef4855f4cc56eaeba33e2}} 
+\index{Node@{Node}!operator==@{operator==}}
+\index{operator==@{operator==}!Node@{Node}}
+\subsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Node\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_node}{Node}}}]{n1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Equals operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n1} & second edge \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+if they are the same 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_node_ad802c1308c34e4acd51938cf2d85eee8}\label{class_node_ad802c1308c34e4acd51938cf2d85eee8}} 
+\index{Node@{Node}!set\+Charging\+Point@{set\+Charging\+Point}}
+\index{set\+Charging\+Point@{set\+Charging\+Point}!Node@{Node}}
+\subsubsection{\texorpdfstring{set\+Charging\+Point()}{setChargingPoint()}}
+{\footnotesize\ttfamily void Node\+::set\+Charging\+Point (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+sets charging point 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & is charging point? \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Graph.\+h\end{DoxyCompactItemize}

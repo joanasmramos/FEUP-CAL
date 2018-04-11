@@ -1,0 +1,240 @@
+\hypertarget{class_graph}{}\section{Graph Class Reference}
+\label{class_graph}\index{Graph@{Graph}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_graph_ae4c72b8ac4d693c49800a4c7e273654f}{Graph}} ()
+\item 
+vector$<$ \mbox{\hyperlink{class_road}{Road}} $\ast$ $>$ \mbox{\hyperlink{class_graph_a95b76b429415815ffe5d14250452e313}{get\+Roads}} ()
+\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_graph_afdc074fadabe848450ff8fac1c555f8b}{find\+Node}} (string id)
+\item 
+\mbox{\hyperlink{class_edge}{Edge}} $\ast$ \mbox{\hyperlink{class_graph_aa170b2747ece61cb271ef050357f2a75}{find\+Edge}} (string dep, string dest)
+\item 
+\mbox{\hyperlink{class_road}{Road}} $\ast$ \mbox{\hyperlink{class_graph_ae4b8a4be11b1fcda91667400e127848d}{find\+Road}} (string id)
+\item 
+bool \mbox{\hyperlink{class_graph_ae89c94dba0a869ea715299c5d009a755}{add\+Node}} (\mbox{\hyperlink{class_node}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Adds node to graph. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_graph_ae89cdc4fa0cc56d265ca7488f8bfa72c}{add\+Edge}} (\mbox{\hyperlink{class_edge}{Edge}} $\ast$edge)
+\begin{DoxyCompactList}\small\item\em Adds edge to graph. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_graph_a25d56584978abf41188f9c6c1732f19f}{add\+Road}} (\mbox{\hyperlink{class_road}{Road}} $\ast$road)
+\begin{DoxyCompactList}\small\item\em Adds road to graph. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ \mbox{\hyperlink{class_graph_a22c9dd0bd46bff0107f8414980c28749}{get\+Charging\+Points}} ()
+\item 
+\mbox{\Hypertarget{class_graph_a242bfef1fd40e84c0c1089bef6879198}\label{class_graph_a242bfef1fd40e84c0c1089bef6879198}} 
+void \mbox{\hyperlink{class_graph_a242bfef1fd40e84c0c1089bef6879198}{set\+Charging\+Points}} ()
+\begin{DoxyCompactList}\small\item\em sets charging points based on the ones with more entry points \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_graph_a94386342ca91dcb2022745eb289dbc16}{init\+Single\+Source}} (const string id)
+\begin{DoxyCompactList}\small\item\em Initializes single-\/source shortest path data (path, dist). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_graph_a2c013e691f7306c0b46dd0b900b43389}{relax}} (\mbox{\hyperlink{class_node}{Node}} $\ast$v, \mbox{\hyperlink{class_node}{Node}} $\ast$w, double weight)
+\begin{DoxyCompactList}\small\item\em Analyzes an edge in single-\/source shortest path algorithm. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_acc8c0f30f708afa2bb067f94147fb471}{dijkstra\+Shortest\+Path}} (const string origin)
+\begin{DoxyCompactList}\small\item\em Dijkstra algorithm. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{class_graph_a437976400df5ab50b20703be4f88e6e7}{get\+Shortest\+Path}} (string origin, string dest)
+\begin{DoxyCompactList}\small\item\em Calls Dijkstra algorithm with origin. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_graph_ae4c72b8ac4d693c49800a4c7e273654f}\label{class_graph_ae4c72b8ac4d693c49800a4c7e273654f}} 
+\index{Graph@{Graph}!Graph@{Graph}}
+\index{Graph@{Graph}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{Graph()}{Graph()}}
+{\footnotesize\ttfamily Graph\+::\+Graph (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\hyperlink{class_graph}{Graph}} constructor. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_graph_ae89cdc4fa0cc56d265ca7488f8bfa72c}\label{class_graph_ae89cdc4fa0cc56d265ca7488f8bfa72c}} 
+\index{Graph@{Graph}!add\+Edge@{add\+Edge}}
+\index{add\+Edge@{add\+Edge}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{add\+Edge()}{addEdge()}}
+{\footnotesize\ttfamily bool Graph\+::add\+Edge (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_edge}{Edge}} $\ast$}]{edge }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds edge to graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em egde} & edge \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+if it was added 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_ae89c94dba0a869ea715299c5d009a755}\label{class_graph_ae89c94dba0a869ea715299c5d009a755}} 
+\index{Graph@{Graph}!add\+Node@{add\+Node}}
+\index{add\+Node@{add\+Node}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{add\+Node()}{addNode()}}
+{\footnotesize\ttfamily bool Graph\+::add\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds node to graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+if it was added 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a25d56584978abf41188f9c6c1732f19f}\label{class_graph_a25d56584978abf41188f9c6c1732f19f}} 
+\index{Graph@{Graph}!add\+Road@{add\+Road}}
+\index{add\+Road@{add\+Road}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{add\+Road()}{addRoad()}}
+{\footnotesize\ttfamily bool Graph\+::add\+Road (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_road}{Road}} $\ast$}]{road }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds road to graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em road} & road \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+if it was added 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_acc8c0f30f708afa2bb067f94147fb471}\label{class_graph_acc8c0f30f708afa2bb067f94147fb471}} 
+\index{Graph@{Graph}!dijkstra\+Shortest\+Path@{dijkstra\+Shortest\+Path}}
+\index{dijkstra\+Shortest\+Path@{dijkstra\+Shortest\+Path}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{dijkstra\+Shortest\+Path()}{dijkstraShortestPath()}}
+{\footnotesize\ttfamily void Graph\+::dijkstra\+Shortest\+Path (\begin{DoxyParamCaption}\item[{const string}]{origin }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Dijkstra algorithm. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em origin} & origin node \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_aa170b2747ece61cb271ef050357f2a75}\label{class_graph_aa170b2747ece61cb271ef050357f2a75}} 
+\index{Graph@{Graph}!find\+Edge@{find\+Edge}}
+\index{find\+Edge@{find\+Edge}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{find\+Edge()}{findEdge()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_edge}{Edge}}$\ast$ Graph\+::find\+Edge (\begin{DoxyParamCaption}\item[{string}]{dep,  }\item[{string}]{dest }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+edge with certain id 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_afdc074fadabe848450ff8fac1c555f8b}\label{class_graph_afdc074fadabe848450ff8fac1c555f8b}} 
+\index{Graph@{Graph}!find\+Node@{find\+Node}}
+\index{find\+Node@{find\+Node}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{find\+Node()}{findNode()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}}$\ast$ Graph\+::find\+Node (\begin{DoxyParamCaption}\item[{string}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+node with certain id 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_ae4b8a4be11b1fcda91667400e127848d}\label{class_graph_ae4b8a4be11b1fcda91667400e127848d}} 
+\index{Graph@{Graph}!find\+Road@{find\+Road}}
+\index{find\+Road@{find\+Road}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{find\+Road()}{findRoad()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_road}{Road}}$\ast$ Graph\+::find\+Road (\begin{DoxyParamCaption}\item[{string}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+road with certain id 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a22c9dd0bd46bff0107f8414980c28749}\label{class_graph_a22c9dd0bd46bff0107f8414980c28749}} 
+\index{Graph@{Graph}!get\+Charging\+Points@{get\+Charging\+Points}}
+\index{get\+Charging\+Points@{get\+Charging\+Points}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{get\+Charging\+Points()}{getChargingPoints()}}
+{\footnotesize\ttfamily vector$<$\mbox{\hyperlink{class_node}{Node}}$\ast$$>$ Graph\+::get\+Charging\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+charging\+Points 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a95b76b429415815ffe5d14250452e313}\label{class_graph_a95b76b429415815ffe5d14250452e313}} 
+\index{Graph@{Graph}!get\+Roads@{get\+Roads}}
+\index{get\+Roads@{get\+Roads}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{get\+Roads()}{getRoads()}}
+{\footnotesize\ttfamily vector$<$\mbox{\hyperlink{class_road}{Road}}$\ast$$>$ Graph\+::get\+Roads (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyReturn}{Returns}
+roads 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a437976400df5ab50b20703be4f88e6e7}\label{class_graph_a437976400df5ab50b20703be4f88e6e7}} 
+\index{Graph@{Graph}!get\+Shortest\+Path@{get\+Shortest\+Path}}
+\index{get\+Shortest\+Path@{get\+Shortest\+Path}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{get\+Shortest\+Path()}{getShortestPath()}}
+{\footnotesize\ttfamily vector$<$string$>$ Graph\+::get\+Shortest\+Path (\begin{DoxyParamCaption}\item[{string}]{origin,  }\item[{string}]{dest }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Calls Dijkstra algorithm with origin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em origin} & origin \\
+\hline
+{\em dest} & destination \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector with path from origin to destination 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a94386342ca91dcb2022745eb289dbc16}\label{class_graph_a94386342ca91dcb2022745eb289dbc16}} 
+\index{Graph@{Graph}!init\+Single\+Source@{init\+Single\+Source}}
+\index{init\+Single\+Source@{init\+Single\+Source}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{init\+Single\+Source()}{initSingleSource()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}}$\ast$ Graph\+::init\+Single\+Source (\begin{DoxyParamCaption}\item[{const string}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initializes single-\/source shortest path data (path, dist). 
+
+Used by all single-\/source shortest path algorithms. 
+\begin{DoxyParams}{Parameters}
+{\em id} & content of the source vertex and returns a pointer to the source vertex. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+node 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a2c013e691f7306c0b46dd0b900b43389}\label{class_graph_a2c013e691f7306c0b46dd0b900b43389}} 
+\index{Graph@{Graph}!relax@{relax}}
+\index{relax@{relax}!Graph@{Graph}}
+\subsubsection{\texorpdfstring{relax()}{relax()}}
+{\footnotesize\ttfamily bool Graph\+::relax (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{v,  }\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{w,  }\item[{double}]{weight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Analyzes an edge in single-\/source shortest path algorithm. 
+
+Used by all single-\/source shortest path algorithms. 
+\begin{DoxyParams}{Parameters}
+{\em v} & \mbox{\hyperlink{class_node}{Node}} 1 \\
+\hline
+{\em w} & \mbox{\hyperlink{class_node}{Node}} 2 \\
+\hline
+{\em weight} & value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the target vertex was relaxed (dist, path). 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Graph.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,263 @@
+\hypertarget{class_management}{}\section{Management Class Reference}
+\label{class_management}\index{Management@{Management}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_management_af6443089434984f915086ab2526b570b}\label{class_management_af6443089434984f915086ab2526b570b}} 
+\mbox{\hyperlink{class_management_af6443089434984f915086ab2526b570b}{Management}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_management}{Management}} constructor. It creates de graph and calls the functions to read the information to the graph. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_management_abd2b54f0edd1686ee127cff8816a2a2e}{read\+\_\+nodes}} (string filename)
+\begin{DoxyCompactList}\small\item\em Function to read nodes to a file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_management_a06aef0ba82fa962d986eb9de55b8816b}{read\+\_\+edges}} (string filename)
+\begin{DoxyCompactList}\small\item\em Function to read edges to a file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_management_a67738d2358c0b97686e4fc47356d8b78}{read\+\_\+roads}} (string filename)
+\begin{DoxyCompactList}\small\item\em Function to read roads to a file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_management_af37e787a2e40e21afc0a6f7ca2742cd3}{read\+\_\+vehicles}} (string filename)
+\begin{DoxyCompactList}\small\item\em Function to read vehicles to a file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_management_a84634ca51dce29ab60e964128302cc4c}{read\+\_\+trips}} (string filename)
+\begin{DoxyCompactList}\small\item\em Function to read trips to a file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_aeb489fc5dcd2a306c45c4de6261a1f69}\label{class_management_aeb489fc5dcd2a306c45c4de6261a1f69}} 
+void \mbox{\hyperlink{class_management_aeb489fc5dcd2a306c45c4de6261a1f69}{main\+\_\+menu}} ()
+\begin{DoxyCompactList}\small\item\em Creates the main menu. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_ad20f9e2096c9550286ef65c30b60580c}\label{class_management_ad20f9e2096c9550286ef65c30b60580c}} 
+void \mbox{\hyperlink{class_management_ad20f9e2096c9550286ef65c30b60580c}{add\+\_\+vehicle}} ()
+\begin{DoxyCompactList}\small\item\em Add vehicle according to the informations given by the user. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_ac84fc5b65c91433d3dd8fd7c674fa491}\label{class_management_ac84fc5b65c91433d3dd8fd7c674fa491}} 
+void \mbox{\hyperlink{class_management_ac84fc5b65c91433d3dd8fd7c674fa491}{remove\+\_\+vehicle}} ()
+\begin{DoxyCompactList}\small\item\em Remove vehicle according to the informations given by the user. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_a4f9bfe1bac2eeb7b8364e61bfa4811fd}\label{class_management_a4f9bfe1bac2eeb7b8364e61bfa4811fd}} 
+void \mbox{\hyperlink{class_management_a4f9bfe1bac2eeb7b8364e61bfa4811fd}{add\+\_\+trip}} ()
+\begin{DoxyCompactList}\small\item\em Add trip according to the informations given by the user. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_a0ab4dc585ee4d3f2463ccca2b97f9201}\label{class_management_a0ab4dc585ee4d3f2463ccca2b97f9201}} 
+void \mbox{\hyperlink{class_management_a0ab4dc585ee4d3f2463ccca2b97f9201}{remove\+\_\+trip}} ()
+\begin{DoxyCompactList}\small\item\em Remove trip according to the informations given by the user. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_af5c8090bd9be9ddd8d47749a363da302}\label{class_management_af5c8090bd9be9ddd8d47749a363da302}} 
+void \mbox{\hyperlink{class_management_af5c8090bd9be9ddd8d47749a363da302}{calc\+\_\+itineraries}} ()
+\begin{DoxyCompactList}\small\item\em This function the uses Dijkstra algorithm. It calculate all the trips made by each vehicle, updates the vehicle\textquotesingle{}s current energy and prints all the paths. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_management_a396e4d7bd472ce1678c278e0b4df1cfe}{get\+Length}} (vector$<$ \mbox{\hyperlink{class_edge}{Edge}} $\ast$$>$ edges)
+\begin{DoxyCompactList}\small\item\em Auxiliar function to \mbox{\hyperlink{class_management_af5c8090bd9be9ddd8d47749a363da302}{calc\+\_\+itineraries()}} \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_management_a00f02fdc0b2e15d98d3350a23e58efee}{get\+Integer}} (string question, int min, int max)
+\begin{DoxyCompactList}\small\item\em controlled version to use std\+::cin mainly to get ID\textquotesingle{}s \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_management_a79bd0ad615c9d128e5d81c07a033c4d8}{find\+\_\+vehicle}} (int id)
+\begin{DoxyCompactList}\small\item\em Searches vehicle in the vehicles vector. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_management_a901f0f1aba1db0da4e015c60abec104d}{find\+\_\+node}} (string id)
+\begin{DoxyCompactList}\small\item\em Searches node in map. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_management_a24d2b454c34f53a3dbcddde32cd21a9c}{print\+\_\+path}} (vector$<$ \mbox{\hyperlink{class_edge}{Edge}} $\ast$$>$ p)
+\begin{DoxyCompactList}\small\item\em Prints path by street. If it goes throw 2 or more edges on the same street only prints the street once. \end{DoxyCompactList}\item 
+vector$<$ \mbox{\hyperlink{class_edge}{Edge}} $\ast$ $>$ \mbox{\hyperlink{class_management_a25150de3fee6dc27f4450ff4f1d79ef7}{get\+Edges}} (vector$<$ string $>$ path)
+\begin{DoxyCompactList}\small\item\em Creates a path made of edges from a path made of nodes. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_a899531b6cdaa77205d03cc970f4b5381}\label{class_management_a899531b6cdaa77205d03cc970f4b5381}} 
+void \mbox{\hyperlink{class_management_a899531b6cdaa77205d03cc970f4b5381}{update\+Vehicles}} ()
+\begin{DoxyCompactList}\small\item\em updates vehicles file \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_a8ee5ea4b7f4ef6d9281e2576f365d8ab}\label{class_management_a8ee5ea4b7f4ef6d9281e2576f365d8ab}} 
+void \mbox{\hyperlink{class_management_a8ee5ea4b7f4ef6d9281e2576f365d8ab}{update\+Trips}} ()
+\begin{DoxyCompactList}\small\item\em updates trips file \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_a215f5ae2169b645b4acf302f523a8e93}\label{class_management_a215f5ae2169b645b4acf302f523a8e93}} 
+void \mbox{\hyperlink{class_management_a215f5ae2169b645b4acf302f523a8e93}{print\+\_\+vehicles}} ()
+\begin{DoxyCompactList}\small\item\em prints vehicles file \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_management_ae8dc129529a164689937dd079087717b}\label{class_management_ae8dc129529a164689937dd079087717b}} 
+void \mbox{\hyperlink{class_management_ae8dc129529a164689937dd079087717b}{print\+\_\+trips}} ()
+\begin{DoxyCompactList}\small\item\em prints trips file \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_management_a901f0f1aba1db0da4e015c60abec104d}\label{class_management_a901f0f1aba1db0da4e015c60abec104d}} 
+\index{Management@{Management}!find\+\_\+node@{find\+\_\+node}}
+\index{find\+\_\+node@{find\+\_\+node}!Management@{Management}}
+\subsubsection{\texorpdfstring{find\+\_\+node()}{find\_node()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}} $\ast$ Management\+::find\+\_\+node (\begin{DoxyParamCaption}\item[{string}]{id }\end{DoxyParamCaption})}
+
+
+
+Searches node in map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & node\textquotesingle{}s id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+node 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_management_a79bd0ad615c9d128e5d81c07a033c4d8}\label{class_management_a79bd0ad615c9d128e5d81c07a033c4d8}} 
+\index{Management@{Management}!find\+\_\+vehicle@{find\+\_\+vehicle}}
+\index{find\+\_\+vehicle@{find\+\_\+vehicle}!Management@{Management}}
+\subsubsection{\texorpdfstring{find\+\_\+vehicle()}{find\_vehicle()}}
+{\footnotesize\ttfamily int Management\+::find\+\_\+vehicle (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+Searches vehicle in the vehicles vector. 
+
+\begin{DoxyReturn}{Returns}
+Position in the vector 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_management_a25150de3fee6dc27f4450ff4f1d79ef7}\label{class_management_a25150de3fee6dc27f4450ff4f1d79ef7}} 
+\index{Management@{Management}!get\+Edges@{get\+Edges}}
+\index{get\+Edges@{get\+Edges}!Management@{Management}}
+\subsubsection{\texorpdfstring{get\+Edges()}{getEdges()}}
+{\footnotesize\ttfamily vector$<$ \mbox{\hyperlink{class_edge}{Edge}} $\ast$ $>$ Management\+::get\+Edges (\begin{DoxyParamCaption}\item[{vector$<$ string $>$}]{path }\end{DoxyParamCaption})}
+
+
+
+Creates a path made of edges from a path made of nodes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & path made of nodes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+path made of edges 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_management_a00f02fdc0b2e15d98d3350a23e58efee}\label{class_management_a00f02fdc0b2e15d98d3350a23e58efee}} 
+\index{Management@{Management}!get\+Integer@{get\+Integer}}
+\index{get\+Integer@{get\+Integer}!Management@{Management}}
+\subsubsection{\texorpdfstring{get\+Integer()}{getInteger()}}
+{\footnotesize\ttfamily string Management\+::get\+Integer (\begin{DoxyParamCaption}\item[{string}]{question,  }\item[{int}]{min,  }\item[{int}]{max }\end{DoxyParamCaption})}
+
+
+
+controlled version to use std\+::cin mainly to get ID\textquotesingle{}s 
+
+
+\begin{DoxyParams}{Parameters}
+{\em question} & question printed \\
+\hline
+{\em min} & minimum number \\
+\hline
+{\em max} & maximum number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string of the number 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_management_a396e4d7bd472ce1678c278e0b4df1cfe}\label{class_management_a396e4d7bd472ce1678c278e0b4df1cfe}} 
+\index{Management@{Management}!get\+Length@{get\+Length}}
+\index{get\+Length@{get\+Length}!Management@{Management}}
+\subsubsection{\texorpdfstring{get\+Length()}{getLength()}}
+{\footnotesize\ttfamily double Management\+::get\+Length (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_edge}{Edge}} $\ast$$>$}]{edges }\end{DoxyParamCaption})}
+
+
+
+Auxiliar function to \mbox{\hyperlink{class_management_af5c8090bd9be9ddd8d47749a363da302}{calc\+\_\+itineraries()}} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em edges} & Vector containing a path of edges \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pseudo-\/distance combining the distance and the inclination of the path use to calculate the vehicle\textquotesingle{}s consumption 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_management_a24d2b454c34f53a3dbcddde32cd21a9c}\label{class_management_a24d2b454c34f53a3dbcddde32cd21a9c}} 
+\index{Management@{Management}!print\+\_\+path@{print\+\_\+path}}
+\index{print\+\_\+path@{print\+\_\+path}!Management@{Management}}
+\subsubsection{\texorpdfstring{print\+\_\+path()}{print\_path()}}
+{\footnotesize\ttfamily void Management\+::print\+\_\+path (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_edge}{Edge}} $\ast$$>$}]{p }\end{DoxyParamCaption})}
+
+
+
+Prints path by street. If it goes throw 2 or more edges on the same street only prints the street once. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & Path of edges \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_management_a06aef0ba82fa962d986eb9de55b8816b}\label{class_management_a06aef0ba82fa962d986eb9de55b8816b}} 
+\index{Management@{Management}!read\+\_\+edges@{read\+\_\+edges}}
+\index{read\+\_\+edges@{read\+\_\+edges}!Management@{Management}}
+\subsubsection{\texorpdfstring{read\+\_\+edges()}{read\_edges()}}
+{\footnotesize\ttfamily bool Management\+::read\+\_\+edges (\begin{DoxyParamCaption}\item[{string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Function to read edges to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if it was read correctly, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_management_abd2b54f0edd1686ee127cff8816a2a2e}\label{class_management_abd2b54f0edd1686ee127cff8816a2a2e}} 
+\index{Management@{Management}!read\+\_\+nodes@{read\+\_\+nodes}}
+\index{read\+\_\+nodes@{read\+\_\+nodes}!Management@{Management}}
+\subsubsection{\texorpdfstring{read\+\_\+nodes()}{read\_nodes()}}
+{\footnotesize\ttfamily bool Management\+::read\+\_\+nodes (\begin{DoxyParamCaption}\item[{string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Function to read nodes to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if it was read correctly, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_management_a67738d2358c0b97686e4fc47356d8b78}\label{class_management_a67738d2358c0b97686e4fc47356d8b78}} 
+\index{Management@{Management}!read\+\_\+roads@{read\+\_\+roads}}
+\index{read\+\_\+roads@{read\+\_\+roads}!Management@{Management}}
+\subsubsection{\texorpdfstring{read\+\_\+roads()}{read\_roads()}}
+{\footnotesize\ttfamily bool Management\+::read\+\_\+roads (\begin{DoxyParamCaption}\item[{string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Function to read roads to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if it was read correctly, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_management_a84634ca51dce29ab60e964128302cc4c}\label{class_management_a84634ca51dce29ab60e964128302cc4c}} 
+\index{Management@{Management}!read\+\_\+trips@{read\+\_\+trips}}
+\index{read\+\_\+trips@{read\+\_\+trips}!Management@{Management}}
+\subsubsection{\texorpdfstring{read\+\_\+trips()}{read\_trips()}}
+{\footnotesize\ttfamily bool Management\+::read\+\_\+trips (\begin{DoxyParamCaption}\item[{string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Function to read trips to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if it was read correctly, false otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_management_af37e787a2e40e21afc0a6f7ca2742cd3}\label{class_management_af37e787a2e40e21afc0a6f7ca2742cd3}} 
+\index{Management@{Management}!read\+\_\+vehicles@{read\+\_\+vehicles}}
+\index{read\+\_\+vehicles@{read\+\_\+vehicles}!Management@{Management}}
+\subsubsection{\texorpdfstring{read\+\_\+vehicles()}{read\_vehicles()}}
+{\footnotesize\ttfamily bool Management\+::read\+\_\+vehicles (\begin{DoxyParamCaption}\item[{string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Function to read vehicles to a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if it was read correctly, false otherwise 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Interface.\+h\item 
+Interface.\+cpp\end{DoxyCompactItemize}
