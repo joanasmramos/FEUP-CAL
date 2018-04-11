@@ -8,6 +8,7 @@
 
 using namespace std;
 
+
 vector<double> convertToMeters(double rlat, double rlon, double latitude, double longitude){
 	vector<double> res;
 	double dlat, dlon, lat, lon;
@@ -38,7 +39,7 @@ Management::Management(){
 //	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
 //			return;
 
-	if (!((read_nodes("A.txt") == true) && (read_edges("B.txt") == true) && (read_roads("C.txt") == true)))
+	if (!((read_nodes("A.txt") == true) && (read_edges("C.txt") == true) && (read_roads("B.txt") == true)))
 		return;
 
 	if (!((read_vehicles("VehiclesTest.txt") == true) && (read_trips("TripsTest.txt"))))
