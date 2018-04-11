@@ -5,6 +5,7 @@
 class Management {
 private:
 	vector<Vehicle*> vehicles;
+	vector<Trip*> trips;
 	Graph* map; //read map text files
 public:
 	Management();
@@ -27,4 +28,6 @@ public:
 	vector<Edge *> getEdges(vector<string> path);
 	void updateVehicles();
 	void updateTrips();
+	void print_vehicles();
+	void print_trips();
 };

@@ -20,7 +20,7 @@ private:
 public:
 	Vehicle(int id, float aut, float cons, float ce);
 	int getID();
-	void addTrip(int i, Node* dest, Node* dep);
+	void addTrip(Trip* t);
 	int findTrip(Node* dep, Node* dest);
 	bool removeTrip(Node* dep, Node* dest);
 	vector< Trip* > getTrips();

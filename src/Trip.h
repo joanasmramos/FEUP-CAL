@@ -15,5 +15,6 @@ public:
 	Trip(int i, Node* dp, Node* dt);
 	Node* getDep();
 	Node* getDest();
+	int getCarId();
 	string toString();
 };
