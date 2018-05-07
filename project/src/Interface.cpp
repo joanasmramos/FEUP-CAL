@@ -259,9 +259,11 @@ void Management::main_menu() {
 	cout << "5- Calculate and show best itineraries" << endl;
 	cout << "6- Show vehicles" << endl;
 	cout << "7- Show trips" << endl;
-	cout << "8- Exit" << endl;
+	cout << "8- Exact Search" << endl;
+	cout << "9- Approximate Search" << endl;
+	cout << "10- Exit" << endl;
 
-	string option = getInteger("Option: ", 1, 8);
+	string option = getInteger("Option: ", 1, 10);
 
 	switch (stoul(option)) {
 		case 1:
@@ -292,6 +294,12 @@ void Management::main_menu() {
 			print_trips();
 			break;
 		case 8:
+			exact_search();
+			break;
+		case 9:
+			apro_search();
+			break;
+		case 10:
 			return;
 
 		default: break;
@@ -646,4 +654,14 @@ void Management::print_trips() {
 	}
 	cout << endl;
 	cout << endl;
+}
+
+void Management::exact_search() {
+
+	return;
+}
+
+void Management::apro_search() {
+
+	return;
 }

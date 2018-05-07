@@ -120,5 +120,16 @@ public:
 	 * @brief prints trips file
 	 */
 	void print_trips();
+	/**
+	 * @brief exact search
+	 */
+	void exact_search();
+	/**
+	 * @brief approximate search
+	 */
+	void apro_search();
+
+
+
 	void setup_GraphViewer();
 };
