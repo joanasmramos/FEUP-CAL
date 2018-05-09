@@ -128,6 +128,14 @@ public:
 	 * @brief approximate search
 	 */
 	void apro_search();
+	/**
+	 * @brief asks user to input the string he/she is looking for
+	 */
+	string getSearchString();
+	/**
+	 * @brief KMC matcher algorithm
+	 */
+	bool KMCmatcher(string p, string t);
 
 
 

@@ -657,11 +657,49 @@ void Management::print_trips() {
 }
 
 void Management::exact_search() {
+	cout << endl;
 
-	return;
+	int i;
+	string p;
+	vector<Road*> roads;
+
+	p = getSearchString();
+	roads = this->map->getRoads();
+
+
+
+
+	cout << endl;
+	cout << endl;
 }
 
 void Management::apro_search() {
+	cout << endl;
 
-	return;
+	string p;
+	vector<Road*> roads;
+
+	p = getSearchString();
+
+	roads = this->map->getRoads();
+
+	//cout << roads[0]->getName();
+
+
+	cout << endl;
+	cout << endl;
+}
+
+string Management::getSearchString(){
+	string s;
+
+	cout << "What are you looking for?" << endl;
+	getline(cin, s);
+
+	return s;
+}
+
+bool Management::KMCmatcher(string p, string t){
+
+	return true;
 }
