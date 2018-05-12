@@ -135,7 +135,11 @@ public:
 	/**
 	 * @brief KMC matcher algorithm
 	 */
-	bool KMCmatcher(string p, string t);
+	int KMPmatcher(string p, string t);
+	/**
+	 * @brief Compute-Prefix-Function
+	 */
+	void CPF(string p, int pi[]);
 
 
 

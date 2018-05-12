@@ -659,15 +659,18 @@ void Management::print_trips() {
 void Management::exact_search() {
 	cout << endl;
 
-	int i;
 	string p;
 	vector<Road*> roads;
+	bool res;
 
 	p = getSearchString();
 	roads = this->map->getRoads();
 
+	cout << roads[0]->getName() << "\n\n";
 
+	res = KMPmatcher(p, roads[0]->getName());
 
+	cout << res << endl;
 
 	cout << endl;
 	cout << endl;
@@ -683,7 +686,7 @@ void Management::apro_search() {
 
 	roads = this->map->getRoads();
 
-	//cout << roads[0]->getName();
+	cout << roads[0]->getName();
 
 
 	cout << endl;
@@ -699,7 +702,49 @@ string Management::getSearchString(){
 	return s;
 }
 
-bool Management::KMCmatcher(string p, string t){
+int Management::KMPmatcher(string pattern, string text){
+	int length = pattern.length();
+		int pi[length] = {};
+		int nOccurrences = 0;
+		CPF(pattern, pi);
 
-	return true;
+		int n = text.length(), m = pattern.length();
+		int q = 0, i = 0;
+
+		while( i < n){
+			if (pattern[q] == text[i]){
+				q++;
+				i++;
+			}
+			if (q == m){
+				q = pi[q-1];
+				nOccurrences++;
+			}
+			else if (i < n && pattern[q] != text[i]){
+				if (q != 0)
+					q= pi[q-1];
+				else i++;
+			}
+
+		}
+		return nOccurrences;
 }
+
+void Management::CPF(string pattern, int pi[]){
+	int m = pattern.length(), k = 0;
+		pi[0] = 0;
+		for (int q = 1; q < m; q++) {
+			if (pattern[q] == pattern[k]) {
+				k++;
+				pi[q] = k;
+			} else {
+				if (k != 0)
+					k = pi[k - 1];
+				else
+					pi[q] = 0;
+			}
+
+		}
+}
+
+
