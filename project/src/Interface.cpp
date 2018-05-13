@@ -660,17 +660,29 @@ void Management::exact_search() {
 	cout << endl;
 
 	string p;
-	vector<Road*> roads;
-	bool res;
+	vector<Road*> roads, matched;
+	int res;
+	unsigned int i;
 
 	p = getSearchString();
 	roads = this->map->getRoads();
 
-	cout << roads[0]->getName() << "\n\n";
+	for(i = 0; i < roads.size(); i++){
+		res = KMPmatcher(p, roads[i]->getName());
+		if(res > 0){
+			matched.push_back(roads[i]);
+		}
+	}
 
-	res = KMPmatcher(p, roads[0]->getName());
+	if(matched.size() > 0){
+		for(i = 0; i < matched.size(); i++){
+			cout << matched[i]->getName() << endl;
+		}
+	}
 
-	cout << res << endl;
+	else{
+		cout << "Sorry, cant find that place...\n";
+	}
 
 	cout << endl;
 	cout << endl;
