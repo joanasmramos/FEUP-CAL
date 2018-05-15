@@ -303,6 +303,14 @@ public:
 	}
 
 	/**
+	 * @return nodesRoad
+	 */
+
+	vector<Node*> getNodesRoad() {
+		return nodesRoad;
+	}
+
+	/**
 	 * @brief Equals operator
 	 * @param n1 second edge
 	 * @return if they are the same

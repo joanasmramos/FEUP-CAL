@@ -661,7 +661,9 @@ void Management::exact_search() {
 	cout << endl;
 
 	string p;
-	vector<Road*> roads, matched;
+	vector<Road*> roads, matched, empty;
+
+	vector<vector<Road*>> cross;
 	int res;
 	unsigned int i;
 
@@ -675,10 +677,60 @@ void Management::exact_search() {
 		}
 	}
 
+	Node* aux = nullptr;
+
+
+	for (i = 0; i < matched.size(); i++) {
+
+		cross.push_back(empty);
+
+		cout << matched[i]->getName() << endl << matched[i]->getNodesRoad().size() << endl;
+
+		for (int j = 0; j < matched[i]->getNodesRoad().size(); j++) {
+
+			cout << matched[i]->getNodesRoad()[j]->getId() << " "<< matched[i]->getNodesRoad()[j]->getChargingPoint() << endl;
+
+			if (matched[i]->getNodesRoad()[j]->getChargingPoint() == true) {
+				for (int k = 0; k < map->getRoads().size(); k++) {
+					if (map->getRoads()[k]->getId() != matched[i]->getId()) {
+						for(int l = 0; l < map->getRoads()[k]->getNodesRoad().size(); l++) {
+							if (matched[i]->getNodesRoad()[j] == map->getRoads()[k]->getNodesRoad()[l]
+								&& map->getRoads()[k]->getNodesRoad()[l] != aux) {
+								aux = matched[i]->getNodesRoad()[j];
+								cross[i].push_back(map->getRoads()[k]);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	bool crossFound = false;
+
 	if(matched.size() > 0){
-		cout << "We found: \n";
-		for(i = 0; i < matched.size(); i++){
-			cout << matched[i]->getName() << endl;
+
+		for(i = 0; i < matched.size(); i++) {
+
+			if (cross.size() != 0) {
+				if (cross[i].size() != 0) {
+
+					if (!crossFound) {
+						cout << "We found charging point at: \n";
+						crossFound = true;
+					}
+
+					for (int j = 0; j < cross[i].size(); j++) {
+
+						cout << matched[i]->getName() << " - " << cross[i][j]->getName() << endl;
+					}
+				}
+			}
+
+		}
+
+		if (!crossFound) {
+			cout << "We couldn't charging point in that street: \n";
 		}
 	}
 
@@ -686,7 +738,6 @@ void Management::exact_search() {
 		cout << "Sorry, cant find that place...\n";
 	}
 
-	cout << endl;
 	cout << endl;
 }
 
