@@ -32,6 +32,7 @@ Management::Management(){
 			return;
 
 	map->setChargingPoints();
+	map->organizeNodes();
 
 	main_menu();
 }

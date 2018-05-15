@@ -147,7 +147,7 @@ public:
 	* @param t text string
 	* @return edit distance
 	*/
-	int Management::editDistance(string p, string t);
+	int editDistance(string p, string t);
 
 	/**
 	* @brief computes minimum of 3 values
@@ -156,7 +156,7 @@ public:
 	* @param c third value
 	* @return minimum value
 	*/
-	int Management::minimum(int a, int b, int c);
+	int minimum(int a, int b, int c);
 
 	void setup_GraphViewer();
 };

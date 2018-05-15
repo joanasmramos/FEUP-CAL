@@ -210,6 +210,13 @@ public:
 	}
 
 	/**
+	 * @return adj_out
+	 */
+	vector<Edge *> getAdjOut() {
+		return adj_out;
+	}
+
+	/**
 	 * @return chargingPoint
 	 */
 	bool getChargingPoint() {
@@ -265,6 +272,7 @@ private:
 	string id; ///< Unique Id of the road
 	std::string name; ///< Name of the road
 	bool twoWay; ///< True if road has two ways, false if it only has one.
+	vector<Node *> nodesRoad;
 public:
 	friend class Graph;
 
@@ -301,6 +309,36 @@ public:
 	 */
 	bool operator==(const Road n1){
 		return (n1.id == this->id);
+	}
+
+	/**
+	 * @brief Fill nodesRoad with nodes that belong to the road
+	 */
+
+	void fillNodes(vector<Node *> nodes) {
+
+		bool added = false;
+
+		for (int i = 0; i < nodes.size(); i++) {
+			for (int j = 0; j < nodes[i]->getAdjIn().size(); j++) {
+				if (nodes[i]->getAdjIn()[j]->getRoadId() == this->id) {
+					nodesRoad.push_back(nodes[i]);
+					added = true;
+					break;
+				}
+			}
+
+			if (!added) {
+				for (int j = 0; j < nodes[i]->getAdjOut().size(); j++) {
+					if (nodes[i]->getAdjOut()[j]->getRoadId() == this->id) {
+						nodesRoad.push_back(nodes[i]);
+						break;
+					}
+				}
+			}
+		}
+
+		added = false;
 	}
 
 };
@@ -522,6 +560,15 @@ public:
 		return res;
 	}
 
+
+	/**
+	 * @brief Fills every road's node vector
+	 */
+	void organizeNodes() {
+		for (int i = 0; i < roads.size(); i++) {
+			roads[i]->fillNodes(nodes);
+		}
+	}
 
 };
 #endif /* SRC_GRAPH_H_ */
