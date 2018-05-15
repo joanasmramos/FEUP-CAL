@@ -7,6 +7,7 @@
 #include <cstdio>
 #include "graphviewer.h"
 #include <sstream>
+#include <map>
 
 using namespace std;
 
@@ -524,7 +525,6 @@ void Management::calc_itineraries() {
 
 }
 
-
 void Management::print_path(vector<Edge*> p) {
 	string last_printed;
 	string currentName;
@@ -675,6 +675,7 @@ void Management::exact_search() {
 	}
 
 	if(matched.size() > 0){
+		cout << "We found: \n";
 		for(i = 0; i < matched.size(); i++){
 			cout << matched[i]->getName() << endl;
 		}
@@ -688,6 +689,41 @@ void Management::exact_search() {
 	cout << endl;
 }
 
+int Management::minimum(int a, int b, int c) {
+	if (a <= b && b <= c) {
+		return a;
+	}
+	else if (b <= a && b <= c) {
+		return b;
+	}
+	else return c;
+}
+
+int Management::editDistance(string p, string t) {
+	static vector<vector<int>> D(p.length(), vector<int> (t.length()));
+
+	for (int i = 0; i < p.length(); i++) {
+		D[i][0] = i;
+	}
+
+	for (int j = 0; j < t.length(); j++) {
+		D[0][j] = j;
+	}
+
+	for (int i = 1; i < p.length(); i++) {
+		for (int j = 1; j < t.length(); j++) {
+			if (p[i] == t[i]) {
+				D[i][j] = D[i - 1][j - 1];
+			}
+			else {
+				D[i][j] = 1 + minimum(D[i - 1][j - 1], D[i - 1][j], D[i][j - 1]);
+			}
+		}
+	}
+
+	return D[p.length()][t.length()];
+}
+
 void Management::apro_search() {
 	cout << endl;
 
@@ -698,8 +734,17 @@ void Management::apro_search() {
 
 	roads = this->map->getRoads();
 
-	cout << roads[0]->getName();
+	multimap<int, string> distances;
 
+	for (auto it = roads.begin(); it != roads.end(); it++) {
+		distances.insert(pair<int, string> (editDistance(p, (*it)->getName()), (*it)->getName()));
+	}
+
+	cout << "\n We found... \n";
+
+	for (auto it = distances.begin(); it != distances.end(); it++) {
+		cout << (*it).second << "		" << (*it).first << endl;
+	}
 
 	cout << endl;
 	cout << endl;
@@ -715,8 +760,7 @@ string Management::getSearchString(){
 }
 
 int Management::KMPmatcher(string pattern, string text){
-	int length = pattern.length();
-		int pi[length] = {};
+		int * pi = new int[pattern.length()];
 		int nOccurrences = 0;
 		CPF(pattern, pi);
 
@@ -739,6 +783,8 @@ int Management::KMPmatcher(string pattern, string text){
 			}
 
 		}
+
+		delete [] pi;
 		return nOccurrences;
 }
 

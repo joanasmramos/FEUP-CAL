@@ -141,7 +141,22 @@ public:
 	 */
 	void CPF(string p, int pi[]);
 
+	/**
+	* @brief computes the edit distance between a pattern and a text string
+	* @param p pattern string
+	* @param t text string
+	* @return edit distance
+	*/
+	int Management::editDistance(string p, string t);
 
+	/**
+	* @brief computes minimum of 3 values
+	* @param a first value
+	* @param b second value
+	* @param c third value
+	* @return minimum value
+	*/
+	int Management::minimum(int a, int b, int c);
 
 	void setup_GraphViewer();
 };
