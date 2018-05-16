@@ -302,7 +302,8 @@ void Management::main_menu() {
 			apro_search();
 			break;
 		case 10:
-			return;
+			cout << "Goodbye!\n";
+			exit(0);
 
 		default: break;
 	}
@@ -657,38 +658,30 @@ void Management::print_trips() {
 	cout << endl;
 }
 
-void Management::exact_search() {
+void Management::searchCross(vector<Road*> matched) {
+
+	cout << endl << "We found the following streets matching your search input:" << endl;
+
+	for (int i = 0; i < matched.size(); i++) {
+		cout << matched[i]->getName() << endl;
+	}
+
 	cout << endl;
 
-	string p;
-	vector<Road*> roads, matched, empty;
-
 	vector<vector<Road*>> cross;
-	int res;
-	unsigned int i;
-
-	p = getSearchString();
-	roads = this->map->getRoads();
-
-	for(i = 0; i < roads.size(); i++){
-		res = KMPmatcher(p, roads[i]->getName());
-		if(res > 0){
-			matched.push_back(roads[i]);
-		}
-	}
+	vector<Road*> empty;
 
 	Node* aux = nullptr;
 
-
-	for (i = 0; i < matched.size(); i++) {
+	for (int i = 0; i < matched.size(); i++) {
 
 		cross.push_back(empty);
 
-		cout << matched[i]->getName() << endl << matched[i]->getNodesRoad().size() << endl;
+		//cout << matched[i]->getName() << endl << matched[i]->getNodesRoad().size() << endl;
 
 		for (int j = 0; j < matched[i]->getNodesRoad().size(); j++) {
 
-			cout << matched[i]->getNodesRoad()[j]->getId() << " "<< matched[i]->getNodesRoad()[j]->getChargingPoint() << endl;
+			//cout << matched[i]->getNodesRoad()[j]->getId() << " "<< matched[i]->getNodesRoad()[j]->getChargingPoint() << endl;
 
 			if (matched[i]->getNodesRoad()[j]->getChargingPoint() == true) {
 				for (int k = 0; k < map->getRoads().size(); k++) {
@@ -710,7 +703,8 @@ void Management::exact_search() {
 
 	if(matched.size() > 0){
 
-		for(i = 0; i < matched.size(); i++) {
+		for(int i = 0; i < matched.size(); i++) {
+
 
 			if (cross.size() != 0) {
 				if (cross[i].size() != 0) {
@@ -730,7 +724,7 @@ void Management::exact_search() {
 		}
 
 		if (!crossFound) {
-			cout << "We couldn't charging point in that street: \n";
+			cout << "We couldn't charging point in that street. \n";
 		}
 	}
 
@@ -739,6 +733,29 @@ void Management::exact_search() {
 	}
 
 	cout << endl;
+}
+
+void Management::exact_search() {
+	cout << endl;
+
+	string p;
+	vector<Road*> roads, matched, empty;
+
+	int res;
+	unsigned int i;
+
+	p = getSearchString();
+	roads = this->map->getRoads();
+
+	for(i = 0; i < roads.size(); i++){
+		res = KMPmatcher(p, roads[i]->getName());
+		if(res > 0){
+			matched.push_back(roads[i]);
+		}
+	}
+
+	searchCross(matched);
+
 }
 
 int Management::minimum(int a, int b, int c) {

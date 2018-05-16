@@ -159,4 +159,6 @@ public:
 	int minimum(int a, int b, int c);
 
 	void setup_GraphViewer();
+
+	void searchCross(vector<Road*> matched);
 };
