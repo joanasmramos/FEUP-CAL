@@ -160,5 +160,7 @@ public:
 
 	void setup_GraphViewer();
 
-	void searchCross(vector<Road*> matched);
+	bool searchCross(vector<Road*> matched, vector<vector<Road*>> *cross);
+
+	void manageCross(vector<Road*> matched);
 };

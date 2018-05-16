@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "Interface.h"
 #include "Graph.h"
 #include <fstream>
@@ -658,24 +659,15 @@ void Management::print_trips() {
 	cout << endl;
 }
 
-void Management::searchCross(vector<Road*> matched) {
+bool Management::searchCross(vector<Road*> matched, vector<vector<Road*>> *cross) {
 
-	cout << endl << "We found the following streets matching your search input:" << endl;
-
-	for (int i = 0; i < matched.size(); i++) {
-		cout << matched[i]->getName() << endl;
-	}
-
-	cout << endl;
-
-	vector<vector<Road*>> cross;
 	vector<Road*> empty;
 
 	Node* aux = nullptr;
 
 	for (int i = 0; i < matched.size(); i++) {
 
-		cross.push_back(empty);
+		cross->push_back(empty);
 
 		//cout << matched[i]->getName() << endl << matched[i]->getNodesRoad().size() << endl;
 
@@ -690,7 +682,7 @@ void Management::searchCross(vector<Road*> matched) {
 							if (matched[i]->getNodesRoad()[j] == map->getRoads()[k]->getNodesRoad()[l]
 								&& map->getRoads()[k]->getNodesRoad()[l] != aux) {
 								aux = matched[i]->getNodesRoad()[j];
-								cross[i].push_back(map->getRoads()[k]);
+								(*cross)[i].push_back(map->getRoads()[k]);
 							}
 						}
 					}
@@ -698,6 +690,27 @@ void Management::searchCross(vector<Road*> matched) {
 			}
 		}
 	}
+
+	if (cross[0].size() > 0)
+		return true;
+	else
+		return false;
+
+}
+
+void Management::manageCross(vector<Road*> matched) {
+
+	cout << endl << "We found the following streets matching your search input:" << endl;
+
+	for (int i = 0; i < matched.size(); i++) {
+		cout << matched[i]->getName() << endl;
+	}
+
+	cout << endl;
+
+	vector<vector<Road*>> cross;
+
+	searchCross(matched, &cross);
 
 	bool crossFound = false;
 
@@ -754,7 +767,7 @@ void Management::exact_search() {
 		}
 	}
 
-	searchCross(matched);
+	manageCross(matched);
 
 }
 
@@ -769,7 +782,7 @@ int Management::minimum(int a, int b, int c) {
 }
 
 int Management::editDistance(string p, string t) {
-	static vector<vector<int>> D(p.length(), vector<int> (t.length()));
+	vector<vector<int>> D(p.length(), vector<int> (t.length()));
 
 	for (int i = 0; i < p.length(); i++) {
 		D[i][0] = i;
@@ -789,8 +802,11 @@ int Management::editDistance(string p, string t) {
 			}
 		}
 	}
+//	cout << p.length()-1 << " " << t.length()-1 << endl;
+//	cout << D.size() << " " << D[p.length()-1].size() << endl;
+//	cout << D[p.length()-1][t.length()-1] << endl;
 
-	return D[p.length()][t.length()];
+	return D[p.length()-1][t.length()-1];
 }
 
 void Management::apro_search() {
@@ -809,14 +825,21 @@ void Management::apro_search() {
 		distances.insert(pair<int, string> (editDistance(p, (*it)->getName()), (*it)->getName()));
 	}
 
-	cout << "\n We found... \n";
+	cout << "\nWe found... \n";
 
 	for (auto it = distances.begin(); it != distances.end(); it++) {
-		cout << (*it).second << "		" << (*it).first << endl;
+		cout << left << setw(35) << (*it).second << (*it).first << endl;
 	}
 
 	cout << endl;
 	cout << endl;
+
+	for (int i = 0; i < distances.size(); i++) {
+		vector<Road*> aux;
+		vector<vector<Road*>> cross;
+//		aux.push_back(distances[i]);
+//		searchCross(distances, &cross);
+	}
 }
 
 string Management::getSearchString(){
