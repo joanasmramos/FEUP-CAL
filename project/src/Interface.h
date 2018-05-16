@@ -158,6 +158,7 @@ public:
 	*/
 	int minimum(int a, int b, int c);
 
+	Road* searchRoad(string name);
 	void setup_GraphViewer();
 
 	bool searchCross(vector<Road*> matched, vector<vector<Road*>> *cross);

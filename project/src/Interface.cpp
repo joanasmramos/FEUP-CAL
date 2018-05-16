@@ -664,6 +664,7 @@ bool Management::searchCross(vector<Road*> matched, vector<vector<Road*>> *cross
 	vector<Road*> empty;
 
 	Node* aux = nullptr;
+	bool hit = false;
 
 	for (int i = 0; i < matched.size(); i++) {
 
@@ -683,6 +684,7 @@ bool Management::searchCross(vector<Road*> matched, vector<vector<Road*>> *cross
 								&& map->getRoads()[k]->getNodesRoad()[l] != aux) {
 								aux = matched[i]->getNodesRoad()[j];
 								(*cross)[i].push_back(map->getRoads()[k]);
+								hit = true;
 							}
 						}
 					}
@@ -691,10 +693,7 @@ bool Management::searchCross(vector<Road*> matched, vector<vector<Road*>> *cross
 		}
 	}
 
-	if (cross[0].size() > 0)
-		return true;
-	else
-		return false;
+	return hit;
 
 }
 
@@ -813,11 +812,19 @@ void Management::apro_search() {
 	cout << endl;
 
 	string p;
-	vector<Road*> roads;
+	vector<Road*> roads, matched;
+	int res;
 
 	p = getSearchString();
 
 	roads = this->map->getRoads();
+
+	for(int i = 0; i < roads.size(); i++){
+		res = KMPmatcher(p, roads[i]->getName());
+		if(res > 0){
+			matched.push_back(roads[i]);
+		}
+	}
 
 	multimap<int, string> distances;
 
@@ -827,19 +834,41 @@ void Management::apro_search() {
 
 	cout << "\nWe found... \n";
 
+	for (auto it = matched.begin(); it != matched.end(); it++) {
+		cout << left << setw(35) << (*it)->getName() << "Contains" << endl;
+	}
+
 	for (auto it = distances.begin(); it != distances.end(); it++) {
 		cout << left << setw(35) << (*it).second << (*it).first << endl;
 	}
 
 	cout << endl;
-	cout << endl;
 
-	for (int i = 0; i < distances.size(); i++) {
+	vector<Road*> r;
+
+
+	for (auto it = distances.begin(); it != distances.end(); it++) {
+		r.push_back(searchRoad((*it).second));
+	}
+
+	for (int i = 0; i < r.size(); i++) {
 		vector<Road*> aux;
 		vector<vector<Road*>> cross;
-//		aux.push_back(distances[i]);
-//		searchCross(distances, &cross);
+		aux.push_back(r[i]);
+
+		if (searchCross(aux, &cross)) {
+
+			cout << "Did you mean " << r[i]->getName() << "?\nWe found there a charging point at:\n";
+
+			for (int j = 0; j < cross[0].size(); j++) {
+				cout << aux[0]->getName() << " - " << cross[0][j]->getName() << endl;
+			}
+			break;
+		}
 	}
+
+	cout << endl;
+
 }
 
 string Management::getSearchString(){
@@ -849,6 +878,15 @@ string Management::getSearchString(){
 	getline(cin, s);
 
 	return s;
+}
+
+Road* Management::searchRoad(string name) {
+	for (int i = 0; i < map->getRoads().size(); i++) {
+		if (map->getRoads()[i]->getName() == name)
+			return map->getRoads()[i];
+	}
+
+	return nullptr;
 }
 
 int Management::KMPmatcher(string pattern, string text){
