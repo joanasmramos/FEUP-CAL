@@ -16,24 +16,24 @@ Management::Management(){
 
 	map = new Graph();
 
-//	if (!((read_nodes("A.txt") == true) &&
-//		(read_roads("B.txt") == true) &&
-//		(read_edges("C.txt") == true)))
-//		return;
-//
-//	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
-//			return;
-
-	if (!((read_nodes("Nodes.txt") == true) && (read_edges("Edges.txt") == true) && (read_roads("Streets.txt") == true)))
+	if (!((read_nodes("A.txt") == true) &&
+		(read_roads("B.txt") == true) &&
+		(read_edges("C.txt") == true)))
 		return;
 
-	if (!((read_vehicles("VehiclesTest.txt") == true) && (read_trips("TripsTest.txt"))))
+	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
 			return;
+
+//	if (!((read_nodes("Nodes.txt") == true) && (read_edges("Edges.txt") == true) && (read_roads("Streets.txt") == true)))
+//		return;
+//
+//	if (!((read_vehicles("VehiclesTest.txt") == true) && (read_trips("TripsTest.txt"))))
+//			return;
 
 	map->setChargingPoints();
 	map->organizeNodes();
 
-	setup_GraphViewer();
+	//setup_GraphViewer();
 
 	main_menu();
 }
@@ -79,8 +79,8 @@ bool Management::read_nodes(string filename){
 			getline(instream, info, '\n');
 			altitude = stod(info);
 			Node* newnode = new Node(id, latitude, longitude, altitude);
-			this->map->addNode(newnode);
 
+			this->map->addNode(newnode);
 		}
 	}
 	else {
@@ -106,8 +106,9 @@ bool Management::read_edges(string filename){
 			road_id = info;
 			getline(instream, info, ';');
 			node1_id = info;
-			getline(instream, info, '\n');
+			getline(instream, info, ';');
 			node2_id = info;
+			getline(instream, info, '\n');
 
 			Node* node_1 = find_node(node1_id);
 			Node* node_2 = find_node(node2_id);
