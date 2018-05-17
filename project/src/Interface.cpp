@@ -24,8 +24,6 @@ Management::Management(){
 //	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
 //			return;
 
-	//setup_GraphViewer();
-
 	if (!((read_nodes("Nodes.txt") == true) && (read_edges("Edges.txt") == true) && (read_roads("Streets.txt") == true)))
 		return;
 
@@ -35,10 +33,12 @@ Management::Management(){
 	map->setChargingPoints();
 	map->organizeNodes();
 
+	setup_GraphViewer();
+
 	main_menu();
 }
 
-/*void Management::setup_GraphViewer() {
+void Management::setup_GraphViewer() {
 	GraphViewer *gv = new GraphViewer(1000, 600, false);
 
 	gv->createWindow(1000, 600);
@@ -46,7 +46,15 @@ Management::Management(){
 	gv->defineEdgeColor("blue");
 	gv->defineVertexColor("yellow");
 	gv->defineEdgeCurved(true);
-}*/
+
+	for (int i = 0; i < map->getNodes().size(); i++) {
+		gv->addNode(stoi(map->getNodes()[i]->getId()), (int) map->getNodes()[i]->getLat() + 100, (int) map->getNodes()[i]->getLong()+ 100);
+	}
+
+	for (int i = 0; i < map->getEdges().size(); i++) {
+		gv->addEdge(i, stoi(map->getEdges()[i]->getSourceId()), stoi(map->getEdges()[i]->getDestId()), EdgeType::UNDIRECTED);
+	}
+}
 
 bool Management::read_nodes(string filename){
 
@@ -70,7 +78,6 @@ bool Management::read_nodes(string filename){
 			latitude = stod(info);
 			getline(instream, info, '\n');
 			altitude = stod(info);
-		//	gv->addNode(id, latitude, longitude);
 			Node* newnode = new Node(id, latitude, longitude, altitude);
 			this->map->addNode(newnode);
 
