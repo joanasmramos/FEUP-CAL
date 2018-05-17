@@ -33,7 +33,7 @@ Management::Management(){
 	map->setChargingPoints();
 	map->organizeNodes();
 
-	//setup_GraphViewer();
+	setup_GraphViewer();
 
 	main_menu();
 }
@@ -48,11 +48,11 @@ void Management::setup_GraphViewer() {
 	gv->defineEdgeCurved(true);
 
 	for (int i = 0; i < map->getNodes().size(); i++) {
-		gv->addNode(stoi(map->getNodes()[i]->getId()), (int) map->getNodes()[i]->getLat() + 100, (int) map->getNodes()[i]->getLong()+ 100);
+		gv->addNode(stol(map->getNodes()[i]->getId()), (long) map->getNodes()[i]->getLat() + 100, (long) map->getNodes()[i]->getLong()+ 100);
 	}
 
 	for (int i = 0; i < map->getEdges().size(); i++) {
-		gv->addEdge(i, stoi(map->getEdges()[i]->getSourceId()), stoi(map->getEdges()[i]->getDestId()), EdgeType::UNDIRECTED);
+		gv->addEdge(i, stol(map->getEdges()[i]->getSourceId()), stol(map->getEdges()[i]->getDestId()), EdgeType::UNDIRECTED);
 	}
 }
 
@@ -131,7 +131,6 @@ bool Management::read_edges(string filename){
 
 				this->map->addEdge(newedge);
 			}
-		//	gv->addEdge(road_id, node1_id, node2_id);
 		}
 	}
 	else {

@@ -95,7 +95,7 @@ public:
 	 * @param x Posição horizontal do nó.
 	 * @param y Posição vertical do nó.
 	 */
-	bool addNode(int id, int x, int y);
+	bool addNode(long id, int x, int y);
 
 	/**
 	 * Acrescenta um nó à representação do grafo, numa posição ao critério do programa.
@@ -120,7 +120,7 @@ public:
 	 * @param edgeType EdgeType.DIRECTED caso a aresta seja unidirecional
 	 * ou EdgeType.UNDIRECTED caso a aresta seja bidirecional.
 	 */
-	bool addEdge(int id, int v1, int v2, int edgeType);
+	bool addEdge(int id, long v1, long v2, int edgeType);
 
 	/**
 	 * Remove um nó da representação do grafo e todas as arestas ligadas a este.
