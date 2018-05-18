@@ -16,9 +16,9 @@ Management::Management(){
 
 	map = new Graph();
 
-	if (!((read_nodes("Nodes.txt") == true) &&
-		(read_roads("Streets.txt") == true) &&
-		(read_edges("Edges.txt") == true)))
+	if (!((read_nodes("A.txt") == true) &&
+		(read_roads("B.txt") == true) &&
+		(read_edges("C.txt") == true)))
 		return;
 
 	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))

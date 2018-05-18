@@ -474,8 +474,12 @@ public:
 
 		int max;
 		int max_index;
+		int n = 1;
 
-		//for (int i = 0; i < 5; i++) {
+		if (nodes.size() > 50)
+			n = 3;
+
+		for (int i = 0; i < n; i++) {
 			max = 0;
 			max_index = 0;
 
@@ -488,7 +492,7 @@ public:
 
 			nodes[max_index]->chargingPoint = true;
 			chargingPoints.push_back(nodes[max_index]);
-		//}
+		}
 	}
 
 	/**
