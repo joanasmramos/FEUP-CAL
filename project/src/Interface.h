@@ -164,4 +164,6 @@ public:
 	bool searchCross(vector<Road*> matched, vector<vector<Road*>> *cross);
 
 	void manageCross(vector<Road*> matched);
+
+	string strToLower(string s);
 };

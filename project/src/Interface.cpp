@@ -16,9 +16,9 @@ Management::Management(){
 
 	map = new Graph();
 
-	if (!((read_nodes("A.txt") == true) &&
-		(read_roads("B.txt") == true) &&
-		(read_edges("C.txt") == true)))
+	if (!((read_nodes("Nodes.txt") == true) &&
+		(read_roads("Streets.txt") == true) &&
+		(read_edges("Edges.txt") == true)))
 		return;
 
 	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
@@ -767,7 +767,7 @@ void Management::exact_search() {
 	roads = this->map->getRoads();
 
 	for(i = 0; i < roads.size(); i++){
-		res = KMPmatcher(p, roads[i]->getName());
+		res = KMPmatcher(p, strToLower(roads[i]->getName()));
 		if(res > 0){
 			matched.push_back(roads[i]);
 		}
@@ -827,7 +827,7 @@ void Management::apro_search() {
 	roads = this->map->getRoads();
 
 	for(int i = 0; i < roads.size(); i++){
-		res = KMPmatcher(p, roads[i]->getName());
+		res = KMPmatcher(p, strToLower(roads[i]->getName()));
 		if(res > 0){
 			matched.push_back(roads[i]);
 		}
@@ -940,6 +940,22 @@ void Management::CPF(string pattern, int pi[]){
 			}
 
 		}
+}
+
+string Management::strToLower(string s){
+	string s2;
+	int i;
+	char c;
+
+	for(i = 0; i < s.length(); i++){
+			 c= tolower(s[i]);
+			 s2.push_back(c);
+
+		}
+
+
+
+	return s2;
 }
 
 
