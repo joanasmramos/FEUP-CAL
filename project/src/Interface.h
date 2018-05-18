@@ -8,7 +8,6 @@ private:
 	vector<Vehicle*> vehicles;
 	vector<Trip*> trips;
 	Graph* map; //read map text files
-	GraphViewer *gv;
 public:
 	/**
 	 * @brief Management constructor. It creates de graph and calls the functions to read the information to the graph.

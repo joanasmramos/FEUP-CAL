@@ -33,12 +33,19 @@ Management::Management(){
 	map->setChargingPoints();
 	map->organizeNodes();
 
-	//setup_GraphViewer();
+	char answer;
+
+	cout << "Would you like a visual representation of the map? (Y/N)\n";
+
+	cin >> answer;
+
+	if (answer == 'y' || answer == 'Y')
+		setup_GraphViewer();
 
 	main_menu();
 }
 
-/*
+
 void Management::setup_GraphViewer() {
 	GraphViewer *gv = new GraphViewer(1000, 600, false);
 
@@ -56,7 +63,7 @@ void Management::setup_GraphViewer() {
 		gv->addEdge(i, stol(map->getEdges()[i]->getSourceId()), stol(map->getEdges()[i]->getDestId()), EdgeType::UNDIRECTED);
 	}
 }
-*/
+
 
 bool Management::read_nodes(string filename){
 
@@ -823,7 +830,7 @@ void Management::apro_search() {
 
 	string p;
 	vector<Road*> roads;
-	int res;
+	//int res;
 
 	p = getSearchString();
 
