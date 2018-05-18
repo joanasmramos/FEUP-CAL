@@ -6,7 +6,7 @@
 #include <string>
 #include <math.h>
 #include <cstdio>
-#include "graphviewer.h"
+//#include "graphviewer.h"
 #include <sstream>
 #include <map>
 
@@ -33,11 +33,12 @@ Management::Management(){
 	map->setChargingPoints();
 	map->organizeNodes();
 
-	setup_GraphViewer();
+	//setup_GraphViewer();
 
 	main_menu();
 }
 
+/*
 void Management::setup_GraphViewer() {
 	GraphViewer *gv = new GraphViewer(1000, 600, false);
 
@@ -55,6 +56,7 @@ void Management::setup_GraphViewer() {
 		gv->addEdge(i, stol(map->getEdges()[i]->getSourceId()), stol(map->getEdges()[i]->getDestId()), EdgeType::UNDIRECTED);
 	}
 }
+*/
 
 bool Management::read_nodes(string filename){
 
@@ -788,7 +790,7 @@ int Management::minimum(int a, int b, int c) {
 }
 
 int Management::editDistance(string p, string t) {
-	vector<vector<int>> D(p.length(), vector<int> (t.length()));
+	vector<vector<int>> D(p.length(), vector<int>(t.length()));
 
 	for (int i = 0; i < p.length(); i++) {
 		D[i][0] = i;
@@ -800,7 +802,7 @@ int Management::editDistance(string p, string t) {
 
 	for (int i = 1; i < p.length(); i++) {
 		for (int j = 1; j < t.length(); j++) {
-			if (p[i] == t[i]) {
+			if (tolower(p[i]) == tolower(t[i])) {
 				D[i][j] = D[i - 1][j - 1];
 			}
 			else {
@@ -808,9 +810,10 @@ int Management::editDistance(string p, string t) {
 			}
 		}
 	}
-//	cout << p.length()-1 << " " << t.length()-1 << endl;
-//	cout << D.size() << " " << D[p.length()-1].size() << endl;
-//	cout << D[p.length()-1][t.length()-1] << endl;
+
+	if (D[p.length() - 1][p.length() - 1] == 0) {
+		return D[p.length() - 1][p.length() - 1];
+	}
 
 	return D[p.length()-1][t.length()-1];
 }
@@ -819,19 +822,12 @@ void Management::apro_search() {
 	cout << endl;
 
 	string p;
-	vector<Road*> roads, matched;
+	vector<Road*> roads;
 	int res;
 
 	p = getSearchString();
 
 	roads = this->map->getRoads();
-
-	for(int i = 0; i < roads.size(); i++){
-		res = KMPmatcher(p, strToLower(roads[i]->getName()));
-		if(res > 0){
-			matched.push_back(roads[i]);
-		}
-	}
 
 	multimap<int, string> distances;
 
@@ -841,12 +837,12 @@ void Management::apro_search() {
 
 	cout << "\nWe found... \n";
 
-	for (auto it = matched.begin(); it != matched.end(); it++) {
-		cout << left << setw(35) << (*it)->getName() << "Contains" << endl;
-	}
-
+	int i = 0;
 	for (auto it = distances.begin(); it != distances.end(); it++) {
+		if (i > 5) // mostra 5 melhores opções
+			break;
 		cout << left << setw(35) << (*it).second << (*it).first << endl;
+		i++;
 	}
 
 	cout << endl;
@@ -952,9 +948,6 @@ string Management::strToLower(string s){
 			 s2.push_back(c);
 
 		}
-
-
-
 	return s2;
 }
 
