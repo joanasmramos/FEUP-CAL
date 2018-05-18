@@ -165,5 +165,10 @@ public:
 
 	void manageCross(vector<Road*> matched);
 
+	/**
+		* @brief turns string to lower case string
+		* @param s string to edit
+		* @return string edited
+		*/
 	string strToLower(string s);
 };
