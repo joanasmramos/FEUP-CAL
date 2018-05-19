@@ -16,9 +16,9 @@ Management::Management(){
 
 	map = new Graph();
 
-	if (!((read_nodes("A.txt") == true) &&
-		(read_roads("B.txt") == true) &&
-		(read_edges("C.txt") == true)))
+	if (!((read_nodes("Nodes.txt") == true) &&
+		(read_roads("Streets.txt") == true) &&
+		(read_edges("Edges.txt") == true)))
 		return;
 
 	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
@@ -868,7 +868,7 @@ void Management::apro_search() {
 
 		if (searchCross(aux, &cross)) {
 
-			cout << "Did you mean " << r[i]->getName() << "?\nWe found there a charging point at:\n";
+			cout << "Did you mean " << r[i]->getName() << "?\nWe found a charging point there:\n";
 
 			for (int j = 0; j < cross[0].size(); j++) {
 				cout << aux[0]->getName() << " - " << cross[0][j]->getName() << endl;
