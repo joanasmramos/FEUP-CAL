@@ -6,7 +6,7 @@
 #include <string>
 #include <math.h>
 #include <cstdio>
-//#include "graphviewer.h"
+#include "graphviewer.h"
 #include <sstream>
 #include <map>
 
@@ -16,9 +16,9 @@ Management::Management(){
 
 	map = new Graph();
 
-	if (!((read_nodes("Nodes.txt") == true) &&
-		(read_roads("Streets.txt") == true) &&
-		(read_edges("Edges.txt") == true)))
+	if (!((read_nodes("nodes_osm.txt") == true) &&
+		(read_roads("streets_osm.txt") == true) &&
+		(read_edges("edges_osm.txt") == true)))
 		return;
 
 	if (!(read_vehicles("Vehicles.txt") == true) && (read_trips("Trips.txt")))
@@ -32,19 +32,26 @@ Management::Management(){
 
 	map->setChargingPoints();
 	map->organizeNodes();
-
+	
 	char answer;
-
+	
 	cout << "Would you like a visual representation of the map? (Y/N)\n";
 
 	cin >> answer;
 
+	while (cin.fail() || (answer != 'n' && answer != 'N' && answer != 'y' && answer != 'Y')) {
+		cin.clear();
+		cin.ignore(10000, '\n');
+		cout << "Not an option, retrying\n";
+		cout << "Would you like a visual representation of the map? (Y/N)\n";
+		cin >> answer;
+	}
+
 	if (answer == 'y' || answer == 'Y')
 		setup_GraphViewer();
-
+	
 	main_menu();
 }
-
 
 void Management::setup_GraphViewer() {
 	GraphViewer *gv = new GraphViewer(1000, 600, false);
@@ -63,7 +70,6 @@ void Management::setup_GraphViewer() {
 		gv->addEdge(i, stol(map->getEdges()[i]->getSourceId()), stol(map->getEdges()[i]->getDestId()), EdgeType::UNDIRECTED);
 	}
 }
-
 
 bool Management::read_nodes(string filename){
 
@@ -322,7 +328,11 @@ void Management::main_menu() {
 			cout << "Goodbye!\n";
 			exit(0);
 
-		default: break;
+		default: 
+			cout << "Not an option, retrying. \n";
+			cin.clear();
+			cin.ignore(10000, '\n');
+			break;
 	}
 
 	main_menu();
@@ -797,6 +807,9 @@ int Management::minimum(int a, int b, int c) {
 }
 
 int Management::editDistance(string p, string t) {
+	if (t == "")
+		return p.length();
+
 	vector<vector<int>> D(p.length(), vector<int>(t.length()));
 
 	for (int i = 0; i < p.length(); i++) {
@@ -809,7 +822,7 @@ int Management::editDistance(string p, string t) {
 
 	for (int i = 1; i < p.length(); i++) {
 		for (int j = 1; j < t.length(); j++) {
-			if (tolower(p[i]) == tolower(t[i])) {
+			if (tolower(p[i]) == tolower(t[j])) {
 				D[i][j] = D[i - 1][j - 1];
 			}
 			else {
@@ -818,11 +831,13 @@ int Management::editDistance(string p, string t) {
 		}
 	}
 
-	if (D[p.length() - 1][p.length() - 1] == 0) {
-		return D[p.length() - 1][p.length() - 1];
+	if (t.length() > p.length()) {
+		if (D[p.length() - 1][p.length() - 1] == 0) {
+			return 0;
+		}
 	}
 
-	return D[p.length()-1][t.length()-1];
+	return D[p.length() - 1][t.length() - 1];
 }
 
 void Management::apro_search() {
