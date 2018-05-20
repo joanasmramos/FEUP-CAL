@@ -63,11 +63,11 @@ void Management::setup_GraphViewer() {
 	gv->defineEdgeCurved(true);
 
 	for (int i = 0; i < map->getNodes().size(); i++) {
-		gv->addNode(stol(map->getNodes()[i]->getId()), (long) map->getNodes()[i]->getLat() + 100, (long) map->getNodes()[i]->getLong()+ 100);
+		gv->addNode(map->getNodes()[i]->getId(), (long) map->getNodes()[i]->getLat() + 100, (long) map->getNodes()[i]->getLong()+ 100);
 	}
 
 	for (int i = 0; i < map->getEdges().size(); i++) {
-		gv->addEdge(i, stol(map->getEdges()[i]->getSourceId()), stol(map->getEdges()[i]->getDestId()), EdgeType::UNDIRECTED);
+		gv->addEdge(i, map->getEdges()[i]->getSourceId(), map->getEdges()[i]->getDestId(), EdgeType::UNDIRECTED);
 	}
 }
 
@@ -696,11 +696,7 @@ bool Management::searchCross(vector<Road*> matched, vector<vector<Road*>> *cross
 
 		cross->push_back(empty);
 
-		//cout << matched[i]->getName() << endl << matched[i]->getNodesRoad().size() << endl;
-
 		for (int j = 0; j < matched[i]->getNodesRoad().size(); j++) {
-
-			//cout << matched[i]->getNodesRoad()[j]->getId() << " "<< matched[i]->getNodesRoad()[j]->getChargingPoint() << endl;
 
 			if (matched[i]->getNodesRoad()[j]->getChargingPoint() == true) {
 				for (int k = 0; k < map->getRoads().size(); k++) {
@@ -845,7 +841,6 @@ void Management::apro_search() {
 
 	string p;
 	vector<Road*> roads;
-	//int res;
 
 	p = getSearchString();
 

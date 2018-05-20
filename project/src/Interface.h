@@ -157,12 +157,32 @@ public:
 	*/
 	int minimum(int a, int b, int c);
 
+	/**
+	 * @param searchs road by name
+	 * @param name road's name
+	 * @return road found
+	 */
+
+
 	Road* searchRoad(string name);
 	
+	/**
+	 * @brief launches graphviewer
+	 */
+
 	void setup_GraphViewer();
+
+	/**
+	 * @brief searches the cross streets where there's a charging point
+	 * @param matched streets matched
+	 */
 
 	bool searchCross(vector<Road*> matched, vector<vector<Road*>> *cross);
 
+	/**
+	 * @brief prints the cross streets where there's a charging point
+	 * @param matched streets matched
+	 */
 	void manageCross(vector<Road*> matched);
 
 	/**

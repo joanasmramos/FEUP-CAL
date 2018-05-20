@@ -109,7 +109,7 @@ bool GraphViewer::addNode(int id) {
 	return con->sendMsg(str);
 }
 
-bool GraphViewer::addNode(long id, int x, int y) {
+bool GraphViewer::addNode(string id, int x, int y) {
 	if(isDynamic) {
 		cerr << "This graph is dynamic, "
 				"so the provided x and y values for the node with id "
@@ -117,14 +117,14 @@ bool GraphViewer::addNode(long id, int x, int y) {
 	}
 
 	char buff[200];
-	sprintf(buff, "addNode3 %d %d %d\n", id, x, y);
+	sprintf(buff, "addNode3 %s %d %d\n", id.c_str(), x, y);
 	string str(buff);
 	return con->sendMsg(str);
 }
 
-bool GraphViewer::addEdge(int id, long v1, long v2, int edgeType) {
+bool GraphViewer::addEdge(int id, string v1, string v2, int edgeType) {
 	char buff[200];
-	sprintf(buff, "addEdge %d %d %d %d\n", id, v1, v2, edgeType);
+	sprintf(buff, "addEdge %d %s %s %d\n", id, v1.c_str(), v2.c_str(), edgeType);
 	string str(buff);
 	return con->sendMsg(str);
 }
